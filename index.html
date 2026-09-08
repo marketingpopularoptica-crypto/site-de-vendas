@@ -227,6 +227,26 @@
     justify-content: center;
     margin-bottom: 30px;
   }
+  .search-toggle-btn { display: none; }
+  @media (max-width: 560px) {
+    .toolbar { justify-content: center; }
+    #search-global { display: none; }
+    .toolbar.search-open #search-global { display: block; }
+    .toolbar.search-open .search-toggle-btn { display: none; }
+    .search-toggle-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      border: 1.5px solid #d9c48a;
+      background: #fff;
+      color: #9c7a2e;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+  }
   #search {
     width: 100%;
     max-width: 460px;
@@ -310,13 +330,29 @@
     .grid { gap: 10px; }
     .grid.cols-3 > .card, .grid.cols-4 > .card { flex: 0 0 calc(33.333% - 6.7px); }
     /* !important porque essas regras vêm antes, no CSS, das regras base de
-       .card .name / .availability / .peso-line / .cart-add-btn — sem isso,
-       a ordem no arquivo faz a regra base (mais abaixo) vencer mesmo com o
-       media query batendo. */
+       .card .name / .availability / .peso-line / .cart-add-btn / .add-pendant-btn
+       — sem isso, a ordem no arquivo faz a regra base (mais abaixo) vencer
+       mesmo com o media query batendo. */
     .card .body { padding: 8px 6px 10px !important; }
-    .card .name { font-size: 10.5px !important; line-height: 1.2 !important; overflow-wrap: break-word; }
-    .card .availability, .card .peso-line { font-size: 9.5px !important; }
-    .cart-add-btn { font-size: 9px !important; padding: 6px 4px !important; gap: 3px !important; }
+    .card .name {
+      font-size: 10.5px !important;
+      line-height: 1.2 !important;
+      white-space: nowrap !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+    }
+    .card .availability, .card .peso-line {
+      font-size: 9px !important;
+      white-space: nowrap !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+    }
+    .cart-add-btn, .add-pendant-btn {
+      font-size: 9.5px !important;
+      padding: 7px 4px !important;
+      gap: 3px !important;
+      white-space: nowrap !important;
+    }
   }
   /* subtítulo que separa grupos de produtos dentro de uma mesma seção
      (ex: "Brincos de Bebê" vs "Pulseiras Femininas" dentro de Feminina & Baby) */
@@ -1256,7 +1292,10 @@
   </div>
 </header>
 
-<div class="toolbar" style="padding:0 6vw;margin-top:24px;margin-bottom:0;">
+<div class="toolbar" id="toolbar" style="padding:0 6vw;margin-top:24px;margin-bottom:0;">
+  <button type="button" class="search-toggle-btn" id="search-toggle-btn" aria-label="Abrir busca">
+    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+  </button>
   <input id="search-global" type="text" placeholder="Buscar por nome, modelo, peso ou tamanho..." aria-label="Buscar produtos em todo o catálogo">
 </div>
 
@@ -2394,6 +2433,40 @@
     input.addEventListener('input', runSearch);
   })();
 
+  // ---------- Busca em "balão" no celular: só a lupa aparece; toca pra abrir o campo ----------
+  (function() {
+    var toolbar = document.getElementById('toolbar');
+    var toggleBtn = document.getElementById('search-toggle-btn');
+    var input = document.getElementById('search-global');
+    if (!toolbar || !toggleBtn || !input) return;
+
+    toggleBtn.addEventListener('click', function() {
+      toolbar.classList.add('search-open');
+      input.focus();
+    });
+    input.addEventListener('blur', function() {
+      if (!input.value.trim()) { toolbar.classList.remove('search-open'); }
+    });
+  })();
+
+  // ---------- Texto curto do botão "Adicionar pingente" no celular (3 colunas) ----------
+  (function() {
+    var pendantBtns = document.querySelectorAll('.add-pendant-btn');
+    if (!pendantBtns.length) return;
+    function applyLabel() {
+      var isMobile3Col = window.matchMedia('(max-width: 560px)').matches;
+      pendantBtns.forEach(function(btn) {
+        btn.textContent = isMobile3Col ? '+ Pingente' : '+ Adicionar pingente';
+      });
+    }
+    applyLabel();
+    var resizeTimer2 = null;
+    window.addEventListener('resize', function() {
+      clearTimeout(resizeTimer2);
+      resizeTimer2 = setTimeout(applyLabel, 200);
+    });
+  })();
+
   // ---------- Conversion tracking ----------
   function trackLead(ringName) {
     try {
@@ -2874,16 +2947,17 @@
     }
 
     function syncAddButtons() {
+      var isMobile3Col = window.matchMedia('(max-width: 560px)').matches;
       var buttons = document.querySelectorAll('.cart-add-btn');
       buttons.forEach(function(btn) {
         var name = btn.getAttribute('data-name');
         var inCart = cart.some(function(i) { return i.name === name; });
         if (inCart) {
           btn.classList.add('added');
-          btn.textContent = '✓ No carrinho';
+          btn.textContent = isMobile3Col ? '✓ Adicionado' : '✓ No carrinho';
         } else {
           btn.classList.remove('added');
-          btn.textContent = '+ Adicionar ao carrinho';
+          btn.textContent = isMobile3Col ? '+ Carrinho' : '+ Adicionar ao carrinho';
         }
       });
     }
@@ -2944,6 +3018,14 @@
 
     render();
     syncAddButtons();
+
+    // reaplica os textos curtos/longos dos botões se o celular girar de
+    // orientação (ou a janela mudar de tamanho) e cruzar o breakpoint mobile
+    var resizeTimer = null;
+    window.addEventListener('resize', function() {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(syncAddButtons, 200);
+    });
 
     // formata o número do WhatsApp e o ano no rodapé
     var footerNumEl = document.getElementById('footer-wa-number');
