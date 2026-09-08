@@ -118,6 +118,12 @@
     letter-spacing: 0.3px;
     white-space: nowrap;
   }
+  @media (max-width: 720px) {
+    /* No celular, os links de categoria e o botão "Nossas Lojas" já estão
+       dentro do menu hambúrguer (cat-nav-panel) — some com a fileira extra
+       pra deixar o cabeçalho com uma linha só. */
+    .nav-links, .nav-cta { display: none; }
+  }
   .hero {
     padding: 60px 6vw 50px;
     background: linear-gradient(160deg, #080f1c 0%, #0f1c30 100%);
@@ -301,7 +307,12 @@
     .grid.cols-3 > .card, .grid.cols-4 > .card { flex: 0 0 calc(50% - 13px); }
   }
   @media (max-width: 560px) {
-    .grid.cols-3 > .card, .grid.cols-4 > .card { flex: 0 0 100%; }
+    .grid { gap: 14px; }
+    .grid.cols-3 > .card, .grid.cols-4 > .card { flex: 0 0 calc(50% - 7px); }
+    .card .body { padding: 12px 10px 14px; }
+    .card .name { font-size: 14.5px; }
+    .card .availability, .card .peso-line { font-size: 11px; }
+    .cart-add-btn { font-size: 10.5px; padding: 8px 6px; }
   }
   /* subtítulo que separa grupos de produtos dentro de uma mesma seção
      (ex: "Brincos de Bebê" vs "Pulseiras Femininas" dentro de Feminina & Baby) */
