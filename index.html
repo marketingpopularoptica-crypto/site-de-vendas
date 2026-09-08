@@ -353,6 +353,9 @@
       gap: 3px !important;
       white-space: nowrap !important;
     }
+    /* espaço extra embaixo de cada seção pro botão flutuante do WhatsApp não
+       ficar em cima do último card ao terminar de rolar aquela seção */
+    .catalog-section { padding-bottom: 60px; }
   }
   /* subtítulo que separa grupos de produtos dentro de uma mesma seção
      (ex: "Brincos de Bebê" vs "Pulseiras Femininas" dentro de Feminina & Baby) */
@@ -1219,6 +1222,14 @@
     align-items: center;
     justify-content: center;
     box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+  }
+  @media (max-width: 560px) {
+    /* No celular a grade vira 3 colunas e a última fica bem embaixo do botão
+       flutuante do WhatsApp — encolhe e aproxima mais do canto pra cobrir
+       menos os botões dos cards. */
+    .float-wa-wrap { bottom: 12px; right: 12px; }
+    .float-wa { width: 42px; height: 42px; }
+    .float-wa svg { width: 21px; height: 21px; }
   }
   .float-wa-menu {
     position: absolute;
