@@ -2468,6 +2468,8 @@
   <p>O conteúdo deste site (textos, fotos e catálogo) pertence à Ótica Popular e não pode ser copiado ou reproduzido sem autorização.</p>
   <h4>Seus dados</h4>
   <p>As informações compartilhadas pelo WhatsApp são usadas apenas para o seu atendimento e a finalização da sua compra, e não são repassadas a terceiros.</p>
+  <h4>Carrinho de compras</h4>
+  <p>Para facilitar seu atendimento, guardamos de forma anônima as peças que você adiciona ao carrinho (sem nome, telefone ou qualquer dado que identifique você), mesmo que o pedido não seja finalizado. Essa informação é usada só para entendermos o interesse nas peças do catálogo.</p>
 </div>
 
 <script>
@@ -2621,8 +2623,46 @@
     var countEl = document.getElementById('cart-count');
     var checkoutBtn = document.getElementById('cart-checkout-btn');
 
+    var CART_SESSION_KEY = 'oticapopular_cart_session_v1';
+    var cartSessionId = null;
+    try {
+      cartSessionId = localStorage.getItem(CART_SESSION_KEY);
+      if (!cartSessionId) {
+        cartSessionId = (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : (Date.now() + '-' + Math.random().toString(36).slice(2));
+        localStorage.setItem(CART_SESSION_KEY, cartSessionId);
+      }
+    } catch (e) {}
+
+    var cartSyncTimer = null;
+    function syncCartRemote(finalizado) {
+      if (!cartSessionId) return;
+      try { clearTimeout(cartSyncTimer); } catch (e) {}
+      cartSyncTimer = setTimeout(function() {
+        var payload = {
+          session_id: cartSessionId,
+          loja: CART_WA_NUMBER,
+          itens: cart,
+          total_itens: cart.length
+        };
+        if (finalizado) { payload.finalizado_whatsapp = true; }
+        try {
+          fetch('https://tzznokjjrjrmlzgljeqm.supabase.co/rest/v1/carrinhos_site?on_conflict=session_id', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR6em5va2pqcmpybWx6Z2xqZXFtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQxMjgwMzAsImV4cCI6MjA5OTcwNDAzMH0.f1LHpGzEAP1N5TB-ZYOOiKPDgMbCQmSHaAgs7SlWRYc',
+              'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR6em5va2pqcmpybWx6Z2xqZXFtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQxMjgwMzAsImV4cCI6MjA5OTcwNDAzMH0.f1LHpGzEAP1N5TB-ZYOOiKPDgMbCQmSHaAgs7SlWRYc',
+              'Prefer': 'resolution=merge-duplicates'
+            },
+            body: JSON.stringify(payload)
+          }).catch(function() {});
+        } catch (e) {}
+      }, 1200);
+    }
+
     function saveCart() {
       try { localStorage.setItem(STORAGE_KEY, JSON.stringify(cart)); } catch (e) {}
+      syncCartRemote();
     }
 
     function updateCount() {
@@ -2746,6 +2786,7 @@
         var text = 'Olá! Gostaria de fazer um pedido:\n' + lines.join('\n') +
           '\n\nPode me passar o valor total e as formas de pagamento (Pix ou cartão)?';
         var url = 'https://wa.me/' + CART_WA_NUMBER + '?text=' + encodeURIComponent(text);
+        syncCartRemote(true);
         window.open(url, '_blank', 'noopener');
       });
     }
