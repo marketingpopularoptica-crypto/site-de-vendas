@@ -2646,13 +2646,12 @@
         };
         if (finalizado) { payload.finalizado_whatsapp = true; }
         try {
-          fetch('https://tzznokjjrjrmlzgljeqm.supabase.co/rest/v1/carrinhos_site?on_conflict=session_id', {
+          fetch('https://tzznokjjrjrmlzgljeqm.supabase.co/rest/v1/carrinhos_site', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
               'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR6em5va2pqcmpybWx6Z2xqZXFtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQxMjgwMzAsImV4cCI6MjA5OTcwNDAzMH0.f1LHpGzEAP1N5TB-ZYOOiKPDgMbCQmSHaAgs7SlWRYc',
               'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR6em5va2pqcmpybWx6Z2xqZXFtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQxMjgwMzAsImV4cCI6MjA5OTcwNDAzMH0.f1LHpGzEAP1N5TB-ZYOOiKPDgMbCQmSHaAgs7SlWRYc',
-              'Prefer': 'resolution=merge-duplicates'
             },
             body: JSON.stringify(payload)
           }).catch(function() {});
