@@ -307,12 +307,16 @@
     .grid.cols-3 > .card, .grid.cols-4 > .card { flex: 0 0 calc(50% - 13px); }
   }
   @media (max-width: 560px) {
-    .grid { gap: 14px; }
-    .grid.cols-3 > .card, .grid.cols-4 > .card { flex: 0 0 calc(50% - 7px); }
-    .card .body { padding: 12px 10px 14px; }
-    .card .name { font-size: 14.5px; }
-    .card .availability, .card .peso-line { font-size: 11px; }
-    .cart-add-btn { font-size: 10.5px; padding: 8px 6px; }
+    .grid { gap: 10px; }
+    .grid.cols-3 > .card, .grid.cols-4 > .card { flex: 0 0 calc(33.333% - 6.7px); }
+    /* !important porque essas regras vêm antes, no CSS, das regras base de
+       .card .name / .availability / .peso-line / .cart-add-btn — sem isso,
+       a ordem no arquivo faz a regra base (mais abaixo) vencer mesmo com o
+       media query batendo. */
+    .card .body { padding: 8px 6px 10px !important; }
+    .card .name { font-size: 10.5px !important; line-height: 1.2 !important; overflow-wrap: break-word; }
+    .card .availability, .card .peso-line { font-size: 9.5px !important; }
+    .cart-add-btn { font-size: 9px !important; padding: 6px 4px !important; gap: 3px !important; }
   }
   /* subtítulo que separa grupos de produtos dentro de uma mesma seção
      (ex: "Brincos de Bebê" vs "Pulseiras Femininas" dentro de Feminina & Baby) */
