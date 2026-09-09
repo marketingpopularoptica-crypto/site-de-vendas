@@ -348,10 +348,11 @@
       text-overflow: ellipsis !important;
     }
     .cart-add-btn, .add-pendant-btn {
-      font-size: 9.5px !important;
-      padding: 7px 4px !important;
+      font-size: 8px !important;
+      padding: 7px 2px !important;
       gap: 3px !important;
       white-space: nowrap !important;
+      letter-spacing: 0 !important;
     }
     /* espaço extra embaixo de cada seção pro botão flutuante do WhatsApp não
        ficar em cima do último card ao terminar de rolar aquela seção */
@@ -2460,23 +2461,28 @@
     });
   })();
 
-  // ---------- Texto curto do botão "Adicionar pingente" no celular (3 colunas) ----------
-  (function() {
-    var pendantBtns = document.querySelectorAll('.add-pendant-btn');
-    if (!pendantBtns.length) return;
-    function applyLabel() {
-      var isMobile3Col = window.matchMedia('(max-width: 560px)').matches;
-      pendantBtns.forEach(function(btn) {
-        btn.textContent = isMobile3Col ? '+ Pingente' : '+ Adicionar pingente';
-      });
-    }
-    applyLabel();
-    var resizeTimer2 = null;
-    window.addEventListener('resize', function() {
-      clearTimeout(resizeTimer2);
-      resizeTimer2 = setTimeout(applyLabel, 200);
+  // ---------- Encolhe a fonte dos botões "Adicionar ao carrinho" / "Adicionar
+  // pingente" no celular (3 colunas) até o texto caber numa linha só, em vez
+  // de trocar o texto por uma versão curta. ----------
+  function fitButtonLabels() {
+    var isMobile3Col = window.matchMedia('(max-width: 560px)').matches;
+    var buttons = document.querySelectorAll('.cart-add-btn, .add-pendant-btn');
+    buttons.forEach(function(btn) {
+      // o CSS usa !important no font-size pra vencer a ordem das regras no
+      // arquivo — por isso, pra o JS conseguir sobrescrever, também precisa
+      // marcar a declaração inline como !important (senão o !important do
+      // stylesheet sempre ganha do style inline comum).
+      if (!isMobile3Col) { btn.style.removeProperty('font-size'); return; }
+      var maxSize = 8; // precisa bater com o font-size do CSS em @media (max-width: 560px)
+      var minSize = 5.5;
+      var size = maxSize;
+      btn.style.setProperty('font-size', size + 'px', 'important');
+      while (btn.scrollWidth > btn.clientWidth && size > minSize) {
+        size -= 0.25;
+        btn.style.setProperty('font-size', size + 'px', 'important');
+      }
     });
-  })();
+  }
 
   // ---------- Conversion tracking ----------
   function trackLead(ringName) {
@@ -2958,17 +2964,16 @@
     }
 
     function syncAddButtons() {
-      var isMobile3Col = window.matchMedia('(max-width: 560px)').matches;
       var buttons = document.querySelectorAll('.cart-add-btn');
       buttons.forEach(function(btn) {
         var name = btn.getAttribute('data-name');
         var inCart = cart.some(function(i) { return i.name === name; });
         if (inCart) {
           btn.classList.add('added');
-          btn.textContent = isMobile3Col ? '✓ Adicionado' : '✓ No carrinho';
+          btn.textContent = '✓ No carrinho';
         } else {
           btn.classList.remove('added');
-          btn.textContent = isMobile3Col ? '+ Carrinho' : '+ Adicionar ao carrinho';
+          btn.textContent = '+ Adicionar ao carrinho';
         }
       });
     }
@@ -3029,13 +3034,13 @@
 
     render();
     syncAddButtons();
+    fitButtonLabels();
 
-    // reaplica os textos curtos/longos dos botões se o celular girar de
-    // orientação (ou a janela mudar de tamanho) e cruzar o breakpoint mobile
+    // reencolhe a fonte dos botões se a tela girar/mudar de tamanho
     var resizeTimer = null;
     window.addEventListener('resize', function() {
       clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(syncAddButtons, 200);
+      resizeTimer = setTimeout(fitButtonLabels, 200);
     });
 
     // formata o número do WhatsApp e o ano no rodapé
