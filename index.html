@@ -225,9 +225,26 @@
   .toolbar {
     display: flex;
     justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
     margin-bottom: 30px;
   }
   .search-toggle-btn { display: none; }
+  .clear-filter-btn {
+    padding: 9px 16px;
+    border-radius: 999px;
+    border: 1.5px solid #c9a24a;
+    background: #fff;
+    color: #9c7a2e;
+    font-family: 'Poppins', Arial, sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.15s ease, color 0.15s ease;
+  }
+  .clear-filter-btn:hover { background: #c9a24a; color: #fff; }
   @media (max-width: 560px) {
     .toolbar { justify-content: center; }
     #search-global { display: none; }
@@ -1385,7 +1402,7 @@
       <button type="button" class="menu-btn" id="cat-nav-open-btn" aria-label="Abrir menu de categorias">
         <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h10"/></svg>
       </button>
-      <div class="brand">Ótica Popular</div>
+      <div class="brand" id="brand-home-link" style="cursor:pointer;">Ótica Popular</div>
     </div>
     <div class="nav-links"><a href="#feminina">Linha Feminina</a><a href="#infantil">Linha Infantil</a><a href="#masculina">Linha Masculina</a><a href="#aliancas-solitarios">Solitários</a><a href="#aliancas">Alianças</a><a href="#lojas">Nossas Lojas</a></div>
     <div class="nav-right">
@@ -1403,6 +1420,7 @@
     <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
   </button>
   <input id="search-global" type="text" placeholder="Buscar por nome, modelo, peso ou tamanho..." aria-label="Buscar produtos em todo o catálogo">
+  <button type="button" class="clear-filter-btn" id="clear-filter-btn" hidden>&times; Ver catálogo completo</button>
 </div>
 
 <section class="hero">
@@ -3090,12 +3108,90 @@
           input.value = query;
           input.dispatchEvent(new Event('input', { bubbles: true }));
         }
+        if (window.isolateCatalogSection) { window.isolateCatalogSection(targetId); }
         closePanel();
         if (section) {
           setTimeout(function() {
             section.scrollIntoView({ behavior: 'smooth', block: 'start' });
           }, 200);
         }
+      });
+    });
+  })();
+
+  // ---------- Ao escolher uma categoria (menu de categorias ou o menu do
+  // topo), mostra só aquela seção do catálogo — evita que, ao rolar a tela
+  // depois de clicar em "Linha Feminina", por exemplo, apareçam peças de
+  // outras linhas (masculina, infantil etc.) logo abaixo. ----------
+  (function() {
+    var CATALOG_SECTION_IDS = ['feminina', 'infantil', 'masculina', 'aliancas-solitarios', 'aliancas'];
+    var clearBtn = document.getElementById('clear-filter-btn');
+    var searchInput = document.getElementById('search-global');
+
+    function isolateCatalogSection(targetId) {
+      if (CATALOG_SECTION_IDS.indexOf(targetId) === -1) return;
+      CATALOG_SECTION_IDS.forEach(function(id) {
+        var el = document.getElementById(id);
+        if (el) { el.style.display = (id === targetId) ? '' : 'none'; }
+      });
+      if (clearBtn) { clearBtn.hidden = false; }
+    }
+    window.isolateCatalogSection = isolateCatalogSection;
+
+    function showAllCatalogSections() {
+      CATALOG_SECTION_IDS.forEach(function(id) {
+        var el = document.getElementById(id);
+        if (el) { el.style.display = ''; }
+      });
+      if (clearBtn) { clearBtn.hidden = true; }
+    }
+    window.showAllCatalogSections = showAllCatalogSections;
+
+    function resetCatalogAndSearch() {
+      showAllCatalogSections();
+      if (searchInput) {
+        searchInput.value = '';
+        searchInput.dispatchEvent(new Event('input', { bubbles: true }));
+      }
+    }
+
+    if (clearBtn) {
+      clearBtn.addEventListener('click', resetCatalogAndSearch);
+    }
+
+    // a marca "Ótica Popular" no cabeçalho funciona como "voltar pro
+    // catálogo completo" — fica sempre visível (cabeçalho fixo) mesmo
+    // quando a pessoa já rolou bastante a tela dentro de uma categoria
+    var brandLink = document.getElementById('brand-home-link');
+    if (brandLink) {
+      brandLink.addEventListener('click', function() {
+        resetCatalogAndSearch();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        history.replaceState(null, '', window.location.pathname);
+      });
+    }
+
+    // links do menu superior e do rodapé (fora do painel de categorias, que
+    // já tem seu próprio tratamento acima) que apontam direto pra uma seção
+    document.querySelectorAll('.nav-links a, .footer-col a').forEach(function(link) {
+      var href = link.getAttribute('href') || '';
+      if (href.charAt(0) !== '#') return;
+      var targetId = href.slice(1);
+      if (CATALOG_SECTION_IDS.indexOf(targetId) === -1) return;
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        if (searchInput) {
+          searchInput.value = '';
+          searchInput.dispatchEvent(new Event('input', { bubbles: true }));
+        }
+        isolateCatalogSection(targetId);
+        var section = document.getElementById(targetId);
+        if (section) {
+          setTimeout(function() {
+            section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }, 50);
+        }
+        history.replaceState(null, '', '#' + targetId);
       });
     });
   })();
