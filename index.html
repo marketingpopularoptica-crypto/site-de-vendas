@@ -1392,6 +1392,164 @@
     flex-shrink: 0;
   }
   .float-wa-menu a:hover { background: #faf8f3; }
+
+  /* ---------- Conta do cliente (login opcional) ---------- */
+  .account-btn {
+    position: relative;
+    background: none;
+    border: none;
+    color: #f4ecd8;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px;
+    font-family: 'Poppins', Arial, sans-serif;
+  }
+  .account-btn .account-label {
+    font-size: 12.5px;
+    letter-spacing: 0.3px;
+    max-width: 90px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  @media (max-width: 480px) {
+    .account-btn .account-label { display: none; }
+  }
+  .auth-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(8, 15, 28, 0.55);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease;
+    z-index: 200;
+  }
+  .auth-overlay.open { opacity: 1; visibility: visible; }
+  .auth-modal {
+    position: relative;
+    background: #faf8f3;
+    border-radius: 18px;
+    border: 1.5px solid #d9c48a;
+    padding: 30px 26px 26px;
+    width: 100%;
+    max-width: 380px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+  }
+  .auth-modal-close {
+    position: absolute;
+    top: 12px;
+    right: 14px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    line-height: 1;
+    color: #8a8471;
+    cursor: pointer;
+    padding: 4px;
+  }
+  .auth-modal-close:hover { color: #0f1c30; }
+  .auth-view h3 {
+    margin: 0 0 8px;
+    font-size: 19px;
+    color: #0f1c30;
+    letter-spacing: 0.3px;
+  }
+  .auth-sub {
+    font-size: 12.5px;
+    color: #8a8471;
+    line-height: 1.5;
+    margin: 0 0 18px;
+  }
+  .auth-view form { display: flex; flex-direction: column; gap: 14px; }
+  .auth-view label {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-size: 12.5px;
+    color: #6b6555;
+    font-weight: 600;
+  }
+  .auth-view input {
+    padding: 12px 16px;
+    border-radius: 30px;
+    border: 1.5px solid #d9c48a;
+    font-size: 14.5px;
+    font-family: 'Poppins', Arial, sans-serif;
+    background: #fff;
+    color: #0f1c30;
+  }
+  .auth-view input:focus { outline: none; border-color: #c9a24a; }
+  .auth-submit-btn {
+    margin-top: 4px;
+    padding: 13px 20px;
+    border-radius: 30px;
+    border: none;
+    background: #c9a24a;
+    color: #0f1c30;
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 0.3px;
+    cursor: pointer;
+    font-family: 'Poppins', Arial, sans-serif;
+  }
+  .auth-submit-btn:hover { background: #b8913d; }
+  .auth-logout-btn { background: #fff; border: 1.5px solid #c9a24a; color: #9c7a2e; }
+  .auth-logout-btn:hover { background: #faf4e4; }
+  .auth-msg {
+    font-size: 12.5px;
+    margin: 12px 0 0;
+    line-height: 1.5;
+  }
+  .auth-msg-error { color: #b3261e; }
+  .auth-msg-ok { color: #3a7d44; }
+  .auth-switch {
+    font-size: 12.5px;
+    color: #6b6555;
+    margin: 14px 0 0;
+    text-align: center;
+  }
+  .auth-link-btn {
+    background: none;
+    border: none;
+    color: #9c7a2e;
+    font-weight: 700;
+    font-size: 12.5px;
+    cursor: pointer;
+    padding: 0;
+    text-decoration: underline;
+    font-family: 'Poppins', Arial, sans-serif;
+  }
+  .cart-restore-banner {
+    background: #fbf2da;
+    border: 1.5px solid #e3cd8e;
+    border-radius: 12px;
+    padding: 12px 14px;
+    margin: 0 0 14px;
+    font-size: 12.5px;
+    color: #6b5a28;
+  }
+  .cart-restore-banner p { margin: 0 0 10px; line-height: 1.4; }
+  .cart-restore-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+  .cart-restore-actions button {
+    padding: 8px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: 'Poppins', Arial, sans-serif;
+  }
+  #cart-restore-use { background: #c9a24a; border: none; color: #0f1c30; }
+  #cart-restore-use:hover { background: #b8913d; }
+  #cart-restore-keep { background: #fff; border: 1.5px solid #d9c48a; color: #6b5a28; }
+  #cart-restore-keep:hover { background: #fdf9ee; }
 </style>
 </head>
 <body>
@@ -1406,6 +1564,10 @@
     </div>
     <div class="nav-links"><a href="#feminina">Linha Feminina</a><a href="#infantil">Linha Infantil</a><a href="#masculina">Linha Masculina</a><a href="#aliancas-solitarios">Solitários</a><a href="#aliancas">Alianças</a><a href="#lojas">Nossas Lojas</a></div>
     <div class="nav-right">
+      <button type="button" class="account-btn" id="account-open-btn" aria-label="Entrar ou criar conta">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="3.2"/><path d="M5 20c1.2-3.6 4-5.4 7-5.4s5.8 1.8 7 5.4"/></svg>
+        <span class="account-label" id="account-label">Entrar</span>
+      </button>
       <button type="button" class="cart-btn" id="cart-open-btn" aria-label="Abrir carrinho">
         <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="9" cy="21" r="1.4" fill="currentColor" stroke="none"/><circle cx="18" cy="21" r="1.4" fill="currentColor" stroke="none"/><path d="M2.5 3h2.2l1.9 11.4a2 2 0 0 0 2 1.6h8.6a2 2 0 0 0 2-1.6L20.7 7H6"/></svg>
         <span class="cart-count" id="cart-count" hidden>0</span>
@@ -3380,6 +3542,7 @@
       <h3 id="cart-drawer-title">Seu carrinho</h3>
       <button class="cart-drawer-close" id="cart-drawer-close" aria-label="Fechar">&times;</button>
     </div>
+    <div class="cart-restore-banner" id="cart-restore-banner" hidden></div>
     <div class="cart-drawer-items" id="cart-drawer-items">
       <div class="cart-empty" id="cart-empty">Seu carrinho está vazio. Adicione peças do catálogo para montar seu pedido.</div>
     </div>
@@ -3390,6 +3553,55 @@
         <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21h.004c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm5.8 14.14c-.24.68-1.4 1.3-1.93 1.38-.5.08-1.12.11-1.8-.11-.42-.13-.96-.31-1.65-.6-2.9-1.25-4.8-4.17-4.94-4.36-.15-.19-1.18-1.57-1.18-3 0-1.42.75-2.12 1.01-2.41.27-.29.58-.36.78-.36.19 0 .39 0 .56.01.18.01.42-.07.65.5.24.58.82 2 .89 2.15.07.15.12.32.02.51-.09.19-.14.31-.28.48-.14.17-.3.37-.42.5-.14.15-.29.31-.12.6.16.29.72 1.19 1.55 1.93 1.07.95 1.97 1.25 2.26 1.39.29.15.46.12.63-.07.17-.19.72-.84.91-1.13.19-.29.38-.24.64-.14.26.1 1.66.78 1.94.93.29.14.47.21.55.33.07.12.07.68-.17 1.36z"/></svg>
         <span>Finalizar pedido no WhatsApp</span>
       </button>
+    </div>
+  </div>
+</div>
+
+<div class="auth-overlay" id="auth-overlay">
+  <div class="auth-modal" role="dialog" aria-modal="true" aria-labelledby="auth-modal-title">
+    <button class="auth-modal-close" id="auth-modal-close" aria-label="Fechar">&times;</button>
+
+    <div id="auth-view-login" class="auth-view">
+      <h3 id="auth-modal-title">Entrar</h3>
+      <p class="auth-sub">Login é opcional — você pode comprar sem criar conta. Entre só se quiser salvar seu carrinho e encontrá-lo depois, em qualquer aparelho.</p>
+      <form id="auth-login-form">
+        <label>E-mail<input type="email" id="login-email" required autocomplete="email"></label>
+        <label>Senha<input type="password" id="login-password" required autocomplete="current-password" minlength="6"></label>
+        <button type="submit" class="auth-submit-btn">Entrar</button>
+      </form>
+      <p class="auth-msg" id="login-msg" hidden></p>
+      <p class="auth-switch">Não tem conta? <button type="button" class="auth-link-btn" id="go-to-signup">Criar conta</button></p>
+      <p class="auth-switch"><button type="button" class="auth-link-btn" id="go-to-recover">Esqueci minha senha</button></p>
+    </div>
+
+    <div id="auth-view-signup" class="auth-view" hidden>
+      <h3>Criar conta</h3>
+      <p class="auth-sub">Opcional! É só pra guardar seu carrinho. Você pode continuar comprando sem se cadastrar, se preferir.</p>
+      <form id="auth-signup-form">
+        <label>Nome<input type="text" id="signup-name" required autocomplete="name"></label>
+        <label>E-mail<input type="email" id="signup-email" required autocomplete="email"></label>
+        <label>Senha<input type="password" id="signup-password" required autocomplete="new-password" minlength="6"></label>
+        <button type="submit" class="auth-submit-btn">Criar conta</button>
+      </form>
+      <p class="auth-msg" id="signup-msg" hidden></p>
+      <p class="auth-switch">Já tem conta? <button type="button" class="auth-link-btn" id="go-to-login">Entrar</button></p>
+    </div>
+
+    <div id="auth-view-recover" class="auth-view" hidden>
+      <h3>Recuperar senha</h3>
+      <p class="auth-sub">Informe seu e-mail e enviaremos um link para criar uma nova senha.</p>
+      <form id="auth-recover-form">
+        <label>E-mail<input type="email" id="recover-email" required autocomplete="email"></label>
+        <button type="submit" class="auth-submit-btn">Enviar link</button>
+      </form>
+      <p class="auth-msg" id="recover-msg" hidden></p>
+      <p class="auth-switch"><button type="button" class="auth-link-btn" id="go-to-login-from-recover">Voltar para o login</button></p>
+    </div>
+
+    <div id="auth-view-account" class="auth-view" hidden>
+      <h3>Sua conta</h3>
+      <p class="auth-sub" id="account-greeting"></p>
+      <button type="button" class="auth-submit-btn auth-logout-btn" id="logout-btn">Sair da conta</button>
     </div>
   </div>
 </div>
@@ -3422,6 +3634,16 @@
       }
     } catch (e) {}
 
+    // ---------- Login opcional (conta do cliente) ----------
+    var SUPABASE_URL = 'https://tzznokjjrjrmlzgljeqm.supabase.co';
+    var SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR6em5va2pqcmpybWx6Z2xqZXFtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQxMjgwMzAsImV4cCI6MjA5OTcwNDAzMH0.f1LHpGzEAP1N5TB-ZYOOiKPDgMbCQmSHaAgs7SlWRYc';
+    var AUTH_STORAGE_KEY = 'oticapopular_auth_v1';
+    var authSession = null;
+    try {
+      var savedAuth = localStorage.getItem(AUTH_STORAGE_KEY);
+      if (savedAuth) { authSession = JSON.parse(savedAuth); }
+    } catch (e) { authSession = null; }
+
     var cartSyncTimer = null;
     function syncCartRemote(finalizado) {
       if (!cartSessionId) return;
@@ -3434,13 +3656,18 @@
           total_itens: cart.length
         };
         if (finalizado) { payload.finalizado_whatsapp = true; }
+        var authToken = SUPABASE_ANON_KEY;
+        if (authSession && authSession.access_token && authSession.user_id) {
+          payload.user_id = authSession.user_id;
+          authToken = authSession.access_token;
+        }
         try {
-          fetch('https://tzznokjjrjrmlzgljeqm.supabase.co/rest/v1/carrinhos_site', {
+          fetch(SUPABASE_URL + '/rest/v1/carrinhos_site', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
-              'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR6em5va2pqcmpybWx6Z2xqZXFtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQxMjgwMzAsImV4cCI6MjA5OTcwNDAzMH0.f1LHpGzEAP1N5TB-ZYOOiKPDgMbCQmSHaAgs7SlWRYc',
-              'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR6em5va2pqcmpybWx6Z2xqZXFtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQxMjgwMzAsImV4cCI6MjA5OTcwNDAzMH0.f1LHpGzEAP1N5TB-ZYOOiKPDgMbCQmSHaAgs7SlWRYc',
+              'apikey': SUPABASE_ANON_KEY,
+              'Authorization': 'Bearer ' + authToken,
             },
             body: JSON.stringify(payload)
           }).catch(function() {});
@@ -3719,6 +3946,233 @@
     }
     var yearEl = document.getElementById('footer-year');
     if (yearEl) { yearEl.textContent = new Date().getFullYear(); }
+
+    // ---------- Conta do cliente: modal de login/cadastro e restauração de carrinho ----------
+    var accountBtn = document.getElementById('account-open-btn');
+    var accountLabel = document.getElementById('account-label');
+    var authOverlay = document.getElementById('auth-overlay');
+    var authModalClose = document.getElementById('auth-modal-close');
+    var authViews = {
+      login: document.getElementById('auth-view-login'),
+      signup: document.getElementById('auth-view-signup'),
+      recover: document.getElementById('auth-view-recover'),
+      account: document.getElementById('auth-view-account')
+    };
+    var restoreBanner = document.getElementById('cart-restore-banner');
+
+    function saveAuthSession(session) {
+      authSession = session;
+      try {
+        if (session) { localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(session)); }
+        else { localStorage.removeItem(AUTH_STORAGE_KEY); }
+      } catch (e) {}
+      updateAccountUI();
+    }
+
+    function updateAccountUI() {
+      if (!accountLabel) return;
+      if (authSession && authSession.nome) {
+        accountLabel.textContent = authSession.nome.split(' ')[0];
+      } else if (authSession && authSession.email) {
+        accountLabel.textContent = authSession.email.split('@')[0];
+      } else {
+        accountLabel.textContent = 'Entrar';
+      }
+    }
+
+    function showAuthView(name) {
+      Object.keys(authViews).forEach(function(key) {
+        if (authViews[key]) { authViews[key].hidden = (key !== name); }
+      });
+    }
+
+    function openAuthModal() {
+      if (!authOverlay) return;
+      if (authSession) {
+        var greetEl = document.getElementById('account-greeting');
+        if (greetEl) {
+          greetEl.textContent = 'Você está logado como ' + (authSession.nome || authSession.email) +
+            '. Seu carrinho fica salvo automaticamente nessa conta.';
+        }
+        showAuthView('account');
+      } else {
+        showAuthView('login');
+      }
+      authOverlay.classList.add('open');
+    }
+    function closeAuthModal() {
+      if (authOverlay) { authOverlay.classList.remove('open'); }
+    }
+
+    if (accountBtn) { accountBtn.addEventListener('click', openAuthModal); }
+    if (authModalClose) { authModalClose.addEventListener('click', closeAuthModal); }
+    if (authOverlay) {
+      authOverlay.addEventListener('click', function(e) { if (e.target === authOverlay) { closeAuthModal(); } });
+    }
+
+    var goSignup = document.getElementById('go-to-signup');
+    var goLogin = document.getElementById('go-to-login');
+    var goRecover = document.getElementById('go-to-recover');
+    var goLoginFromRecover = document.getElementById('go-to-login-from-recover');
+    if (goSignup) { goSignup.addEventListener('click', function() { showAuthView('signup'); }); }
+    if (goLogin) { goLogin.addEventListener('click', function() { showAuthView('login'); }); }
+    if (goRecover) { goRecover.addEventListener('click', function() { showAuthView('recover'); }); }
+    if (goLoginFromRecover) { goLoginFromRecover.addEventListener('click', function() { showAuthView('login'); }); }
+
+    function setAuthMsg(elId, text, isError) {
+      var el = document.getElementById(elId);
+      if (!el) return;
+      el.textContent = text;
+      el.hidden = !text;
+      el.className = 'auth-msg' + (isError ? ' auth-msg-error' : ' auth-msg-ok');
+    }
+
+    function authFetch(path, body) {
+      return fetch(SUPABASE_URL + '/auth/v1' + path, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_ANON_KEY },
+        body: JSON.stringify(body)
+      }).then(function(res) {
+        return res.json().then(function(data) { return { ok: res.ok, status: res.status, data: data }; });
+      });
+    }
+
+    function onAuthSuccess(data, nomeFallback) {
+      var nome = (data.user && data.user.user_metadata && data.user.user_metadata.nome) || nomeFallback || '';
+      saveAuthSession({
+        access_token: data.access_token,
+        refresh_token: data.refresh_token,
+        expires_at: Date.now() + ((data.expires_in || 3600) * 1000),
+        user_id: data.user && data.user.id,
+        email: data.user && data.user.email,
+        nome: nome
+      });
+      closeAuthModal();
+      restoreCartFromAccount();
+      syncCartRemote();
+    }
+
+    var loginForm = document.getElementById('auth-login-form');
+    if (loginForm) {
+      loginForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        var email = document.getElementById('login-email').value.trim();
+        var password = document.getElementById('login-password').value;
+        setAuthMsg('login-msg', 'Entrando...', false);
+        authFetch('/token?grant_type=password', { email: email, password: password }).then(function(r) {
+          if (r.ok && r.data.access_token) {
+            setAuthMsg('login-msg', '', false);
+            onAuthSuccess(r.data);
+          } else {
+            var msg = (r.data && r.data.error_description) || (r.data && r.data.msg) || 'E-mail ou senha incorretos.';
+            if (/confirm/i.test(msg)) { msg = 'Confirme seu e-mail antes de entrar (verifique sua caixa de entrada).'; }
+            setAuthMsg('login-msg', msg, true);
+          }
+        }).catch(function() { setAuthMsg('login-msg', 'Não foi possível entrar agora. Tente de novo.', true); });
+      });
+    }
+
+    var signupForm = document.getElementById('auth-signup-form');
+    if (signupForm) {
+      signupForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        var nome = document.getElementById('signup-name').value.trim();
+        var email = document.getElementById('signup-email').value.trim();
+        var password = document.getElementById('signup-password').value;
+        setAuthMsg('signup-msg', 'Criando conta...', false);
+        authFetch('/signup', { email: email, password: password, data: { nome: nome } }).then(function(r) {
+          if (r.ok && r.data.access_token) {
+            setAuthMsg('signup-msg', '', false);
+            onAuthSuccess(r.data, nome);
+          } else if (r.ok) {
+            setAuthMsg('signup-msg', 'Conta criada! Verifique seu e-mail para confirmar e depois faça login.', false);
+            setTimeout(function() { showAuthView('login'); }, 2600);
+          } else {
+            var msg = (r.data && r.data.error_description) || (r.data && r.data.msg) || 'Não foi possível criar a conta.';
+            if (/registered/i.test(msg)) { msg = 'Esse e-mail já tem uma conta. Tente entrar.'; }
+            setAuthMsg('signup-msg', msg, true);
+          }
+        }).catch(function() { setAuthMsg('signup-msg', 'Não foi possível criar a conta agora. Tente de novo.', true); });
+      });
+    }
+
+    var recoverForm = document.getElementById('auth-recover-form');
+    if (recoverForm) {
+      recoverForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        var email = document.getElementById('recover-email').value.trim();
+        setAuthMsg('recover-msg', 'Enviando...', false);
+        authFetch('/recover', { email: email }).then(function() {
+          setAuthMsg('recover-msg', 'Se esse e-mail tiver uma conta, enviamos um link de recuperação.', false);
+        }).catch(function() { setAuthMsg('recover-msg', 'Não foi possível enviar agora. Tente de novo.', true); });
+      });
+    }
+
+    var logoutBtn = document.getElementById('logout-btn');
+    if (logoutBtn) {
+      logoutBtn.addEventListener('click', function() {
+        saveAuthSession(null);
+        closeAuthModal();
+      });
+    }
+
+    function restoreCartFromAccount() {
+      if (!authSession || !authSession.access_token || !authSession.user_id) return;
+      fetch(SUPABASE_URL + '/rest/v1/carrinhos_site?select=itens,total_itens,atualizado_em&user_id=eq.' +
+        authSession.user_id + '&order=atualizado_em.desc&limit=1', {
+        headers: {
+          'apikey': SUPABASE_ANON_KEY,
+          'Authorization': 'Bearer ' + authSession.access_token
+        }
+      }).then(function(res) { return res.json(); }).then(function(rows) {
+        if (!rows || !rows.length) return;
+        var saved = rows[0].itens;
+        if (!saved || !saved.length) return;
+        if (cart.length === 0) {
+          cart = saved;
+          saveCart();
+          render();
+          syncAddButtons();
+        } else if (restoreBanner) {
+          restoreBanner.hidden = false;
+          restoreBanner.innerHTML = '<p>Encontramos um carrinho salvo na sua conta (' + saved.length + ' ' +
+            (saved.length === 1 ? 'peça' : 'peças') + ').</p>' +
+            '<div class="cart-restore-actions">' +
+            '<button type="button" id="cart-restore-use">Usar esse carrinho</button>' +
+            '<button type="button" id="cart-restore-keep">Manter o atual</button>' +
+            '</div>';
+          var useBtn = document.getElementById('cart-restore-use');
+          var keepBtn = document.getElementById('cart-restore-keep');
+          if (useBtn) {
+            useBtn.addEventListener('click', function() {
+              cart = saved;
+              saveCart();
+              render();
+              syncAddButtons();
+              restoreBanner.hidden = true;
+            });
+          }
+          if (keepBtn) {
+            keepBtn.addEventListener('click', function() { restoreBanner.hidden = true; });
+          }
+        }
+      }).catch(function() {});
+    }
+
+    function maybeRefreshAuthSession() {
+      if (!authSession || !authSession.refresh_token) return;
+      if (authSession.expires_at && authSession.expires_at - Date.now() > 5 * 60 * 1000) { return; }
+      authFetch('/token?grant_type=refresh_token', { refresh_token: authSession.refresh_token }).then(function(r) {
+        if (r.ok && r.data.access_token) {
+          onAuthSuccess(r.data, authSession.nome);
+        } else {
+          saveAuthSession(null);
+        }
+      }).catch(function() {});
+    }
+
+    updateAccountUI();
+    if (authSession) { maybeRefreshAuthSession(); restoreCartFromAccount(); }
   })();
 </script>
 
