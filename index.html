@@ -460,6 +460,52 @@
     font-weight: 600;
     margin-top: 4px;
   }
+  /* seletor de tamanho do anel — só aparece nos solitários, onde o mesmo
+     modelo pode vir em tamanhos diferentes */
+  .card .size-select-wrap {
+    margin-top: 8px;
+    text-align: left;
+  }
+  .card .size-select-wrap label {
+    display: block;
+    font-size: 10.5px;
+    color: #8a8471;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    margin-bottom: 3px;
+  }
+  .card .size-select {
+    width: 100%;
+    padding: 7px 8px;
+    border: 1.5px solid #d9c48a;
+    border-radius: 10px;
+    background: #fff;
+    color: #1c1a17;
+    font-family: 'Poppins', Arial, sans-serif;
+    font-size: 12.5px;
+    cursor: pointer;
+    transition: border-color 0.15s ease;
+  }
+  .card .size-select:focus {
+    outline: none;
+    border-color: #c9a24a;
+  }
+  .card .size-select-wrap.size-missing .size-select {
+    border-color: #c0392b;
+    animation: size-shake 0.35s ease;
+  }
+  .card .size-select-wrap.size-missing label {
+    color: #c0392b;
+  }
+  @keyframes size-shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-3px); }
+    75% { transform: translateX(3px); }
+  }
+  @media (max-width: 560px) {
+    .card .size-select-wrap label { font-size: 9px !important; }
+    .card .size-select { font-size: 10.5px !important; padding: 6px 6px !important; }
+  }
   .coming-soon {
     text-align: center;
     font-size: 13px;
@@ -1749,6 +1795,19 @@
           <div class="name">Solitário Ponto de Luz</div>
           <div class="availability">Ouro 10K · Ouro 18K</div>
           <div class="peso-line">0,5g a 0,6g</div>
+          <div class="size-select-wrap">
+            <label for="size-solitario-01">Tamanho</label>
+            <select class="size-select" id="size-solitario-01">
+              <option value="">Selecione</option>
+              <option value="13">13</option>
+              <option value="14">14</option>
+              <option value="15">15</option>
+              <option value="16">16</option>
+              <option value="18">18</option>
+              <option value="19">19</option>
+              <option value="20">20</option>
+            </select>
+          </div>
           <button type="button" class="cart-add-btn" data-name="Solitário Ponto de Luz" data-avail="Ouro 10K · Ouro 18K" data-peso="0,5g a 0,6g">+ Adicionar ao carrinho</button>
           </div>
       </div>
@@ -1758,6 +1817,17 @@
           <div class="name">Solitário Nobre</div>
           <div class="availability">Ouro 10K · Ouro 18K</div>
           <div class="peso-line">1,0g a 1,1g</div>
+          <div class="size-select-wrap">
+            <label for="size-solitario-02">Tamanho</label>
+            <select class="size-select" id="size-solitario-02">
+              <option value="">Selecione</option>
+              <option value="17">17</option>
+              <option value="18">18</option>
+              <option value="19">19</option>
+              <option value="20">20</option>
+              <option value="22">22</option>
+            </select>
+          </div>
           <button type="button" class="cart-add-btn" data-name="Solitário Nobre" data-avail="Ouro 10K · Ouro 18K" data-peso="1,0g a 1,1g">+ Adicionar ao carrinho</button>
           </div>
       </div>
@@ -1767,6 +1837,16 @@
           <div class="name">Solitário Coroa</div>
           <div class="availability">Ouro 10K · Ouro 18K</div>
           <div class="peso-line">0,5g</div>
+          <div class="size-select-wrap">
+            <label for="size-solitario-03">Tamanho</label>
+            <select class="size-select" id="size-solitario-03">
+              <option value="">Selecione</option>
+              <option value="14">14</option>
+              <option value="15">15</option>
+              <option value="16">16</option>
+              <option value="20">20</option>
+            </select>
+          </div>
           <button type="button" class="cart-add-btn" data-name="Solitário Coroa" data-avail="Ouro 10K · Ouro 18K" data-peso="0,5g">+ Adicionar ao carrinho</button>
           </div>
       </div>
@@ -1776,6 +1856,13 @@
           <div class="name">Solitário Duo · Incolor</div>
           <div class="availability">Ouro 10K · Ouro 18K</div>
           <div class="peso-line">0,6g</div>
+          <div class="size-select-wrap">
+            <label for="size-solitario-04">Tamanho</label>
+            <select class="size-select" id="size-solitario-04">
+              <option value="">Selecione</option>
+              <option value="18">18</option>
+            </select>
+          </div>
           <button type="button" class="cart-add-btn" data-name="Solitário Duo · Incolor" data-avail="Ouro 10K · Ouro 18K" data-peso="0,6g">+ Adicionar ao carrinho</button>
           </div>
       </div>
@@ -1785,6 +1872,13 @@
           <div class="name">Solitário Duo · Lilás</div>
           <div class="availability">Ouro 10K · Ouro 18K</div>
           <div class="peso-line">0,6g</div>
+          <div class="size-select-wrap">
+            <label for="size-solitario-05">Tamanho</label>
+            <select class="size-select" id="size-solitario-05">
+              <option value="">Selecione</option>
+              <option value="18">18</option>
+            </select>
+          </div>
           <button type="button" class="cart-add-btn" data-name="Solitário Duo · Lilás" data-avail="Ouro 10K · Ouro 18K" data-peso="0,6g">+ Adicionar ao carrinho</button>
           </div>
       </div>
@@ -1794,6 +1888,14 @@
           <div class="name">Solitário Cravejado</div>
           <div class="availability">Ouro 10K · Ouro 18K</div>
           <div class="peso-line">1,1g a 1,3g</div>
+          <div class="size-select-wrap">
+            <label for="size-solitario-06">Tamanho</label>
+            <select class="size-select" id="size-solitario-06">
+              <option value="">Selecione</option>
+              <option value="18">18</option>
+              <option value="20">20</option>
+            </select>
+          </div>
           <button type="button" class="cart-add-btn" data-name="Solitário Cravejado" data-avail="Ouro 10K · Ouro 18K" data-peso="1,1g a 1,3g">+ Adicionar ao carrinho</button>
           </div>
       </div>
@@ -1803,6 +1905,14 @@
           <div class="name">Solitário Cravejada Full</div>
           <div class="availability">Ouro 10K · Ouro 18K</div>
           <div class="peso-line">0,9g a 1,1g</div>
+          <div class="size-select-wrap">
+            <label for="size-solitario-07">Tamanho</label>
+            <select class="size-select" id="size-solitario-07">
+              <option value="">Selecione</option>
+              <option value="15">15</option>
+              <option value="20">20</option>
+            </select>
+          </div>
           <button type="button" class="cart-add-btn" data-name="Solitário Cravejada Full" data-avail="Ouro 10K · Ouro 18K" data-peso="0,9g a 1,1g">+ Adicionar ao carrinho</button>
           </div>
       </div>
@@ -1812,6 +1922,14 @@
           <div class="name">Solitário Vintage</div>
           <div class="availability">Ouro 10K · Ouro 18K</div>
           <div class="peso-line">1,1g</div>
+          <div class="size-select-wrap">
+            <label for="size-solitario-08">Tamanho</label>
+            <select class="size-select" id="size-solitario-08">
+              <option value="">Selecione</option>
+              <option value="18">18</option>
+              <option value="19">19</option>
+            </select>
+          </div>
           <button type="button" class="cart-add-btn" data-name="Solitário Vintage" data-avail="Ouro 10K · Ouro 18K" data-peso="1,1g">+ Adicionar ao carrinho</button>
           </div>
       </div>
@@ -1821,6 +1939,16 @@
           <div class="name">Solitário Infinity</div>
           <div class="availability">Ouro 10K · Ouro 18K</div>
           <div class="peso-line">0,7g a 1,2g</div>
+          <div class="size-select-wrap">
+            <label for="size-solitario-09">Tamanho</label>
+            <select class="size-select" id="size-solitario-09">
+              <option value="">Selecione</option>
+              <option value="20">20</option>
+              <option value="22">22</option>
+              <option value="24">24</option>
+              <option value="28">28</option>
+            </select>
+          </div>
           <button type="button" class="cart-add-btn" data-name="Solitário Infinity" data-avail="Ouro 10K · Ouro 18K" data-peso="0,7g a 1,2g">+ Adicionar ao carrinho</button>
           </div>
       </div>
@@ -1830,6 +1958,13 @@
           <div class="name">Solitário Ondulado</div>
           <div class="availability">Ouro 10K · Ouro 18K</div>
           <div class="peso-line">0,6g</div>
+          <div class="size-select-wrap">
+            <label for="size-solitario-10">Tamanho</label>
+            <select class="size-select" id="size-solitario-10">
+              <option value="">Selecione</option>
+              <option value="16">16</option>
+            </select>
+          </div>
           <button type="button" class="cart-add-btn" data-name="Solitário Ondulado" data-avail="Ouro 10K · Ouro 18K" data-peso="0,6g">+ Adicionar ao carrinho</button>
           </div>
       </div>
@@ -1839,6 +1974,13 @@
           <div class="name">Solitário Coração Vazado</div>
           <div class="availability">Ouro 10K · Ouro 18K</div>
           <div class="peso-line">0,8g</div>
+          <div class="size-select-wrap">
+            <label for="size-solitario-11">Tamanho</label>
+            <select class="size-select" id="size-solitario-11">
+              <option value="">Selecione</option>
+              <option value="17">17</option>
+            </select>
+          </div>
           <button type="button" class="cart-add-btn" data-name="Solitário Coração Vazado" data-avail="Ouro 10K · Ouro 18K" data-peso="0,8g">+ Adicionar ao carrinho</button>
           </div>
       </div>
@@ -1848,6 +1990,13 @@
           <div class="name">Solitário Flor Cravejada</div>
           <div class="availability">Ouro 10K · Ouro 18K</div>
           <div class="peso-line">0,8g</div>
+          <div class="size-select-wrap">
+            <label for="size-solitario-12">Tamanho</label>
+            <select class="size-select" id="size-solitario-12">
+              <option value="">Selecione</option>
+              <option value="18">18</option>
+            </select>
+          </div>
           <button type="button" class="cart-add-btn" data-name="Solitário Flor Cravejada" data-avail="Ouro 10K · Ouro 18K" data-peso="0,8g">+ Adicionar ao carrinho</button>
           </div>
       </div>
@@ -1857,6 +2006,13 @@
           <div class="name">Solitário Coração Fosco</div>
           <div class="availability">Ouro 10K · Ouro 18K</div>
           <div class="peso-line">1,0g</div>
+          <div class="size-select-wrap">
+            <label for="size-solitario-13">Tamanho</label>
+            <select class="size-select" id="size-solitario-13">
+              <option value="">Selecione</option>
+              <option value="22">22</option>
+            </select>
+          </div>
           <button type="button" class="cart-add-btn" data-name="Solitário Coração Fosco" data-avail="Ouro 10K · Ouro 18K" data-peso="1,0g">+ Adicionar ao carrinho</button>
           </div>
       </div>
@@ -1866,6 +2022,13 @@
           <div class="name">Solitário Coração Cravejado</div>
           <div class="availability">Ouro 10K · Ouro 18K</div>
           <div class="peso-line">1,3g</div>
+          <div class="size-select-wrap">
+            <label for="size-solitario-14">Tamanho</label>
+            <select class="size-select" id="size-solitario-14">
+              <option value="">Selecione</option>
+              <option value="17">17</option>
+            </select>
+          </div>
           <button type="button" class="cart-add-btn" data-name="Solitário Coração Cravejado" data-avail="Ouro 10K · Ouro 18K" data-peso="1,3g">+ Adicionar ao carrinho</button>
           </div>
       </div>
@@ -1875,6 +2038,15 @@
           <div class="name">Solitário Assimétrico</div>
           <div class="availability">Ouro 10K · Ouro 18K</div>
           <div class="peso-line">0,9g a 1,2g</div>
+          <div class="size-select-wrap">
+            <label for="size-solitario-15">Tamanho</label>
+            <select class="size-select" id="size-solitario-15">
+              <option value="">Selecione</option>
+              <option value="16">16</option>
+              <option value="18">18</option>
+              <option value="19">19</option>
+            </select>
+          </div>
           <button type="button" class="cart-add-btn" data-name="Solitário Assimétrico" data-avail="Ouro 10K · Ouro 18K" data-peso="0,9g a 1,2g">+ Adicionar ao carrinho</button>
           </div>
       </div>
@@ -1884,6 +2056,13 @@
           <div class="name">Solitário Duo Deluxe</div>
           <div class="availability">Ouro 10K · Ouro 18K</div>
           <div class="peso-line">0,9g</div>
+          <div class="size-select-wrap">
+            <label for="size-solitario-16">Tamanho</label>
+            <select class="size-select" id="size-solitario-16">
+              <option value="">Selecione</option>
+              <option value="21">21</option>
+            </select>
+          </div>
           <button type="button" class="cart-add-btn" data-name="Solitário Duo Deluxe" data-avail="Ouro 10K · Ouro 18K" data-peso="0,9g">+ Adicionar ao carrinho</button>
           </div>
       </div>
@@ -1893,6 +2072,13 @@
           <div class="name">Solitário Cruzado</div>
           <div class="availability">Ouro 10K · Ouro 18K</div>
           <div class="peso-line">1,4g</div>
+          <div class="size-select-wrap">
+            <label for="size-solitario-17">Tamanho</label>
+            <select class="size-select" id="size-solitario-17">
+              <option value="">Selecione</option>
+              <option value="16">16</option>
+            </select>
+          </div>
           <button type="button" class="cart-add-btn" data-name="Solitário Cruzado" data-avail="Ouro 10K · Ouro 18K" data-peso="1,4g">+ Adicionar ao carrinho</button>
           </div>
       </div>
@@ -1902,6 +2088,14 @@
           <div class="name">Solitário Halo</div>
           <div class="availability">Ouro 10K · Ouro 18K</div>
           <div class="peso-line">1,2g</div>
+          <div class="size-select-wrap">
+            <label for="size-solitario-18">Tamanho</label>
+            <select class="size-select" id="size-solitario-18">
+              <option value="">Selecione</option>
+              <option value="18">18</option>
+              <option value="20">20</option>
+            </select>
+          </div>
           <button type="button" class="cart-add-btn" data-name="Solitário Halo" data-avail="Ouro 10K · Ouro 18K" data-peso="1,2g">+ Adicionar ao carrinho</button>
           </div>
       </div>
@@ -1911,6 +2105,13 @@
           <div class="name">Solitário Ornamentado</div>
           <div class="availability">Ouro 10K · Ouro 18K</div>
           <div class="peso-line">1,1g</div>
+          <div class="size-select-wrap">
+            <label for="size-solitario-19">Tamanho</label>
+            <select class="size-select" id="size-solitario-19">
+              <option value="">Selecione</option>
+              <option value="19">19</option>
+            </select>
+          </div>
           <button type="button" class="cart-add-btn" data-name="Solitário Ornamentado" data-avail="Ouro 10K · Ouro 18K" data-peso="1,1g">+ Adicionar ao carrinho</button>
           </div>
       </div>
@@ -1920,6 +2121,13 @@
           <div class="name">Solitário Botão</div>
           <div class="availability">Ouro 10K · Ouro 18K</div>
           <div class="peso-line">1,0g</div>
+          <div class="size-select-wrap">
+            <label for="size-solitario-20">Tamanho</label>
+            <select class="size-select" id="size-solitario-20">
+              <option value="">Selecione</option>
+              <option value="19">19</option>
+            </select>
+          </div>
           <button type="button" class="cart-add-btn" data-name="Solitário Botão" data-avail="Ouro 10K · Ouro 18K" data-peso="1,0g">+ Adicionar ao carrinho</button>
           </div>
       </div>
@@ -1929,6 +2137,13 @@
           <div class="name">Solitário Rosé</div>
           <div class="availability">Ouro 10K · Ouro 18K</div>
           <div class="peso-line">1,1g</div>
+          <div class="size-select-wrap">
+            <label for="size-solitario-21">Tamanho</label>
+            <select class="size-select" id="size-solitario-21">
+              <option value="">Selecione</option>
+              <option value="16">16</option>
+            </select>
+          </div>
           <button type="button" class="cart-add-btn" data-name="Solitário Rosé" data-avail="Ouro 10K · Ouro 18K" data-peso="1,1g">+ Adicionar ao carrinho</button>
           </div>
       </div>
@@ -1938,6 +2153,14 @@
           <div class="name">Solitário Resplendor</div>
           <div class="availability">Ouro 10K · Ouro 18K</div>
           <div class="peso-line">1,0g</div>
+          <div class="size-select-wrap">
+            <label for="size-solitario-22">Tamanho</label>
+            <select class="size-select" id="size-solitario-22">
+              <option value="">Selecione</option>
+              <option value="18">18</option>
+              <option value="19">19</option>
+            </select>
+          </div>
           <button type="button" class="cart-add-btn" data-name="Solitário Resplendor" data-avail="Ouro 10K · Ouro 18K" data-peso="1,0g">+ Adicionar ao carrinho</button>
           </div>
       </div>
@@ -1947,6 +2170,13 @@
           <div class="name">Solitário Encanto</div>
           <div class="availability">Ouro 10K · Ouro 18K</div>
           <div class="peso-line">0,8g</div>
+          <div class="size-select-wrap">
+            <label for="size-solitario-23">Tamanho</label>
+            <select class="size-select" id="size-solitario-23">
+              <option value="">Selecione</option>
+              <option value="19">19</option>
+            </select>
+          </div>
           <button type="button" class="cart-add-btn" data-name="Solitário Encanto" data-avail="Ouro 10K · Ouro 18K" data-peso="0,8g">+ Adicionar ao carrinho</button>
           </div>
       </div>
@@ -1956,6 +2186,13 @@
           <div class="name">Solitário Clássico</div>
           <div class="availability">Ouro 10K · Ouro 18K</div>
           <div class="peso-line">1,0g</div>
+          <div class="size-select-wrap">
+            <label for="size-solitario-24">Tamanho</label>
+            <select class="size-select" id="size-solitario-24">
+              <option value="">Selecione</option>
+              <option value="22">22</option>
+            </select>
+          </div>
           <button type="button" class="cart-add-btn" data-name="Solitário Clássico" data-avail="Ouro 10K · Ouro 18K" data-peso="1,0g">+ Adicionar ao carrinho</button>
           </div>
       </div>
@@ -1965,6 +2202,13 @@
           <div class="name">Solitário Orgânica</div>
           <div class="availability">Ouro 10K · Ouro 18K</div>
           <div class="peso-line">0,7g</div>
+          <div class="size-select-wrap">
+            <label for="size-solitario-25">Tamanho</label>
+            <select class="size-select" id="size-solitario-25">
+              <option value="">Selecione</option>
+              <option value="22">22</option>
+            </select>
+          </div>
           <button type="button" class="cart-add-btn" data-name="Solitário Orgânica" data-avail="Ouro 10K · Ouro 18K" data-peso="0,7g">+ Adicionar ao carrinho</button>
           </div>
       </div>
@@ -1974,6 +2218,13 @@
           <div class="name">Solitário Lumine</div>
           <div class="availability">Ouro 10K · Ouro 18K</div>
           <div class="peso-line">1,0g</div>
+          <div class="size-select-wrap">
+            <label for="size-solitario-26">Tamanho</label>
+            <select class="size-select" id="size-solitario-26">
+              <option value="">Selecione</option>
+              <option value="17">17</option>
+            </select>
+          </div>
           <button type="button" class="cart-add-btn" data-name="Solitário Lumine" data-avail="Ouro 10K · Ouro 18K" data-peso="1,0g">+ Adicionar ao carrinho</button>
           </div>
       </div>
@@ -1983,6 +2234,13 @@
           <div class="name">Solitário Eternity</div>
           <div class="availability">Ouro 10K · Ouro 18K</div>
           <div class="peso-line">1,0g</div>
+          <div class="size-select-wrap">
+            <label for="size-solitario-27">Tamanho</label>
+            <select class="size-select" id="size-solitario-27">
+              <option value="">Selecione</option>
+              <option value="18">18</option>
+            </select>
+          </div>
           <button type="button" class="cart-add-btn" data-name="Solitário Eternity" data-avail="Ouro 10K · Ouro 18K" data-peso="1,0g">+ Adicionar ao carrinho</button>
           </div>
       </div>
@@ -1992,6 +2250,13 @@
           <div class="name">Solitário Suave</div>
           <div class="availability">Ouro 10K · Ouro 18K</div>
           <div class="peso-line">0,6g</div>
+          <div class="size-select-wrap">
+            <label for="size-solitario-28">Tamanho</label>
+            <select class="size-select" id="size-solitario-28">
+              <option value="">Selecione</option>
+              <option value="20">20</option>
+            </select>
+          </div>
           <button type="button" class="cart-add-btn" data-name="Solitário Suave" data-avail="Ouro 10K · Ouro 18K" data-peso="0,6g">+ Adicionar ao carrinho</button>
           </div>
       </div>
@@ -2001,6 +2266,13 @@
           <div class="name">Solitário Majestade</div>
           <div class="availability">Ouro 10K · Ouro 18K</div>
           <div class="peso-line">1,1g</div>
+          <div class="size-select-wrap">
+            <label for="size-solitario-29">Tamanho</label>
+            <select class="size-select" id="size-solitario-29">
+              <option value="">Selecione</option>
+              <option value="20">20</option>
+            </select>
+          </div>
           <button type="button" class="cart-add-btn" data-name="Solitário Majestade" data-avail="Ouro 10K · Ouro 18K" data-peso="1,1g">+ Adicionar ao carrinho</button>
           </div>
       </div>
@@ -2010,6 +2282,13 @@
           <div class="name">Solitário Harmonia</div>
           <div class="availability">Ouro 10K · Ouro 18K</div>
           <div class="peso-line">0,9g</div>
+          <div class="size-select-wrap">
+            <label for="size-solitario-30">Tamanho</label>
+            <select class="size-select" id="size-solitario-30">
+              <option value="">Selecione</option>
+              <option value="23">23</option>
+            </select>
+          </div>
           <button type="button" class="cart-add-btn" data-name="Solitário Harmonia" data-avail="Ouro 10K · Ouro 18K" data-peso="0,9g">+ Adicionar ao carrinho</button>
           </div>
       </div>
@@ -3106,6 +3385,7 @@
         nameEl.textContent = item.name;
         var metaText = item.avail || '';
         if (item.peso) { metaText += (metaText ? ' · ' : '') + item.peso; }
+        if (item.size) { metaText += (metaText ? ' · ' : '') + 'Tam. ' + item.size; }
         var metaEl = document.createElement('div');
         metaEl.className = 'cart-item-meta';
         metaEl.textContent = metaText;
@@ -3171,9 +3451,29 @@
         var existingIdx = cart.findIndex(function(i) { return i.name === name; });
         if (existingIdx >= 0) {
           cart.splice(existingIdx, 1);
-        } else {
-          cart.push({ name: name, avail: avail, peso: peso });
+          saveCart();
+          render();
+          syncAddButtons();
+          return;
         }
+        var card = btn.closest('.card');
+        var sizeWrap = card ? card.querySelector('.size-select-wrap') : null;
+        var sizeSelect = card ? card.querySelector('.size-select') : null;
+        var size = '';
+        if (sizeSelect) {
+          size = sizeSelect.value || '';
+          if (!size) {
+            sizeWrap.classList.remove('size-missing');
+            void sizeWrap.offsetWidth; // reinicia a animação se clicar de novo
+            sizeWrap.classList.add('size-missing');
+            sizeSelect.focus();
+            return;
+          }
+          sizeWrap.classList.remove('size-missing');
+        }
+        var item = { name: name, avail: avail, peso: peso };
+        if (size) { item.size = size; }
+        cart.push(item);
         saveCart();
         render();
         syncAddButtons();
@@ -3188,6 +3488,7 @@
           var extra = [];
           if (item.avail) { extra.push(item.avail); }
           if (item.peso) { extra.push(item.peso); }
+          if (item.size) { extra.push('Tam. ' + item.size); }
           if (extra.length) { line += ' (' + extra.join(' · ') + ')'; }
           return line;
         });
