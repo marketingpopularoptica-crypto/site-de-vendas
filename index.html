@@ -3099,15 +3099,33 @@
     // que ela só aparece implícita pelo título da seção)
     const SECTION_KEYWORDS = {
       'feminina': 'feminina feminino mulher',
-      'infantil': 'infantil crianca menina menino',
+      'infantil': 'infantil crianca',
       'masculina': 'masculina masculino homem',
-      'aliancas-solitarios': 'solitario solitarios noivado casamento aliança alianca',
+      'aliancas-solitarios': 'solitario solitarios noivado',
       'aliancas': 'alianca aliancas casamento'
+    };
+
+    // quando a busca é só o nome de uma linha/seção (ex: "solitário",
+    // "feminina"), mostra a seção inteira em vez de fazer busca por texto —
+    // evita que uma peça de outra linha cujo nome por acaso contém a mesma
+    // palavra (ex: "Brinco Solitário" na linha infantil) apareça misturada
+    const CATEGORY_QUERY_MAP = {
+      'feminina': 'feminina',
+      'feminino': 'feminina',
+      'infantil': 'infantil',
+      'crianca': 'infantil',
+      'masculina': 'masculina',
+      'masculino': 'masculina',
+      'solitario': 'aliancas-solitarios',
+      'solitarios': 'aliancas-solitarios',
+      'alianca': 'aliancas',
+      'aliancas': 'aliancas'
     };
 
     const SECTIONS = ['feminina', 'infantil', 'masculina', 'aliancas-solitarios', 'aliancas'].map(key => {
       const grid = document.getElementById('grid-' + key);
       return grid ? {
+        key,
         grid,
         countEl: document.getElementById('count-' + key),
         noResultsEl: document.getElementById('no-results-' + key),
@@ -3117,10 +3135,11 @@
 
     function runSearch() {
       const query = normalize(input.value.trim());
+      const categoryTarget = CATEGORY_QUERY_MAP[query];
       for (const s of SECTIONS) {
         let visible = 0;
         for (const c of s.cards) {
-          const show = query === '' || cardMatches(c, query);
+          const show = categoryTarget ? (s.key === categoryTarget) : (query === '' || cardMatches(c, query));
           c.el.style.display = show ? '' : 'none';
           if (show) {
             visible++;
