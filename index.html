@@ -3079,10 +3079,10 @@
     return true;
   }
 
-  function buildCardData(el) {
+  function buildCardData(el, extraTerms) {
     return {
       el,
-      blob: normalize(el.dataset.search || ''),
+      blob: normalize((el.dataset.search || '') + ' ' + (extraTerms || '')),
       modelo: el.dataset.modelo || '',
       sizes: (el.dataset.sizes || '').split(',').map(s => s.trim()).filter(Boolean)
     };
@@ -3094,13 +3094,24 @@
     const input = document.getElementById('search-global');
     if (!input) return;
 
+    // termos da própria linha/seção, pra "pulseira feminina" achar peças
+    // cujo texto de busca individual não repete a palavra "feminina" (já
+    // que ela só aparece implícita pelo título da seção)
+    const SECTION_KEYWORDS = {
+      'feminina': 'feminina feminino mulher',
+      'infantil': 'infantil crianca menina menino',
+      'masculina': 'masculina masculino homem',
+      'aliancas-solitarios': 'solitario solitarios noivado casamento aliança alianca',
+      'aliancas': 'alianca aliancas casamento'
+    };
+
     const SECTIONS = ['feminina', 'infantil', 'masculina', 'aliancas-solitarios', 'aliancas'].map(key => {
       const grid = document.getElementById('grid-' + key);
       return grid ? {
         grid,
         countEl: document.getElementById('count-' + key),
         noResultsEl: document.getElementById('no-results-' + key),
-        cards: Array.from(grid.querySelectorAll('.card')).map(buildCardData)
+        cards: Array.from(grid.querySelectorAll('.card')).map(function(el) { return buildCardData(el, SECTION_KEYWORDS[key]); })
       } : null;
     }).filter(Boolean);
 
