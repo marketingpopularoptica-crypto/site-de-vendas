@@ -3105,23 +3105,6 @@
       'aliancas': 'alianca aliancas casamento'
     };
 
-    // quando a busca é só o nome de uma linha/seção (ex: "solitário",
-    // "feminina"), mostra a seção inteira em vez de fazer busca por texto —
-    // evita que uma peça de outra linha cujo nome por acaso contém a mesma
-    // palavra (ex: "Brinco Solitário" na linha infantil) apareça misturada
-    const CATEGORY_QUERY_MAP = {
-      'feminina': 'feminina',
-      'feminino': 'feminina',
-      'infantil': 'infantil',
-      'crianca': 'infantil',
-      'masculina': 'masculina',
-      'masculino': 'masculina',
-      'solitario': 'aliancas-solitarios',
-      'solitarios': 'aliancas-solitarios',
-      'alianca': 'aliancas',
-      'aliancas': 'aliancas'
-    };
-
     const SECTIONS = ['feminina', 'infantil', 'masculina', 'aliancas-solitarios', 'aliancas'].map(key => {
       const grid = document.getElementById('grid-' + key);
       return grid ? {
@@ -3135,17 +3118,23 @@
 
     function runSearch() {
       const query = normalize(input.value.trim());
-      const categoryTarget = CATEGORY_QUERY_MAP[query];
+      if (query === '' && window.showAllCatalogSections) { window.showAllCatalogSections(); }
       for (const s of SECTIONS) {
         let visible = 0;
         for (const c of s.cards) {
-          const show = categoryTarget ? (s.key === categoryTarget) : (query === '' || cardMatches(c, query));
+          const show = query === '' || cardMatches(c, query);
           c.el.style.display = show ? '' : 'none';
           if (show) {
             visible++;
             c.el.classList.add('in-view');
           }
         }
+        // buscando algo: some com a seção inteira (título, "ordenar por" etc.)
+        // se nenhuma peça dela bateu com a busca — só aparece na tela o que
+        // realmente tem a ver com o que foi procurado
+        const sectionEl = document.getElementById(s.key);
+        if (sectionEl) { sectionEl.style.display = (query !== '' && visible === 0) ? 'none' : ''; }
+
         if (s.countEl) s.countEl.textContent = query === '' ? '' : (visible + (visible === 1 ? ' peça encontrada' : ' peças encontradas'));
         if (s.noResultsEl) s.noResultsEl.style.display = visible === 0 ? 'block' : 'none';
 
