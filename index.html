@@ -1595,7 +1595,7 @@
   </div>
 </section>
 
-<div class="trust">
+<div class="trust" id="trust-bar">
   <span>Ouro 10K e 18K</span>
   <span>Feminina · Infantil · Masculina · Solitários</span>
   <span>3 lojas em Porto Alegre e Viamão</span>
@@ -1603,7 +1603,7 @@
   <span>Parcelado em até 12x sem juros</span>
 </div>
 
-<section class="why">
+<section class="why" id="why-section">
   <div class="why-grid">
     <div class="why-item">
       <div class="ic"><svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M12 2l2.6 6.6L21 10l-5 4.4L17.4 21 12 17.3 6.6 21 8 14.4 3 10l6.4-1.4z"/></svg></div>
@@ -3119,6 +3119,12 @@
     function runSearch() {
       const query = normalize(input.value.trim());
       if (query === '' && window.showAllCatalogSections) { window.showAllCatalogSections(); }
+      // esses blocos (selo de confiança e "por que comprar") só fazem
+      // sentido na tela inicial — some com eles durante uma busca ativa
+      const trustBar = document.getElementById('trust-bar');
+      const whySection = document.getElementById('why-section');
+      if (trustBar) trustBar.style.display = query === '' ? '' : 'none';
+      if (whySection) whySection.style.display = query === '' ? '' : 'none';
       for (const s of SECTIONS) {
         let visible = 0;
         for (const c of s.cards) {
