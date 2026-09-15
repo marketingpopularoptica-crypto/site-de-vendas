@@ -230,6 +230,25 @@
     gap: 10px;
     margin-bottom: 30px;
   }
+  .search-summary {
+    text-align: center;
+    font-family: 'Poppins', Arial, sans-serif;
+    font-size: 13.5px;
+    color: #6b6552;
+    margin: -14px 6vw 26px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid #e4ddc6;
+  }
+  .search-summary strong { color: #1c2340; font-weight: 600; }
+  .search-cat-label {
+    text-align: center;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #c9a24a;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
   .search-toggle-btn { display: none; }
   .clear-filter-btn {
     padding: 9px 16px;
@@ -1584,6 +1603,7 @@
   <input id="search-global" type="text" placeholder="Buscar por nome, modelo, peso ou tamanho..." aria-label="Buscar produtos em todo o catálogo">
   <button type="button" class="clear-filter-btn" id="clear-filter-btn" hidden>&times; Ver catálogo completo</button>
 </div>
+<div class="search-summary" id="search-summary" hidden></div>
 
 <section class="hero">
   <div class="eyebrow">Catálogo Completo &middot; Ouro 10K e 18K</div>
@@ -3107,24 +3127,46 @@
 
     const SECTIONS = ['feminina', 'infantil', 'masculina', 'aliancas-solitarios', 'aliancas'].map(key => {
       const grid = document.getElementById('grid-' + key);
-      return grid ? {
+      if (!grid) return null;
+      const sectionEl = document.getElementById(key);
+      const headEl = sectionEl ? sectionEl.querySelector('.section-head') : null;
+      const sortBarEl = sectionEl ? sectionEl.querySelector('.sort-bar') : null;
+      const kickerEl = headEl ? headEl.querySelector('.kicker') : null;
+      // rótulo discreto ("Linha Feminina") que substitui o título grande +
+      // texto de marketing enquanto o cliente está buscando algo — deixa a
+      // tela de resultado mais direta, como um e-commerce de verdade
+      const catLabel = document.createElement('div');
+      catLabel.className = 'search-cat-label';
+      catLabel.hidden = true;
+      catLabel.textContent = kickerEl ? kickerEl.textContent : '';
+      grid.parentNode.insertBefore(catLabel, grid);
+      return {
         key,
         grid,
+        headEl,
+        sortBarEl,
+        catLabel,
         countEl: document.getElementById('count-' + key),
         noResultsEl: document.getElementById('no-results-' + key),
         cards: Array.from(grid.querySelectorAll('.card')).map(function(el) { return buildCardData(el, SECTION_KEYWORDS[key]); })
-      } : null;
+      };
     }).filter(Boolean);
+
+    const searchSummary = document.getElementById('search-summary');
 
     function runSearch() {
       const query = normalize(input.value.trim());
-      if (query === '' && window.showAllCatalogSections) { window.showAllCatalogSections(); }
+      const searching = query !== '';
+      if (!searching && window.showAllCatalogSections) { window.showAllCatalogSections(); }
       // esses blocos (selo de confiança e "por que comprar") só fazem
       // sentido na tela inicial — some com eles durante uma busca ativa
       const trustBar = document.getElementById('trust-bar');
       const whySection = document.getElementById('why-section');
-      if (trustBar) trustBar.style.display = query === '' ? '' : 'none';
-      if (whySection) whySection.style.display = query === '' ? '' : 'none';
+      if (trustBar) trustBar.style.display = searching ? 'none' : '';
+      if (whySection) whySection.style.display = searching ? 'none' : '';
+
+      let totalVisible = 0;
+
       for (const s of SECTIONS) {
         let visible = 0;
         for (const c of s.cards) {
@@ -3135,11 +3177,20 @@
             c.el.classList.add('in-view');
           }
         }
+        totalVisible += visible;
+
         // buscando algo: some com a seção inteira (título, "ordenar por" etc.)
         // se nenhuma peça dela bateu com a busca — só aparece na tela o que
         // realmente tem a ver com o que foi procurado
         const sectionEl = document.getElementById(s.key);
-        if (sectionEl) { sectionEl.style.display = (query !== '' && visible === 0) ? 'none' : ''; }
+        if (sectionEl) { sectionEl.style.display = (searching && visible === 0) ? 'none' : ''; }
+
+        // durante a busca, troca o título grande + texto de marketing por um
+        // rótulo pequeno da linha, e some com o "Ordenar por" repetido —
+        // fica parecido com resultado de busca de loja de verdade
+        if (s.headEl) s.headEl.hidden = searching;
+        if (s.sortBarEl) s.sortBarEl.hidden = searching;
+        s.catLabel.hidden = !(searching && visible > 0);
 
         if (s.countEl) s.countEl.textContent = query === '' ? '' : (visible + (visible === 1 ? ' peça encontrada' : ' peças encontradas'));
         if (s.noResultsEl) s.noResultsEl.style.display = visible === 0 ? 'block' : 'none';
@@ -3158,6 +3209,17 @@
           }
         }
         if (currentHeading) currentHeading.style.display = groupHasVisible ? '' : 'none';
+      }
+
+      // resumo único no topo da página, no estilo "X resultados para 'busca'"
+      if (searchSummary) {
+        if (searching) {
+          searchSummary.hidden = false;
+          searchSummary.innerHTML = '<strong>' + totalVisible + (totalVisible === 1 ? ' resultado' : ' resultados') + '</strong> para "' + input.value.trim() + '"';
+        } else {
+          searchSummary.hidden = true;
+          searchSummary.innerHTML = '';
+        }
       }
     }
     input.addEventListener('input', runSearch);
