@@ -325,6 +325,20 @@
     color: #8a8471;
     letter-spacing: 0.2px;
   }
+  /* uma única barra "Ordenar por" no topo da página, em vez de uma
+     repetida em cada linha do catálogo — ordena tudo de uma vez só */
+  .global-sort-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin: 14px 6vw 4px;
+  }
+  .global-sort-bar label {
+    font-size: 12px;
+    color: #8a8471;
+    letter-spacing: 0.2px;
+  }
   .sort-select {
     padding: 6px 10px;
     border: 1.5px solid #d9c48a;
@@ -337,8 +351,8 @@
   }
   .sort-select:focus { outline: none; border-color: #c9a24a; }
   @media (max-width: 560px) {
-    .sort-bar { gap: 6px; }
-    .sort-bar label { font-size: 10.5px; }
+    .sort-bar, .global-sort-bar { gap: 6px; }
+    .sort-bar label, .global-sort-bar label { font-size: 10.5px; }
     .sort-select { font-size: 11px; padding: 5px 8px; }
   }
   .catalog-section + .catalog-section {
@@ -628,6 +642,11 @@
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 22px;
     margin-top: 30px;
+  }
+  /* nas 3 lojas, sempre uma do lado da outra numa fileira só a partir de
+     uma tela média — evita a 3ª loja (Viamão) sobrar sozinha numa linha */
+  @media (min-width: 760px) {
+    .stores-grid { grid-template-columns: repeat(3, 1fr); }
   }
   .store-card {
     background: #fff;
@@ -1264,6 +1283,21 @@
     overflow-y: auto;
     padding: 6px 0 0;
   }
+  .cat-nav-view-all {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 15px 20px;
+    margin: 0 0 4px;
+    font-family: 'Poppins', Arial, sans-serif;
+    font-size: 14.5px;
+    font-weight: 700;
+    color: #9c7a2e;
+    text-decoration: none;
+    border-bottom: 1px solid #eee6d4;
+  }
+  .cat-nav-view-all svg { flex-shrink: 0; color: #c9a24a; }
+  .cat-nav-view-all:hover { background: #f1ead6; }
   .cat-nav-group {
     border-bottom: 1px solid #eee6d4;
   }
@@ -1603,6 +1637,14 @@
   <input id="search-global" type="text" placeholder="Buscar por nome, modelo, peso ou tamanho..." aria-label="Buscar produtos em todo o catálogo">
   <button type="button" class="clear-filter-btn" id="clear-filter-btn" hidden>&times; Ver catálogo completo</button>
 </div>
+<div class="global-sort-bar" id="global-sort-bar">
+  <label for="global-sort-select">Ordenar por</label>
+  <select class="sort-select" id="global-sort-select">
+    <option value="relevancia">Relevância</option>
+    <option value="peso-asc">Peso: menor primeiro</option>
+    <option value="peso-desc">Peso: maior primeiro</option>
+  </select>
+</div>
 <div class="search-summary" id="search-summary" hidden></div>
 
 <section class="hero">
@@ -1654,14 +1696,6 @@
     <div class="kicker">Linha Feminina</div>
     <h2>Ouro Linha Feminina</h2>
     <p>Pulseiras e peças delicadas para o dia a dia.</p>
-  </div>
-  <div class="sort-bar">
-    <label for="sort-feminina">Ordenar por</label>
-    <select class="sort-select" id="sort-feminina" data-grid="grid-feminina">
-      <option value="relevancia">Relevância</option>
-      <option value="peso-asc">Peso: menor primeiro</option>
-      <option value="peso-desc">Peso: maior primeiro</option>
-    </select>
   </div>
   <div id="count-feminina" class="count"></div>
   <div class="grid cols-3" id="grid-feminina">
@@ -1750,14 +1784,6 @@
     <h2>Ouro Linha Infantil</h2>
     <p>Brincos e peças delicadas para bebês e crianças.</p>
   </div>
-  <div class="sort-bar">
-    <label for="sort-infantil">Ordenar por</label>
-    <select class="sort-select" id="sort-infantil" data-grid="grid-infantil">
-      <option value="relevancia">Relevância</option>
-      <option value="peso-asc">Peso: menor primeiro</option>
-      <option value="peso-desc">Peso: maior primeiro</option>
-    </select>
-  </div>
   <div id="count-infantil" class="count"></div>
   <div class="grid cols-3" id="grid-infantil">
       <div class="card reveal" data-peso-num="0.37" data-search="brinco de bebê coroa de zircônia delicadeza desde os primeiros dias ouro 0,37g" data-modelo="" data-sizes="">
@@ -1842,14 +1868,6 @@
     <div class="kicker">Linha Masculina</div>
     <h2>Ouro Linha Masculina</h2>
     <p>Anéis, correntes, pulseiras e pingentes em ouro para todos os estilos.</p>
-  </div>
-  <div class="sort-bar">
-    <label for="sort-masculina">Ordenar por</label>
-    <select class="sort-select" id="sort-masculina" data-grid="grid-masculina">
-      <option value="relevancia">Relevância</option>
-      <option value="peso-asc">Peso: menor primeiro</option>
-      <option value="peso-desc">Peso: maior primeiro</option>
-    </select>
   </div>
   <div id="count-masculina" class="count"></div>
   <div class="grid cols-3" id="grid-masculina">
@@ -2037,14 +2055,6 @@
   <div class="section-head">
     <div class="kicker">Linha Solitários</div>
     <h2>Solitários</h2>
-  </div>
-  <div class="sort-bar">
-    <label for="sort-aliancas-solitarios">Ordenar por</label>
-    <select class="sort-select" id="sort-aliancas-solitarios" data-grid="grid-aliancas-solitarios">
-      <option value="relevancia">Relevância</option>
-      <option value="peso-asc">Peso: menor primeiro</option>
-      <option value="peso-desc">Peso: maior primeiro</option>
-    </select>
   </div>
   <div id="count-aliancas-solitarios" class="count"></div>
   <div class="grid cols-4" id="grid-aliancas-solitarios">
@@ -2563,14 +2573,6 @@
     <h2>Alianças de Noivado e Casamento</h2>
     <p>Busque por nome, modelo, peso ou largura do aro.</p>
   </div>
-  <div class="sort-bar">
-    <label for="sort-aliancas">Ordenar por</label>
-    <select class="sort-select" id="sort-aliancas" data-grid="grid-aliancas">
-      <option value="relevancia">Relevância</option>
-      <option value="peso-asc">Peso: menor primeiro</option>
-      <option value="peso-desc">Peso: maior primeiro</option>
-    </select>
-  </div>
   <div id="count-aliancas" class="count"></div>
   <div class="grid cols-4" id="grid-aliancas">
 <div class="card reveal" data-peso-num="18" data-search="aliança ramos gravação de ramos em relevo, acabamento fosco com bordas polidas aliança de noivado e casamento ouro 18k peso 2,6g ou ouro 10k peso 1,8g largura 4,0mm" data-modelo="31">
@@ -2972,6 +2974,8 @@
     </div>
     <div class="cat-nav-list">
 
+      <a href="#feminina" class="cat-nav-view-all" id="cat-nav-view-all"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>Ver todos os produtos</a>
+
       <div class="cat-nav-group" data-target="feminina">
         <button type="button" class="cat-nav-group-head">
           <span>Linha Feminina</span>
@@ -3130,7 +3134,6 @@
       if (!grid) return null;
       const sectionEl = document.getElementById(key);
       const headEl = sectionEl ? sectionEl.querySelector('.section-head') : null;
-      const sortBarEl = sectionEl ? sectionEl.querySelector('.sort-bar') : null;
       const kickerEl = headEl ? headEl.querySelector('.kicker') : null;
       // rótulo discreto ("Linha Feminina") que substitui o título grande +
       // texto de marketing enquanto o cliente está buscando algo — deixa a
@@ -3145,7 +3148,6 @@
         key,
         grid,
         headEl,
-        sortBarEl,
         catLabel,
         countEl: document.getElementById('count-' + key),
         noResultsEl: document.getElementById('no-results-' + key),
@@ -3189,10 +3191,7 @@
         // durante a busca, troca o título grande + texto de marketing por um
         // rótulo pequeno da linha, e some com o "Ordenar por" repetido —
         // fica parecido com resultado de busca de loja de verdade
-        // usa style.display (em vez de "hidden") porque .sort-bar já define
-        // display:flex no CSS, o que sobrescreveria o atributo hidden
         if (s.headEl) s.headEl.style.display = searching ? 'none' : '';
-        if (s.sortBarEl) s.sortBarEl.style.display = searching ? 'none' : '';
         s.catLabel.style.display = (searching && visible > 0) ? '' : 'none';
 
         if (s.countEl) s.countEl.textContent = query === '' ? '' : (visible + (visible === 1 ? ' peça encontrada' : ' peças encontradas'));
@@ -3228,36 +3227,45 @@
     input.addEventListener('input', runSearch);
   })();
 
-  // ---------- Ordenar por peso dentro de cada seção do catálogo ----------
+  // ---------- Ordenar por peso: um único seletor no topo da página que
+  // ordena todas as linhas do catálogo de uma vez, em vez de um "Ordenar
+  // por" repetido dentro de cada seção/produto ----------
   (function() {
-    document.querySelectorAll('.sort-select').forEach(function(select) {
-      const originalOrder = []; // guarda a ordem original (relevância) pra poder voltar
-      select.addEventListener('change', function() {
-        const grid = document.getElementById(select.getAttribute('data-grid'));
-        if (!grid) return;
-        const cards = Array.from(grid.querySelectorAll('.card'));
-        if (!originalOrder.length) { originalOrder.push(...cards); }
-        const mode = select.value;
-        let ordered;
-        if (mode === 'relevancia') {
-          ordered = originalOrder;
-        } else {
-          const withPeso = cards.map(function(el, idx) {
-            const raw = el.getAttribute('data-peso-num');
-            const num = raw === null ? NaN : parseFloat(raw);
-            return { el: el, num: num, idx: idx };
-          });
-          withPeso.sort(function(a, b) {
-            const aMissing = isNaN(a.num);
-            const bMissing = isNaN(b.num);
-            if (aMissing && bMissing) return a.idx - b.idx;
-            if (aMissing) return 1;
-            if (bMissing) return -1;
-            return mode === 'peso-asc' ? a.num - b.num : b.num - a.num;
-          });
-          ordered = withPeso.map(function(x) { return x.el; });
-        }
-        ordered.forEach(function(el) { grid.appendChild(el); });
+    const globalSelect = document.getElementById('global-sort-select');
+    if (!globalSelect) return;
+    const GRID_IDS = ['grid-feminina', 'grid-infantil', 'grid-masculina', 'grid-aliancas-solitarios', 'grid-aliancas'];
+    const originalOrders = {}; // guarda a ordem original (relevância) de cada grid, pra poder voltar
+
+    function sortGrid(grid, mode) {
+      const cards = Array.from(grid.querySelectorAll('.card'));
+      if (!originalOrders[grid.id]) { originalOrders[grid.id] = cards; }
+      let ordered;
+      if (mode === 'relevancia') {
+        ordered = originalOrders[grid.id];
+      } else {
+        const withPeso = cards.map(function(el, idx) {
+          const raw = el.getAttribute('data-peso-num');
+          const num = raw === null ? NaN : parseFloat(raw);
+          return { el: el, num: num, idx: idx };
+        });
+        withPeso.sort(function(a, b) {
+          const aMissing = isNaN(a.num);
+          const bMissing = isNaN(b.num);
+          if (aMissing && bMissing) return a.idx - b.idx;
+          if (aMissing) return 1;
+          if (bMissing) return -1;
+          return mode === 'peso-asc' ? a.num - b.num : b.num - a.num;
+        });
+        ordered = withPeso.map(function(x) { return x.el; });
+      }
+      ordered.forEach(function(el) { grid.appendChild(el); });
+    }
+
+    globalSelect.addEventListener('change', function() {
+      const mode = globalSelect.value;
+      GRID_IDS.forEach(function(gridId) {
+        const grid = document.getElementById(gridId);
+        if (grid) { sortGrid(grid, mode); }
       });
     });
   })();
@@ -3325,6 +3333,24 @@
 
     openBtn.addEventListener('click', openPanel);
     if (closeBtn) { closeBtn.addEventListener('click', closePanel); }
+
+    // "Ver todos os produtos": volta pra página inicial com o catálogo
+    // completo (todas as linhas), sem nenhum filtro de categoria ou busca
+    var viewAllLink = document.getElementById('cat-nav-view-all');
+    if (viewAllLink) {
+      viewAllLink.addEventListener('click', function(e) {
+        e.preventDefault();
+        var input = document.getElementById('search-global');
+        if (input) {
+          input.value = '';
+          input.dispatchEvent(new Event('input', { bubbles: true }));
+        }
+        if (window.showAllCatalogSections) { window.showAllCatalogSections(); }
+        closePanel();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        history.replaceState(null, '', window.location.pathname);
+      });
+    }
     overlay.addEventListener('click', function(e) {
       if (e.target === overlay) { closePanel(); }
     });
