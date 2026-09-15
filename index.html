@@ -112,12 +112,14 @@
     background: #c9a24a;
     color: #080f1c;
     padding: 9px 18px;
-    border-radius: 30px;
+    border-radius: 3px;
     font-size: 13px;
     font-weight: 600;
     letter-spacing: 0.3px;
     white-space: nowrap;
+    transition: background 0.15s ease;
   }
+  .nav-cta:hover { background: #ddb85d; }
   @media (max-width: 720px) {
     /* No celular, os links de categoria e o botão "Nossas Lojas" já estão
        dentro do menu hambúrguer (cat-nav-panel) — some com a fileira extra
@@ -161,22 +163,26 @@
     background: #c9a24a;
     color: #080f1c;
     padding: 14px 30px;
-    border-radius: 30px;
+    border-radius: 3px;
     font-weight: 600;
     font-size: 14.5px;
     letter-spacing: 0.3px;
     display: inline-flex;
     align-items: center;
     gap: 8px;
+    transition: background 0.15s ease, transform 0.15s ease;
   }
+  .btn-primary:hover { background: #ddb85d; transform: translateY(-1px); }
   .btn-secondary {
     border: 1px solid #d9c48a;
     color: #faf8f3;
     padding: 14px 30px;
-    border-radius: 30px;
+    border-radius: 3px;
     font-size: 14.5px;
     letter-spacing: 0.3px;
+    transition: background 0.15s ease, border-color 0.15s ease;
   }
+  .btn-secondary:hover { background: rgba(255,255,255,0.06); border-color: #c9a24a; }
 
   /* ---------- TRUST STRIP ---------- */
   .trust {
@@ -198,6 +204,7 @@
     padding: 56px 6vw 20px;
     max-width: 1400px;
     margin: 0 auto;
+    position: relative;
   }
   .section-head {
     text-align: center;
@@ -252,7 +259,7 @@
   .search-toggle-btn { display: none; }
   .clear-filter-btn {
     padding: 9px 16px;
-    border-radius: 999px;
+    border-radius: 3px;
     border: 1.5px solid #c9a24a;
     background: #fff;
     color: #9c7a2e;
@@ -287,7 +294,7 @@
     width: 100%;
     max-width: 460px;
     padding: 13px 20px;
-    border-radius: 30px;
+    border-radius: 6px;
     border: 1.5px solid #d9c48a;
     font-size: 14.5px;
     font-family: 'Poppins', Arial, sans-serif;
@@ -299,7 +306,7 @@
     width: 100%;
     max-width: 460px;
     padding: 13px 20px;
-    border-radius: 30px;
+    border-radius: 6px;
     border: 1.5px solid #d9c48a;
     font-size: 14.5px;
     font-family: 'Poppins', Arial, sans-serif;
@@ -342,7 +349,7 @@
   .sort-select {
     padding: 6px 10px;
     border: 1.5px solid #d9c48a;
-    border-radius: 999px;
+    border-radius: 4px;
     background: #fff;
     color: #0f1c30;
     font-family: 'Poppins', Arial, sans-serif;
@@ -356,8 +363,21 @@
     .sort-select { font-size: 11px; padding: 5px 8px; }
   }
   .catalog-section + .catalog-section {
-    border-top: 1px solid #d9c48a;
+    border-top: 1px solid #e4d9b8;
     margin-top: 10px;
+  }
+  /* pequeno losango dourado centralizado na linha divisória entre as
+     linhas do catálogo — um toque de joalheria em vez de um traço seco */
+  .catalog-section + .catalog-section::before {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: 50%;
+    width: 9px;
+    height: 9px;
+    background: #faf8f3;
+    border: 1px solid #c9a24a;
+    transform: translateX(-50%) rotate(45deg);
   }
   .empty-line { display: flex; justify-content: center; }
   .empty-card {
@@ -457,14 +477,17 @@
   }
   .card {
     background: #fff;
-    border: 1px solid #d9c48a;
+    border: 1px solid #e6ddc4;
+    border-radius: 6px;
     display: flex;
     flex-direction: column;
     overflow: hidden;
-    transition: transform .18s ease, box-shadow .18s ease, opacity .6s ease, filter .6s ease;
+    box-shadow: 0 1px 2px rgba(15,28,48,0.04);
+    transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease, opacity .6s ease, filter .6s ease;
   }
   .card:hover {
     transform: translateY(-3px);
+    border-color: #d9c48a;
     box-shadow: 0 14px 28px rgba(15,28,48,0.12);
   }
   .card.reveal {
@@ -556,7 +579,7 @@
     width: 100%;
     padding: 7px 8px;
     border: 1.5px solid #d9c48a;
-    border-radius: 10px;
+    border-radius: 4px;
     background: #fff;
     color: #1c1a17;
     font-family: 'Poppins', Arial, sans-serif;
@@ -650,9 +673,17 @@
   }
   .store-card {
     background: #fff;
-    border: 1px solid #d9c48a;
+    border: 1px solid #e6ddc4;
+    border-radius: 6px;
     padding: 0 0 24px;
     overflow: hidden;
+    box-shadow: 0 1px 2px rgba(15,28,48,0.04);
+    transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+  }
+  .store-card:hover {
+    transform: translateY(-3px);
+    border-color: #d9c48a;
+    box-shadow: 0 14px 28px rgba(15,28,48,0.1);
   }
   .store-map {
     width: 100%;
@@ -698,10 +729,12 @@
     background: #25D366;
     color: #fff;
     padding: 9px 14px;
-    border-radius: 20px;
+    border-radius: 3px;
     font-size: 12.5px;
     font-weight: 600;
+    transition: background 0.15s ease;
   }
+  .store-btn:not(.outline):hover { background: #1ebe5a; }
   .store-btn.outline {
     background: transparent;
     border: 1px solid #0f1c30;
@@ -720,7 +753,7 @@
     background: #25D366;
     border: none;
     color: #fff;
-    border-radius: 20px;
+    border-radius: 3px;
     font-family: 'Poppins', Arial, sans-serif;
     font-size: 12px;
     font-weight: 600;
@@ -744,7 +777,7 @@
     background: transparent;
     border: 1px solid #c9a24a;
     color: #0f1c30;
-    border-radius: 20px;
+    border-radius: 3px;
     font-family: 'Poppins', Arial, sans-serif;
     font-size: 12px;
     font-weight: 600;
@@ -904,7 +937,7 @@
     background: #fff;
     border: 1.5px solid #c9a24a;
     color: #9c7a2e;
-    border-radius: 20px;
+    border-radius: 3px;
     font-family: 'Poppins', Arial, sans-serif;
     font-size: 12px;
     font-weight: 600;
@@ -1063,12 +1096,14 @@
     background: #25D366;
     border: none;
     color: #fff;
-    border-radius: 22px;
+    border-radius: 3px;
     font-family: 'Poppins', Arial, sans-serif;
     font-size: 14px;
     font-weight: 700;
     cursor: pointer;
+    transition: background 0.15s ease;
   }
+  .cart-checkout-btn:hover { background: #1ebe5a; }
   .cart-checkout-btn:disabled {
     background: #c9c3ae;
     cursor: not-allowed;
@@ -1532,7 +1567,7 @@
   }
   .auth-view input {
     padding: 12px 16px;
-    border-radius: 30px;
+    border-radius: 6px;
     border: 1.5px solid #d9c48a;
     font-size: 14.5px;
     font-family: 'Poppins', Arial, sans-serif;
@@ -1543,7 +1578,7 @@
   .auth-submit-btn {
     margin-top: 4px;
     padding: 13px 20px;
-    border-radius: 30px;
+    border-radius: 3px;
     border: none;
     background: #c9a24a;
     color: #0f1c30;
@@ -1593,7 +1628,7 @@
   .cart-restore-actions { display: flex; gap: 8px; flex-wrap: wrap; }
   .cart-restore-actions button {
     padding: 8px 14px;
-    border-radius: 20px;
+    border-radius: 3px;
     font-size: 12px;
     font-weight: 600;
     cursor: pointer;
