@@ -3137,9 +3137,10 @@
       // tela de resultado mais direta, como um e-commerce de verdade
       const catLabel = document.createElement('div');
       catLabel.className = 'search-cat-label';
-      catLabel.hidden = true;
+      catLabel.style.display = 'none';
       catLabel.textContent = kickerEl ? kickerEl.textContent : '';
-      grid.parentNode.insertBefore(catLabel, grid);
+      const countElForInsert = document.getElementById('count-' + key);
+      grid.parentNode.insertBefore(catLabel, countElForInsert || grid);
       return {
         key,
         grid,
@@ -3188,9 +3189,11 @@
         // durante a busca, troca o título grande + texto de marketing por um
         // rótulo pequeno da linha, e some com o "Ordenar por" repetido —
         // fica parecido com resultado de busca de loja de verdade
-        if (s.headEl) s.headEl.hidden = searching;
-        if (s.sortBarEl) s.sortBarEl.hidden = searching;
-        s.catLabel.hidden = !(searching && visible > 0);
+        // usa style.display (em vez de "hidden") porque .sort-bar já define
+        // display:flex no CSS, o que sobrescreveria o atributo hidden
+        if (s.headEl) s.headEl.style.display = searching ? 'none' : '';
+        if (s.sortBarEl) s.sortBarEl.style.display = searching ? 'none' : '';
+        s.catLabel.style.display = (searching && visible > 0) ? '' : 'none';
 
         if (s.countEl) s.countEl.textContent = query === '' ? '' : (visible + (visible === 1 ? ' peça encontrada' : ' peças encontradas'));
         if (s.noResultsEl) s.noResultsEl.style.display = visible === 0 ? 'block' : 'none';
