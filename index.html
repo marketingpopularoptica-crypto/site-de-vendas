@@ -3864,10 +3864,11 @@
 
     <div id="auth-view-signup" class="auth-view" hidden>
       <h3>Criar conta</h3>
-      <p class="auth-sub">Opcional! É só pra guardar seu carrinho. Você pode continuar comprando sem se cadastrar, se preferir.</p>
+      <p class="auth-sub">Opcional! É só pra guardar seu carrinho e te avisar sobre novidades e promoções. Você pode continuar comprando sem se cadastrar, se preferir.</p>
       <form id="auth-signup-form">
         <label>Nome<input type="text" id="signup-name" required autocomplete="name"></label>
         <label>E-mail<input type="email" id="signup-email" required autocomplete="email"></label>
+        <label>WhatsApp<input type="tel" id="signup-phone" required autocomplete="tel" placeholder="(51) 99999-9999" inputmode="tel"></label>
         <label>Senha<input type="password" id="signup-password" required autocomplete="new-password" minlength="6"></label>
         <button type="submit" class="auth-submit-btn">Criar conta</button>
       </form>
@@ -4360,20 +4361,38 @@
       });
     }
 
+    function saveContatoSite(userId, nome, email, telefone, accessToken) {
+      try {
+        fetch(SUPABASE_URL + '/rest/v1/contatos_site', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'apikey': SUPABASE_ANON_KEY,
+            'Authorization': 'Bearer ' + (accessToken || SUPABASE_ANON_KEY),
+            'Prefer': 'return=minimal'
+          },
+          body: JSON.stringify({ user_id: userId || null, nome: nome, email: email, telefone: telefone })
+        }).catch(function() {});
+      } catch (e) {}
+    }
+
     var signupForm = document.getElementById('auth-signup-form');
     if (signupForm) {
       signupForm.addEventListener('submit', function(e) {
         e.preventDefault();
         var nome = document.getElementById('signup-name').value.trim();
         var email = document.getElementById('signup-email').value.trim();
+        var telefone = document.getElementById('signup-phone').value.trim();
         var password = document.getElementById('signup-password').value;
         setAuthMsg('signup-msg', 'Criando conta...', false);
-        authFetch('/signup', { email: email, password: password, data: { nome: nome } }).then(function(r) {
+        authFetch('/signup', { email: email, password: password, data: { nome: nome, telefone: telefone } }).then(function(r) {
           if (r.ok && r.data.access_token) {
             setAuthMsg('signup-msg', '', false);
+            saveContatoSite(r.data.user && r.data.user.id, nome, email, telefone, r.data.access_token);
             onAuthSuccess(r.data, nome);
           } else if (r.ok) {
             setAuthMsg('signup-msg', 'Conta criada! Verifique seu e-mail para confirmar e depois faça login.', false);
+            saveContatoSite(r.data.user && r.data.user.id, nome, email, telefone, null);
             setTimeout(function() { showAuthView('login'); }, 2600);
           } else {
             var msg = (r.data && r.data.error_description) || (r.data && r.data.msg) || 'Não foi possível criar a conta.';
