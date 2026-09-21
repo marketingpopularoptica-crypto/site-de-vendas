@@ -3853,8 +3853,8 @@
       <h3 id="auth-modal-title">Entrar</h3>
       <p class="auth-sub">Login é opcional — você pode comprar sem criar conta. Entre só se quiser salvar seu carrinho e encontrá-lo depois, em qualquer aparelho.</p>
       <form id="auth-login-form">
-        <label>E-mail<input type="email" id="login-email" required autocomplete="email"></label>
-        <label>Senha<input type="password" id="login-password" required autocomplete="current-password" minlength="6"></label>
+        <label>E-mail<input type="email" id="login-email" name="email" required autocomplete="email"></label>
+        <label>Senha<input type="password" id="login-password" name="password" required autocomplete="current-password" minlength="6"></label>
         <button type="submit" class="auth-submit-btn">Entrar</button>
       </form>
       <p class="auth-msg" id="login-msg" hidden></p>
@@ -3866,10 +3866,10 @@
       <h3>Criar conta</h3>
       <p class="auth-sub">Opcional! É só pra guardar seu carrinho e te avisar sobre novidades e promoções. Você pode continuar comprando sem se cadastrar, se preferir.</p>
       <form id="auth-signup-form">
-        <label>Nome<input type="text" id="signup-name" required autocomplete="name"></label>
-        <label>E-mail<input type="email" id="signup-email" required autocomplete="email"></label>
-        <label>WhatsApp<input type="tel" id="signup-phone" required autocomplete="tel" placeholder="(51) 99999-9999" inputmode="tel"></label>
-        <label>Senha<input type="password" id="signup-password" required autocomplete="new-password" minlength="6"></label>
+        <label>Nome<input type="text" id="signup-name" name="name" required autocomplete="name"></label>
+        <label>E-mail<input type="email" id="signup-email" name="email" required autocomplete="email"></label>
+        <label>WhatsApp<input type="tel" id="signup-phone" name="tel" required autocomplete="tel" placeholder="(51) 99999-9999" inputmode="tel"></label>
+        <label>Senha<input type="password" id="signup-password" name="new-password" required autocomplete="new-password" minlength="6"></label>
         <button type="submit" class="auth-submit-btn">Criar conta</button>
       </form>
       <p class="auth-msg" id="signup-msg" hidden></p>
@@ -3880,7 +3880,7 @@
       <h3>Recuperar senha</h3>
       <p class="auth-sub">Informe seu e-mail e enviaremos um link para criar uma nova senha.</p>
       <form id="auth-recover-form">
-        <label>E-mail<input type="email" id="recover-email" required autocomplete="email"></label>
+        <label>E-mail<input type="email" id="recover-email" name="email" required autocomplete="email"></label>
         <button type="submit" class="auth-submit-btn">Enviar link</button>
       </form>
       <p class="auth-msg" id="recover-msg" hidden></p>
