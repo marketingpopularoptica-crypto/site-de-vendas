@@ -1574,7 +1574,7 @@
     background: #fff;
     color: #0f1c30;
   }
-  .auth-view input:focus { outline: none; border-color: #c9a24a; }
+  .auth-view input:focus { outline: none; border-color: #c9a24a; } .auth-pwd-wrap { position: relative; display: block; } .auth-pwd-wrap input { width: 100%; padding-right: 68px; box-sizing: border-box; } .auth-pwd-toggle { position: absolute; right: 6px; top: 50%; transform: translateY(-50%); background: none; border: none; color: #9c7a2e; font-size: 11.5px; font-weight: 700; letter-spacing: 0.2px; cursor: pointer; font-family: 'Poppins', Arial, sans-serif; padding: 6px 8px; } .auth-pwd-toggle:hover { color: #0f1c30; }
   .auth-submit-btn {
     margin-top: 4px;
     padding: 13px 20px;
@@ -3854,7 +3854,7 @@
       <p class="auth-sub">Login é opcional — você pode comprar sem criar conta. Entre só se quiser salvar seu carrinho e encontrá-lo depois, em qualquer aparelho.</p>
       <form id="auth-login-form">
         <label>E-mail<input type="email" id="login-email" name="email" required autocomplete="email"></label>
-        <label>Senha<input type="password" id="login-password" name="password" required autocomplete="current-password" minlength="6"></label>
+        <label>Senha<span class="auth-pwd-wrap"><input type="password" id="login-password" name="password" required autocomplete="current-password" minlength="6"><button type="button" class="auth-pwd-toggle" data-target="login-password" aria-label="Mostrar senha">Mostrar</button></span></label>
         <button type="submit" class="auth-submit-btn">Entrar</button>
       </form>
       <p class="auth-msg" id="login-msg" hidden></p>
@@ -3869,7 +3869,7 @@
         <label>Nome<input type="text" id="signup-name" name="name" required autocomplete="name"></label>
         <label>E-mail<input type="email" id="signup-email" name="email" required autocomplete="email"></label>
         <label>WhatsApp<input type="tel" id="signup-phone" name="tel" required autocomplete="tel" placeholder="(51) 99999-9999" inputmode="tel"></label>
-        <label>Senha<input type="password" id="signup-password" name="new-password" required autocomplete="new-password" minlength="6"></label>
+        <label>Senha<span class="auth-pwd-wrap"><input type="password" id="signup-password" name="new-password" required autocomplete="new-password" minlength="6"><button type="button" class="auth-pwd-toggle" data-target="signup-password" aria-label="Mostrar senha">Mostrar</button></span></label>
         <button type="submit" class="auth-submit-btn">Criar conta</button>
       </form>
       <p class="auth-msg" id="signup-msg" hidden></p>
@@ -4341,7 +4341,7 @@
       syncCartRemote();
     }
 
-    var loginForm = document.getElementById('auth-login-form');
+    document.querySelectorAll('.auth-pwd-toggle').forEach(function(btn) { btn.addEventListener('click', function() { var input = document.getElementById(btn.getAttribute('data-target')); if (!input) return; var show = input.type === 'password'; input.type = show ? 'text' : 'password'; btn.textContent = show ? 'Ocultar' : 'Mostrar'; btn.setAttribute('aria-label', show ? 'Ocultar senha' : 'Mostrar senha'); }); }); var loginForm = document.getElementById('auth-login-form');
     if (loginForm) {
       loginForm.addEventListener('submit', function(e) {
         e.preventDefault();
@@ -4391,7 +4391,7 @@
             saveContatoSite(r.data.user && r.data.user.id, nome, email, telefone, r.data.access_token);
             onAuthSuccess(r.data, nome);
           } else if (r.ok) {
-            setAuthMsg('signup-msg', 'Conta criada! Verifique seu e-mail para confirmar e depois faça login.', false);
+            var identities = r.data.user && r.data.user.identities; var alreadyRegistered = Array.isArray(identities) && identities.length === 0; if (alreadyRegistered) { setAuthMsg('signup-msg', 'Esse e-mail ja tem uma conta. Clique em Esqueci minha senha se nao lembrar a senha.', true); setTimeout(function() { showAuthView('login'); }, 3200); return; } setAuthMsg('signup-msg', 'Conta criada! Verifique seu e-mail para confirmar e depois faça login.', false);
             saveContatoSite(r.data.user && r.data.user.id, nome, email, telefone, null);
             setTimeout(function() { showAuthView('login'); }, 2600);
           } else {
