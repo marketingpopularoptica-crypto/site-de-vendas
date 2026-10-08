@@ -1,12 +1,4 @@
 <!DOCTYPE html>
-<script type="application/json" id="cowork-artifact-meta">
-{
-  "name": "Site Vendas Solitarios Otica Popular", "schemaVersion": 1,
-  "description": "Site de vendas dos anéis solitários da Popular Óptica Gold — catálogo com busca, botões de WhatsApp para fechar venda, seção com as 3 lojas (endereço, telefone, mapa), e Meta Pixel + Google Tag instalados.",
-  "mcpTools": [],
-  "mcpServerNames": []
-}
-</script>
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
@@ -23,12 +15,12 @@
 <meta property="og:site_name" content="Popular Óptica Gold">
   <meta property="og:title" content="Popular Óptica Gold · Catálogo de Ouro | Feminina, Infantil, Masculina e Solitários">
   <meta property="og:description" content="Catálogo completo em ouro 10K e 18K: linha feminina, linha infantil, linha masculina, alianças e solitários. Fale com a gente pelo WhatsApp e feche sua compra em uma de nossas lojas em Porto Alegre e Viamão.">
-<meta property="og:image" content="img/p001-f56a6da646.jpg">
+<meta property="og:image" content="https://popularopticagold.pages.dev/img/p001-f56a6da646.jpg">
 <meta property="og:locale" content="pt_BR">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Popular Óptica Gold · Catálogo de Ouro">
 <meta name="twitter:description" content="Catálogo completo em ouro 10K e 18K: feminina, infantil, masculina, alianças e solitários.">
-<meta name="twitter:image" content="img/p001-f56a6da646.jpg">
+<meta name="twitter:image" content="https://popularopticagold.pages.dev/img/p001-f56a6da646.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -1681,29 +1673,13 @@
   </div>
 </header>
 
-<div class="toolbar" id="toolbar" style="padding:0 6vw;margin-top:24px;margin-bottom:0;">
-  <button type="button" class="search-toggle-btn" id="search-toggle-btn" aria-label="Abrir busca">
-    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
-  </button>
-  <input id="search-global" type="text" placeholder="Buscar por nome, modelo, peso ou tamanho..." aria-label="Buscar produtos em todo o catálogo">
-  <button type="button" class="clear-filter-btn" id="clear-filter-btn" hidden>&times; Ver catálogo completo</button>
-</div>
-<div class="global-sort-bar" id="global-sort-bar">
-  <label for="global-sort-select">Ordenar por</label>
-  <select class="sort-select" id="global-sort-select">
-    <option value="relevancia">Relevância</option>
-    <option value="peso-asc">Peso: menor primeiro</option>
-    <option value="peso-desc">Peso: maior primeiro</option>
-  </select>
-</div>
-<div class="search-summary" id="search-summary" hidden></div>
 
 <section class="hero">
   <div class="eyebrow">Catálogo Completo &middot; Ouro 10K e 18K</div>
   <h1>Ouro para cada<br>momento da sua vida</h1>
   <p>Feminina, infantil, masculina, alianças e solitários — tudo em ouro. Escolha sua peça e fale com a gente pelo WhatsApp.</p>
   <div class="hero-actions">
-    <a class="btn-primary" href="#aliancas-solitarios">Ver Catálogo</a>
+    <a class="btn-primary" href="#feminina">Ver Catálogo</a>
     <a class="btn-secondary" href="#lojas">Nossas Lojas</a>
   </div>
 </section>
@@ -1736,11 +1712,28 @@
     <div class="why-item">
       <div class="ic"><svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M9 12l2 2 4-4M21 12c0 4.97-4.03 9-9 9s-9-4.03-9-9 4.03-9 9-9 9 4.03 9 9z"/></svg></div>
       <h3>Compra segura</h3>
-      <p>Você vê e experimenta o anel pessoalmente na loja antes de fechar a compra.</p>
+      <p>Você vê e experimenta a peça pessoalmente na loja antes de fechar a compra.</p>
     </div>
   </div>
 </section>
 
+
+<div class="toolbar" id="toolbar" style="padding:0 6vw;margin-top:24px;margin-bottom:0;">
+  <button type="button" class="search-toggle-btn" id="search-toggle-btn" aria-label="Abrir busca">
+    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+  </button>
+  <input id="search-global" type="text" placeholder="Buscar por nome, modelo, peso ou tamanho..." aria-label="Buscar produtos em todo o catálogo">
+  <button type="button" class="clear-filter-btn" id="clear-filter-btn" hidden>&times; Ver catálogo completo</button>
+</div>
+<div class="global-sort-bar" id="global-sort-bar">
+  <label for="global-sort-select">Ordenar por</label>
+  <select class="sort-select" id="global-sort-select">
+    <option value="relevancia">Relevância</option>
+    <option value="peso-asc">Peso: menor primeiro</option>
+    <option value="peso-desc">Peso: maior primeiro</option>
+  </select>
+</div>
+<div class="search-summary" id="search-summary" hidden></div>
 
 <section class="catalog-section" id="feminina">
   <div class="section-head">
@@ -2627,7 +2620,7 @@
   <div id="count-aliancas" class="count"></div>
   <div class="grid cols-4" id="grid-aliancas">
                   
-      <div class="card reveal" data-peso-num="18" data-search="aliança friso lateral aro largo com frisos laterais e centro levemente arredondado aliança de noivado e casamento ouro 18k peso 3,3g ou ouro 10k peso 2,6g largura 6,0mm" data-modelo="34">
+      <div class="card reveal" data-peso-num="3.3" data-search="aliança friso lateral aro largo com frisos laterais e centro levemente arredondado aliança de noivado e casamento ouro 18k peso 3,3g ou ouro 10k peso 2,6g largura 6,0mm" data-modelo="34">
         <div class="photo"><img src="img/p102-6417773ff1.jpg" alt="Aliança Friso Lateral" loading="lazy"></div>
         <div class="body">
           <div class="name">Aliança Friso Lateral</div>
@@ -2636,7 +2629,7 @@
           <button type="button" class="cart-add-btn" data-name="Aliança Friso Lateral" data-avail="Ouro 10K · Ouro 18K" data-peso="18K 3,3g · 10K 2,6g · Larg. 6,0mm">+ Adicionar ao carrinho</button>
           </div>
       </div>
-                  <div class="card reveal" data-peso-num="18" data-search="aliança fina lisa aro fino e liso, acabamento polido discreto aliança de noivado e casamento ouro 18k peso 1,4g ou ouro 10k peso 1,1g largura 2,5mm" data-modelo="42">
+                  <div class="card reveal" data-peso-num="1.4" data-search="aliança fina lisa aro fino e liso, acabamento polido discreto aliança de noivado e casamento ouro 18k peso 1,4g ou ouro 10k peso 1,1g largura 2,5mm" data-modelo="42">
         <div class="photo"><img src="img/p110-37a7e49422.jpg" alt="Aliança Fina Lisa" loading="lazy"></div>
         <div class="body">
           <div class="name">Aliança Fina Lisa</div>
@@ -2645,7 +2638,7 @@
           <button type="button" class="cart-add-btn" data-name="Aliança Fina Lisa" data-avail="Ouro 10K · Ouro 18K" data-peso="18K 1,4g · 10K 1,1g · Larg. 2,5mm">+ Adicionar ao carrinho</button>
           </div>
       </div>
-      <div class="card reveal" data-peso-num="18" data-search="aliança pontilhada larga textura pontilhada em aro mais largo, acabamento fosco aliança de noivado e casamento ouro 18k peso 2,8g ou ouro 10k peso 2,4g largura 4,0mm" data-modelo="55">
+      <div class="card reveal" data-peso-num="2.8" data-search="aliança pontilhada larga textura pontilhada em aro mais largo, acabamento fosco aliança de noivado e casamento ouro 18k peso 2,8g ou ouro 10k peso 2,4g largura 4,0mm" data-modelo="55">
         <div class="photo"><img src="img/p123-44527e3f72.jpg" alt="Aliança Pontilhada Larga" loading="lazy"></div>
         <div class="body">
           <div class="name">Aliança Pontilhada Larga</div>
@@ -2654,7 +2647,7 @@
           <button type="button" class="cart-add-btn" data-name="Aliança Pontilhada Larga" data-avail="Ouro 10K · Ouro 18K" data-peso="18K 2,8g · 10K 2,4g · Larg. 4,0mm">+ Adicionar ao carrinho</button>
           </div>
       </div>
-      <div class="card reveal" data-peso-num="18" data-search="aliança fosca clássica aro liso com acabamento fosco uniforme, formato tradicional aliança de noivado e casamento ouro 18k peso 4,5g ou ouro 10k peso 3,5g largura 5,0mm" data-modelo="61">
+      <div class="card reveal" data-peso-num="4.5" data-search="aliança fosca clássica aro liso com acabamento fosco uniforme, formato tradicional aliança de noivado e casamento ouro 18k peso 4,5g ou ouro 10k peso 3,5g largura 5,0mm" data-modelo="61">
         <div class="photo"><img src="img/p129-90e86ba715.jpg" alt="Aliança Fosca Clássica" loading="lazy"></div>
         <div class="body">
           <div class="name">Aliança Fosca Clássica</div>
@@ -2663,7 +2656,7 @@
           <button type="button" class="cart-add-btn" data-name="Aliança Fosca Clássica" data-avail="Ouro 10K · Ouro 18K" data-peso="18K 4,5g · 10K 3,5g · Larg. 5,0mm">+ Adicionar ao carrinho</button>
           </div>
       </div>
-            <div class="card reveal" data-peso-num="18" data-search="aliança anatômica diamantada corte anatômico com friso central diamantado em X aliança de noivado e casamento ouro 18k peso 2,8g ou ouro 10k peso 2,4g largura 3,5mm" data-modelo="63">
+            <div class="card reveal" data-peso-num="2.8" data-search="aliança anatômica diamantada corte anatômico com friso central diamantado em X aliança de noivado e casamento ouro 18k peso 2,8g ou ouro 10k peso 2,4g largura 3,5mm" data-modelo="63">
         <div class="photo"><img src="img/p131-a0f7830f19.jpg" alt="Aliança Anatômica Diamantada" loading="lazy"><span class="ref-tag">AN35</span></div>
         <div class="body">
           <div class="name">Aliança Anatômica Diamantada</div>
@@ -2672,7 +2665,7 @@
           <button type="button" class="cart-add-btn" data-name="Aliança Anatômica Diamantada" data-avail="Ouro 10K · Ouro 18K" data-peso="18K 2,8g · 10K 2,4g · Larg. 3,5mm">+ Adicionar ao carrinho</button>
           </div>
       </div>
-      <div class="card reveal" data-peso-num="18" data-search="aliança fosca com filete acabamento fosco com filete polido central aliança de noivado e casamento ouro 18k peso 2,0g ou ouro 10k peso 1,7g largura 3,0mm" data-modelo="64">
+      <div class="card reveal" data-peso-num="2.0" data-search="aliança fosca com filete acabamento fosco com filete polido central aliança de noivado e casamento ouro 18k peso 2,0g ou ouro 10k peso 1,7g largura 3,0mm" data-modelo="64">
         <div class="photo"><img src="img/p132-6381bcb63a.jpg" alt="Aliança Fosca com Filete" loading="lazy"><span class="ref-tag">BO30</span></div>
         <div class="body">
           <div class="name">Aliança Fosca com Filete</div>
@@ -2682,7 +2675,7 @@
           </div>
       </div>
       
-      <div class="card reveal" data-peso-num="18" data-search="aliança estelar padrão de estrelas gravadas em textura fosca aliança de noivado e casamento ouro 18k peso 3,2g ou ouro 10k peso 3,9g largura 5,0mm" data-modelo="66">
+      <div class="card reveal" data-peso-num="3.2" data-search="aliança estelar padrão de estrelas gravadas em textura fosca aliança de noivado e casamento ouro 18k peso 3,2g ou ouro 10k peso 3,9g largura 5,0mm" data-modelo="66">
         <div class="photo"><img src="img/p134-ba95b6d57e.jpg" alt="Aliança Estelar" loading="lazy"><span class="ref-tag">BOX250</span></div>
         <div class="body">
           <div class="name">Aliança Estelar</div>
@@ -2691,7 +2684,7 @@
           <button type="button" class="cart-add-btn" data-name="Aliança Estelar" data-avail="Ouro 10K · Ouro 18K" data-peso="18K 3,2g · 10K 3,9g · Larg. 5,0mm">+ Adicionar ao carrinho</button>
           </div>
       </div>
-      <div class="card reveal" data-peso-num="18" data-search="aliança cruzada fosca padrão gravado em cruzes, acabamento fosco aliança de noivado e casamento ouro 18k peso 3,8g ou ouro 10k peso 3,0g largura 5,0mm" data-modelo="67">
+      <div class="card reveal" data-peso-num="3.8" data-search="aliança cruzada fosca padrão gravado em cruzes, acabamento fosco aliança de noivado e casamento ouro 18k peso 3,8g ou ouro 10k peso 3,0g largura 5,0mm" data-modelo="67">
         <div class="photo"><img src="img/p135-abdd83f000.jpg" alt="Aliança Cruzada Fosca" loading="lazy"><span class="ref-tag">BOX50</span></div>
         <div class="body">
           <div class="name">Aliança Cruzada Fosca</div>
@@ -2700,7 +2693,7 @@
           <button type="button" class="cart-add-btn" data-name="Aliança Cruzada Fosca" data-avail="Ouro 10K · Ouro 18K" data-peso="18K 3,8g · 10K 3,0g · Larg. 5,0mm">+ Adicionar ao carrinho</button>
           </div>
       </div>
-      <div class="card reveal" data-peso-num="18" data-search="aliança cravejada com zircônias cravejada com zircônias brancas em todo o aro aliança de noivado e casamento ouro 18k peso 2,0g ou ouro 10k peso 1,7g largura 3,0mm" data-modelo="68">
+      <div class="card reveal" data-peso-num="2.0" data-search="aliança cravejada com zircônias cravejada com zircônias brancas em todo o aro aliança de noivado e casamento ouro 18k peso 2,0g ou ouro 10k peso 1,7g largura 3,0mm" data-modelo="68">
         <div class="photo"><img src="img/p136-e3e327944b.jpg" alt="Aliança Cravejada com Zircônias" loading="lazy"><span class="ref-tag">BP30</span></div>
         <div class="body">
           <div class="name">Aliança Cravejada com Zircônias</div>
@@ -2709,7 +2702,7 @@
           <button type="button" class="cart-add-btn" data-name="Aliança Cravejada com Zircônias" data-avail="Ouro 10K · Ouro 18K" data-peso="18K 2,0g · 10K 1,7g · Larg. 3,0mm">+ Adicionar ao carrinho</button>
           </div>
       </div>
-      <div class="card reveal" data-peso-num="18" data-search="aliança cravejada fosca textura cravejada em acabamento fosco, brilho pontual aliança de noivado e casamento ouro 18k peso 2,6g ou ouro 10k peso 2,1g largura 4,0mm" data-modelo="69">
+      <div class="card reveal" data-peso-num="2.6" data-search="aliança cravejada fosca textura cravejada em acabamento fosco, brilho pontual aliança de noivado e casamento ouro 18k peso 2,6g ou ouro 10k peso 2,1g largura 4,0mm" data-modelo="69">
         <div class="photo"><img src="img/p137-95189ece30.jpg" alt="Aliança Cravejada Fosca" loading="lazy"><span class="ref-tag">BP40</span></div>
         <div class="body">
           <div class="name">Aliança Cravejada Fosca</div>
@@ -2718,7 +2711,7 @@
           <button type="button" class="cart-add-btn" data-name="Aliança Cravejada Fosca" data-avail="Ouro 10K · Ouro 18K" data-peso="18K 2,6g · 10K 2,1g · Larg. 4,0mm">+ Adicionar ao carrinho</button>
           </div>
       </div>
-      <div class="card reveal" data-peso-num="18" data-search="aliança fosca filete central acabamento fosco com filete polido ao centro do aro aliança de noivado e casamento ouro 18k peso 2,5g ou ouro 10k peso 2,3g largura 3,5mm" data-modelo="70">
+      <div class="card reveal" data-peso-num="2.5" data-search="aliança fosca filete central acabamento fosco com filete polido ao centro do aro aliança de noivado e casamento ouro 18k peso 2,5g ou ouro 10k peso 2,3g largura 3,5mm" data-modelo="70">
         <div class="photo"><img src="img/p138-2259ee3ae2.jpg" alt="Aliança Fosca Filete Central" loading="lazy"><span class="ref-tag">CCM35</span></div>
         <div class="body">
           <div class="name">Aliança Fosca Filete Central</div>
@@ -2727,7 +2720,7 @@
           <button type="button" class="cart-add-btn" data-name="Aliança Fosca Filete Central" data-avail="Ouro 10K · Ouro 18K" data-peso="18K 2,5g · 10K 2,3g · Larg. 3,5mm">+ Adicionar ao carrinho</button>
           </div>
       </div>
-      <div class="card reveal" data-peso-num="18" data-search="aliança fosca larga aro largo com acabamento fosco uniforme aliança de noivado e casamento ouro 18k peso 2,1g ou ouro 10k peso 1,8g largura 3,5mm" data-modelo="71">
+      <div class="card reveal" data-peso-num="2.1" data-search="aliança fosca larga aro largo com acabamento fosco uniforme aliança de noivado e casamento ouro 18k peso 2,1g ou ouro 10k peso 1,8g largura 3,5mm" data-modelo="71">
         <div class="photo"><img src="img/p139-393390875d.jpg" alt="Aliança Fosca Larga" loading="lazy"><span class="ref-tag">CF35</span></div>
         <div class="body">
           <div class="name">Aliança Fosca Larga</div>
@@ -2736,7 +2729,7 @@
           <button type="button" class="cart-add-btn" data-name="Aliança Fosca Larga" data-avail="Ouro 10K · Ouro 18K" data-peso="18K 2,1g · 10K 1,8g · Larg. 3,5mm">+ Adicionar ao carrinho</button>
           </div>
       </div>
-      <div class="card reveal" data-peso-num="18" data-search="aliança tripla extra larga três frisos em aro extra largo, ideal para noivos aliança de noivado e casamento ouro 18k peso 6,0g ou ouro 10k peso 5,0g largura 8,0mm" data-modelo="72">
+      <div class="card reveal" data-peso-num="6.0" data-search="aliança tripla extra larga três frisos em aro extra largo, ideal para noivos aliança de noivado e casamento ouro 18k peso 6,0g ou ouro 10k peso 5,0g largura 8,0mm" data-modelo="72">
         <div class="photo"><img src="img/p140-94aefe66dc.jpg" alt="Aliança Tripla Extra Larga" loading="lazy"><span class="ref-tag">CF3M80</span></div>
         <div class="body">
           <div class="name">Aliança Tripla Extra Larga</div>
@@ -2745,7 +2738,7 @@
           <button type="button" class="cart-add-btn" data-name="Aliança Tripla Extra Larga" data-avail="Ouro 10K · Ouro 18K" data-peso="18K 6,0g · 10K 5,0g · Larg. 8,0mm">+ Adicionar ao carrinho</button>
           </div>
       </div>
-      <div class="card reveal" data-peso-num="18" data-search="aliança trançada textura trançada em relevo por todo o aro aliança de noivado e casamento ouro 18k peso 2,8g ou ouro 10k peso 2,4g largura 4,0mm" data-modelo="73">
+      <div class="card reveal" data-peso-num="2.8" data-search="aliança trançada textura trançada em relevo por todo o aro aliança de noivado e casamento ouro 18k peso 2,8g ou ouro 10k peso 2,4g largura 4,0mm" data-modelo="73">
         <div class="photo"><img src="img/p141-d6e0ac2c1e.jpg" alt="Aliança Trançada" loading="lazy"><span class="ref-tag">CFQ40</span></div>
         <div class="body">
           <div class="name">Aliança Trançada</div>
@@ -2754,7 +2747,7 @@
           <button type="button" class="cart-add-btn" data-name="Aliança Trançada" data-avail="Ouro 10K · Ouro 18K" data-peso="18K 2,8g · 10K 2,4g · Larg. 4,0mm">+ Adicionar ao carrinho</button>
           </div>
       </div>
-      <div class="card reveal" data-peso-num="18" data-search="aliança polida larga aro largo e liso com acabamento polido de alto brilho aliança de noivado e casamento ouro 18k peso 3,2g ou ouro 10k peso 2,5g largura 5,0mm" data-modelo="74">
+      <div class="card reveal" data-peso-num="3.2" data-search="aliança polida larga aro largo e liso com acabamento polido de alto brilho aliança de noivado e casamento ouro 18k peso 3,2g ou ouro 10k peso 2,5g largura 5,0mm" data-modelo="74">
         <div class="photo"><img src="img/p142-132e26d91c.jpg" alt="Aliança Polida Larga" loading="lazy"><span class="ref-tag">CL50</span></div>
         <div class="body">
           <div class="name">Aliança Polida Larga</div>
@@ -2763,7 +2756,7 @@
           <button type="button" class="cart-add-btn" data-name="Aliança Polida Larga" data-avail="Ouro 10K · Ouro 18K" data-peso="18K 3,2g · 10K 2,5g · Larg. 5,0mm">+ Adicionar ao carrinho</button>
           </div>
       </div>
-      <div class="card reveal" data-peso-num="18" data-search="aliança fosca fina com friso aro fino fosco com friso lateral polido aliança de noivado e casamento ouro 18k peso 1,5g ou ouro 10k peso 1,3g largura 2,5mm" data-modelo="75">
+      <div class="card reveal" data-peso-num="1.5" data-search="aliança fosca fina com friso aro fino fosco com friso lateral polido aliança de noivado e casamento ouro 18k peso 1,5g ou ouro 10k peso 1,3g largura 2,5mm" data-modelo="75">
         <div class="photo"><img src="img/p143-0dc60bec56.jpg" alt="Aliança Fosca Fina com Friso" loading="lazy"><span class="ref-tag">LCF25</span></div>
         <div class="body">
           <div class="name">Aliança Fosca Fina com Friso</div>
@@ -2772,7 +2765,7 @@
           <button type="button" class="cart-add-btn" data-name="Aliança Fosca Fina com Friso" data-avail="Ouro 10K · Ouro 18K" data-peso="18K 1,5g · 10K 1,3g · Larg. 2,5mm">+ Adicionar ao carrinho</button>
           </div>
       </div>
-      <div class="card reveal" data-peso-num="18" data-search="aliança cruzada fina aro fino com padrão gravado em cruzes aliança de noivado e casamento ouro 18k peso 1,2g ou ouro 10k peso 1,0g largura 2,0mm" data-modelo="76">
+      <div class="card reveal" data-peso-num="1.2" data-search="aliança cruzada fina aro fino com padrão gravado em cruzes aliança de noivado e casamento ouro 18k peso 1,2g ou ouro 10k peso 1,0g largura 2,0mm" data-modelo="76">
         <div class="photo"><img src="img/p144-6410fb8975.jpg" alt="Aliança Cruzada Fina" loading="lazy"><span class="ref-tag">LT20</span></div>
         <div class="body">
           <div class="name">Aliança Cruzada Fina</div>
@@ -2781,7 +2774,7 @@
           <button type="button" class="cart-add-btn" data-name="Aliança Cruzada Fina" data-avail="Ouro 10K · Ouro 18K" data-peso="18K 1,2g · 10K 1,0g · Larg. 2,0mm">+ Adicionar ao carrinho</button>
           </div>
       </div>
-      <div class="card reveal" data-peso-num="18" data-search="aliança extra fina aro extra fino, acabamento polido delicado aliança de noivado e casamento ouro 18k peso 0,9g ou ouro 10k peso 0,6g largura 1,5mm" data-modelo="77">
+      <div class="card reveal" data-peso-num="0.9" data-search="aliança extra fina aro extra fino, acabamento polido delicado aliança de noivado e casamento ouro 18k peso 0,9g ou ouro 10k peso 0,6g largura 1,5mm" data-modelo="77">
         <div class="photo"><img src="img/p145-a950cefd94.jpg" alt="Aliança Extra Fina" loading="lazy"><span class="ref-tag">MC15</span></div>
         <div class="body">
           <div class="name">Aliança Extra Fina</div>
@@ -2790,7 +2783,7 @@
           <button type="button" class="cart-add-btn" data-name="Aliança Extra Fina" data-avail="Ouro 10K · Ouro 18K" data-peso="18K 0,9g · 10K 0,6g · Larg. 1,5mm">+ Adicionar ao carrinho</button>
           </div>
       </div>
-      <div class="card reveal" data-peso-num="18" data-search="aliança facetada fina aro fino com facetas em corte diamantado aliança de noivado e casamento ouro 18k peso 2,5g ou ouro 10k peso 2,5g largura 3,0mm" data-modelo="78">
+      <div class="card reveal" data-peso-num="2.5" data-search="aliança facetada fina aro fino com facetas em corte diamantado aliança de noivado e casamento ouro 18k peso 2,5g ou ouro 10k peso 2,5g largura 3,0mm" data-modelo="78">
         <div class="photo"><img src="img/p146-7efbacd880.jpg" alt="Aliança Facetada Fina" loading="lazy"><span class="ref-tag">MC330</span></div>
         <div class="body">
           <div class="name">Aliança Facetada Fina</div>
@@ -2799,7 +2792,7 @@
           <button type="button" class="cart-add-btn" data-name="Aliança Facetada Fina" data-avail="Ouro 10K · Ouro 18K" data-peso="18K 2,5g · 10K 2,5g · Larg. 3,0mm">+ Adicionar ao carrinho</button>
           </div>
       </div>
-      <div class="card reveal" data-peso-num="18" data-search="aliança al282 aliança de noivado e casamento ouro 18k peso 3,4g ou ouro 10k peso 3,0g largura 4,0mm" data-modelo="79">
+      <div class="card reveal" data-peso-num="3.4" data-search="aliança al282 aliança de noivado e casamento ouro 18k peso 3,4g ou ouro 10k peso 3,0g largura 4,0mm" data-modelo="79">
         <div class="photo"><img src="img/p147-3a3a968bef.jpg" alt="Aliança AL282" loading="lazy"><span class="ref-tag">AL282</span></div>
         <div class="body">
           <div class="name">Aliança Grega</div>
@@ -2808,7 +2801,7 @@
           <button type="button" class="cart-add-btn" data-name="Aliança AL282" data-avail="Ouro 10K · Ouro 18K" data-peso="18K 3,4g · 10K 3,0g · Larg. 4,0mm">+ Adicionar ao carrinho</button>
           </div>
       </div>
-      <div class="card reveal" data-peso-num="18" data-search="aliança al416 aliança de noivado e casamento ouro 18k peso 6,0g ou ouro 10k peso 5,2g largura 5,0mm 1 pedra de zircônia 2,0mm, corte anatômico" data-modelo="80">
+      <div class="card reveal" data-peso-num="6.0" data-search="aliança al416 aliança de noivado e casamento ouro 18k peso 6,0g ou ouro 10k peso 5,2g largura 5,0mm 1 pedra de zircônia 2,0mm, corte anatômico" data-modelo="80">
         <div class="photo"><img src="img/p148-a656250fbf.jpg" alt="Aliança AL416" loading="lazy"><span class="ref-tag">AL416</span></div>
         <div class="body">
           <div class="name">Aliança Cravejada</div>
@@ -2817,7 +2810,7 @@
           <button type="button" class="cart-add-btn" data-name="Aliança AL416" data-avail="Ouro 10K · Ouro 18K" data-peso="18K 6,0g · 10K 5,2g · Larg. 5,0mm">+ Adicionar ao carrinho</button>
           </div>
       </div>
-      <div class="card reveal" data-peso-num="18" data-search="aliança bo40 aliança de noivado e casamento ouro 18k peso 2,6g ou ouro 10k peso 2,1g largura 4,0mm" data-modelo="81">
+      <div class="card reveal" data-peso-num="2.6" data-search="aliança bo40 aliança de noivado e casamento ouro 18k peso 2,6g ou ouro 10k peso 2,1g largura 4,0mm" data-modelo="81">
         <div class="photo"><img src="img/p149-76cdd50169.jpg" alt="Aliança BO40" loading="lazy"><span class="ref-tag">BO40</span></div>
         <div class="body">
           <div class="name">Aliança Ondulada</div>
@@ -2826,7 +2819,7 @@
           <button type="button" class="cart-add-btn" data-name="Aliança BO40" data-avail="Ouro 10K · Ouro 18K" data-peso="18K 2,6g · 10K 2,1g · Larg. 4,0mm">+ Adicionar ao carrinho</button>
           </div>
       </div>
-      <div class="card reveal" data-peso-num="18" data-search="aliança cf3p60 aliança de noivado e casamento ouro 18k peso 6,4g ou ouro 10k peso 4,9g largura 6,0mm 3 pedras de zircônia 1,5mm, corte anatômico" data-modelo="82">
+      <div class="card reveal" data-peso-num="6.4" data-search="aliança cf3p60 aliança de noivado e casamento ouro 18k peso 6,4g ou ouro 10k peso 4,9g largura 6,0mm 3 pedras de zircônia 1,5mm, corte anatômico" data-modelo="82">
         <div class="photo"><img src="img/p150-f16847915b.jpg" alt="Aliança CF3P60" loading="lazy"><span class="ref-tag">CF3P60</span></div>
         <div class="body">
           <div class="name">Aliança Dupla Cravejada</div>
@@ -2835,7 +2828,7 @@
           <button type="button" class="cart-add-btn" data-name="Aliança CF3P60" data-avail="Ouro 10K · Ouro 18K" data-peso="18K 6,4g · 10K 4,9g · Larg. 6,0mm">+ Adicionar ao carrinho</button>
           </div>
       </div>
-      <div class="card reveal" data-peso-num="18" data-search="aliança cfec60 aliança de noivado e casamento ouro 18k peso 4,7g ou ouro 10k peso 3,2g largura 6,0mm" data-modelo="83">
+      <div class="card reveal" data-peso-num="4.7" data-search="aliança cfec60 aliança de noivado e casamento ouro 18k peso 4,7g ou ouro 10k peso 3,2g largura 6,0mm" data-modelo="83">
         <div class="photo"><img src="img/p151-5595356326.jpg" alt="Aliança CFEC60" loading="lazy"><span class="ref-tag">CFEC60</span></div>
         <div class="body">
           <div class="name">Aliança Raiada</div>
@@ -2844,7 +2837,7 @@
           <button type="button" class="cart-add-btn" data-name="Aliança CFEC60" data-avail="Ouro 10K · Ouro 18K" data-peso="18K 4,7g · 10K 3,2g · Larg. 6,0mm">+ Adicionar ao carrinho</button>
           </div>
       </div>
-      <div class="card reveal" data-peso-num="18" data-search="aliança cff40 aliança de noivado e casamento ouro 18k peso 2,6g ou ouro 10k peso 1,8g largura 4,0mm" data-modelo="84">
+      <div class="card reveal" data-peso-num="2.6" data-search="aliança cff40 aliança de noivado e casamento ouro 18k peso 2,6g ou ouro 10k peso 1,8g largura 4,0mm" data-modelo="84">
         <div class="photo"><img src="img/p152-9e88a98361.jpg" alt="Aliança CFF40" loading="lazy"><span class="ref-tag">CFF40</span></div>
         <div class="body">
           <div class="name">Aliança Folha</div>
@@ -2853,7 +2846,7 @@
           <button type="button" class="cart-add-btn" data-name="Aliança CFF40" data-avail="Ouro 10K · Ouro 18K" data-peso="18K 2,6g · 10K 1,8g · Larg. 4,0mm">+ Adicionar ao carrinho</button>
           </div>
       </div>
-      <div class="card reveal" data-peso-num="18" data-search="aliança df30 aliança de noivado e casamento ouro 18k peso 2,2g ou ouro 10k peso 2,0g largura 3,0mm" data-modelo="85">
+      <div class="card reveal" data-peso-num="2.2" data-search="aliança df30 aliança de noivado e casamento ouro 18k peso 2,2g ou ouro 10k peso 2,0g largura 3,0mm" data-modelo="85">
         <div class="photo"><img src="img/p153-de6858754d.jpg" alt="Aliança DF30" loading="lazy"><span class="ref-tag">DF30</span></div>
         <div class="body">
           <div class="name">Aliança Lisa Fina</div>
@@ -2862,7 +2855,7 @@
           <button type="button" class="cart-add-btn" data-name="Aliança DF30" data-avail="Ouro 10K · Ouro 18K" data-peso="18K 2,2g · 10K 2,0g · Larg. 3,0mm">+ Adicionar ao carrinho</button>
           </div>
       </div>
-      <div class="card reveal" data-peso-num="18" data-search="aliança dfc40 aliança de noivado e casamento ouro 18k peso 2,3g ou ouro 10k peso 1,8g largura 4,0mm" data-modelo="86">
+      <div class="card reveal" data-peso-num="2.3" data-search="aliança dfc40 aliança de noivado e casamento ouro 18k peso 2,3g ou ouro 10k peso 1,8g largura 4,0mm" data-modelo="86">
         <div class="photo"><img src="img/p154-acdd27ad4b.jpg" alt="Aliança DFC40" loading="lazy"><span class="ref-tag">DFC40</span></div>
         <div class="body">
           <div class="name">Aliança Facetada</div>
@@ -2871,7 +2864,7 @@
           <button type="button" class="cart-add-btn" data-name="Aliança DFC40" data-avail="Ouro 10K · Ouro 18K" data-peso="18K 2,3g · 10K 1,8g · Larg. 4,0mm">+ Adicionar ao carrinho</button>
           </div>
       </div>
-      <div class="card reveal" data-peso-num="18" data-search="aliança dq20 aliança de noivado e casamento ouro 18k peso 1,3g ou ouro 10k peso 1,1g largura 2,0mm" data-modelo="87">
+      <div class="card reveal" data-peso-num="1.3" data-search="aliança dq20 aliança de noivado e casamento ouro 18k peso 1,3g ou ouro 10k peso 1,1g largura 2,0mm" data-modelo="87">
         <div class="photo"><img src="img/p155-1f7f2addab.jpg" alt="Aliança DQ20" loading="lazy"><span class="ref-tag">DQ20</span></div>
         <div class="body">
           <div class="name">Aliança Lisa Extra Fina</div>
@@ -2880,7 +2873,7 @@
           <button type="button" class="cart-add-btn" data-name="Aliança DQ20" data-avail="Ouro 10K · Ouro 18K" data-peso="18K 1,3g · 10K 1,1g · Larg. 2,0mm">+ Adicionar ao carrinho</button>
           </div>
       </div>
-      <div class="card reveal" data-peso-num="18" data-search="aliança dq30 aliança de noivado e casamento ouro 18k peso 2,0g ou ouro 10k peso 1,4g largura 3,0mm" data-modelo="88">
+      <div class="card reveal" data-peso-num="2.0" data-search="aliança dq30 aliança de noivado e casamento ouro 18k peso 2,0g ou ouro 10k peso 1,4g largura 3,0mm" data-modelo="88">
         <div class="photo"><img src="img/p156-525f045a9a.jpg" alt="Aliança DQ30" loading="lazy"><span class="ref-tag">DQ30</span></div>
         <div class="body">
           <div class="name">Aliança Lisa com Friso</div>
@@ -2889,7 +2882,7 @@
           <button type="button" class="cart-add-btn" data-name="Aliança DQ30" data-avail="Ouro 10K · Ouro 18K" data-peso="18K 2,0g · 10K 1,4g · Larg. 3,0mm">+ Adicionar ao carrinho</button>
           </div>
       </div>
-      <div class="card reveal" data-peso-num="18" data-search="aliança dq40 aliança de noivado e casamento ouro 18k peso 2,5g ou ouro 10k peso 1,9g largura 4,0mm" data-modelo="89">
+      <div class="card reveal" data-peso-num="2.5" data-search="aliança dq40 aliança de noivado e casamento ouro 18k peso 2,5g ou ouro 10k peso 1,9g largura 4,0mm" data-modelo="89">
         <div class="photo"><img src="img/p157-57dfda8e20.jpg" alt="Aliança DQ40" loading="lazy"><span class="ref-tag">DQ40</span></div>
         <div class="body">
           <div class="name">Aliança Lisa com Corte</div>
@@ -2898,7 +2891,7 @@
           <button type="button" class="cart-add-btn" data-name="Aliança DQ40" data-avail="Ouro 10K · Ouro 18K" data-peso="18K 2,5g · 10K 1,9g · Larg. 4,0mm">+ Adicionar ao carrinho</button>
           </div>
       </div>
-      <div class="card reveal" data-peso-num="18" data-search="aliança dq35 aliança de noivado e casamento ouro 18k peso 2,2g ou ouro 10k peso 1,7g largura 3,5mm" data-modelo="90">
+      <div class="card reveal" data-peso-num="2.2" data-search="aliança dq35 aliança de noivado e casamento ouro 18k peso 2,2g ou ouro 10k peso 1,7g largura 3,5mm" data-modelo="90">
         <div class="photo"><img src="img/p158-f4419ea7da.jpg" alt="Aliança DQ35" loading="lazy"><span class="ref-tag">DQ35</span></div>
         <div class="body">
           <div class="name">Aliança Lisa Média</div>
@@ -2907,7 +2900,7 @@
           <button type="button" class="cart-add-btn" data-name="Aliança DQ35" data-avail="Ouro 10K · Ouro 18K" data-peso="18K 2,2g · 10K 1,7g · Larg. 3,5mm">+ Adicionar ao carrinho</button>
           </div>
       </div>
-      <div class="card reveal" data-peso-num="18" data-search="aliança dq360 aliança de noivado e casamento ouro 18k peso 3,5g ou ouro 10k peso 3,0g largura 6,0mm" data-modelo="91">
+      <div class="card reveal" data-peso-num="3.5" data-search="aliança dq360 aliança de noivado e casamento ouro 18k peso 3,5g ou ouro 10k peso 3,0g largura 6,0mm" data-modelo="91">
         <div class="photo"><img src="img/p159-0ebb770f6f.jpg" alt="Aliança DQ360" loading="lazy"><span class="ref-tag">DQ360</span></div>
         <div class="body">
           <div class="name">Aliança em Blocos</div>
@@ -2916,7 +2909,7 @@
           <button type="button" class="cart-add-btn" data-name="Aliança DQ360" data-avail="Ouro 10K · Ouro 18K" data-peso="18K 3,5g · 10K 3,0g · Larg. 6,0mm">+ Adicionar ao carrinho</button>
           </div>
       </div>
-      <div class="card reveal" data-peso-num="18" data-search="aliança dqf40 aliança de noivado e casamento ouro 18k peso 2,6g ou ouro 10k peso 2,0g largura 4,0mm" data-modelo="92">
+      <div class="card reveal" data-peso-num="2.6" data-search="aliança dqf40 aliança de noivado e casamento ouro 18k peso 2,6g ou ouro 10k peso 2,0g largura 4,0mm" data-modelo="92">
         <div class="photo"><img src="img/p160-cdea49d018.jpg" alt="Aliança DQF40" loading="lazy"><span class="ref-tag">DQF40</span></div>
         <div class="body">
           <div class="name">Aliança Facetada Fina</div>
@@ -2925,7 +2918,7 @@
           <button type="button" class="cart-add-btn" data-name="Aliança DQF40" data-avail="Ouro 10K · Ouro 18K" data-peso="18K 2,6g · 10K 2,0g · Larg. 4,0mm">+ Adicionar ao carrinho</button>
           </div>
       </div>
-      <div class="card reveal" data-peso-num="18" data-search="aliança f425 aliança de noivado e casamento ouro 18k peso 1,4g ou ouro 10k peso 1,2g largura 2,5mm" data-modelo="93">
+      <div class="card reveal" data-peso-num="1.4" data-search="aliança f425 aliança de noivado e casamento ouro 18k peso 1,4g ou ouro 10k peso 1,2g largura 2,5mm" data-modelo="93">
         <div class="photo"><img src="img/p161-7c68e9d3f4.jpg" alt="Aliança F425" loading="lazy"><span class="ref-tag">F425</span></div>
         <div class="body">
           <div class="name">Aliança Facetada Diagonal</div>
@@ -2934,7 +2927,7 @@
           <button type="button" class="cart-add-btn" data-name="Aliança F425" data-avail="Ouro 10K · Ouro 18K" data-peso="18K 1,4g · 10K 1,2g · Larg. 2,5mm">+ Adicionar ao carrinho</button>
           </div>
       </div>
-      <div class="card reveal" data-peso-num="18" data-search="aliança fd20 aliança de noivado e casamento ouro 18k peso 1,2g ou ouro 10k peso 1,1g largura 2,0mm" data-modelo="94">
+      <div class="card reveal" data-peso-num="1.2" data-search="aliança fd20 aliança de noivado e casamento ouro 18k peso 1,2g ou ouro 10k peso 1,1g largura 2,0mm" data-modelo="94">
         <div class="photo"><img src="img/p162-aaa9050736.jpg" alt="Aliança FD20" loading="lazy"><span class="ref-tag">FD20</span></div>
         <div class="body">
           <div class="name">Aliança Lisa Delicada</div>
@@ -2943,7 +2936,7 @@
           <button type="button" class="cart-add-btn" data-name="Aliança FD20" data-avail="Ouro 10K · Ouro 18K" data-peso="18K 1,2g · 10K 1,1g · Larg. 2,0mm">+ Adicionar ao carrinho</button>
           </div>
       </div>
-      <div class="card reveal" data-peso-num="18" data-search="aliança fe20 aliança de noivado e casamento ouro 18k peso 1,4g ou ouro 10k peso 1,1g largura 2,0mm" data-modelo="95">
+      <div class="card reveal" data-peso-num="1.4" data-search="aliança fe20 aliança de noivado e casamento ouro 18k peso 1,4g ou ouro 10k peso 1,1g largura 2,0mm" data-modelo="95">
         <div class="photo"><img src="img/p163-de20a55b5c.jpg" alt="Aliança FE20" loading="lazy"><span class="ref-tag">FE20</span></div>
         <div class="body">
           <div class="name">Aliança Cravejada Fina</div>
@@ -2952,7 +2945,7 @@
           <button type="button" class="cart-add-btn" data-name="Aliança FE20" data-avail="Ouro 10K · Ouro 18K" data-peso="18K 1,4g · 10K 1,1g · Larg. 2,0mm">+ Adicionar ao carrinho</button>
           </div>
       </div>
-      <div class="card reveal" data-peso-num="18" data-search="aliança fe30 aliança de noivado e casamento ouro 18k peso 1,7g ou ouro 10k peso 1,3g largura 3,0mm" data-modelo="96">
+      <div class="card reveal" data-peso-num="1.7" data-search="aliança fe30 aliança de noivado e casamento ouro 18k peso 1,7g ou ouro 10k peso 1,3g largura 3,0mm" data-modelo="96">
         <div class="photo"><img src="img/p164-f9558054c6.jpg" alt="Aliança FE30" loading="lazy"><span class="ref-tag">FE30</span></div>
         <div class="body">
           <div class="name">Aliança Lisa Clássica</div>
@@ -2961,7 +2954,7 @@
           <button type="button" class="cart-add-btn" data-name="Aliança FE30" data-avail="Ouro 10K · Ouro 18K" data-peso="18K 1,7g · 10K 1,3g · Larg. 3,0mm">+ Adicionar ao carrinho</button>
           </div>
       </div>
-      <div class="card reveal" data-peso-num="18" data-search="aliança fq30v aliança de noivado e casamento ouro 18k peso 1,8g ou ouro 10k peso 1,4g largura 3,0mm" data-modelo="97">
+      <div class="card reveal" data-peso-num="1.8" data-search="aliança fq30v aliança de noivado e casamento ouro 18k peso 1,8g ou ouro 10k peso 1,4g largura 3,0mm" data-modelo="97">
         <div class="photo"><img src="img/p165-0ba0773d30.jpg" alt="Aliança FQ30V" loading="lazy"><span class="ref-tag">FQ30V</span></div>
         <div class="body">
           <div class="name">Aliança Gravada Delicada</div>
@@ -2970,7 +2963,7 @@
           <button type="button" class="cart-add-btn" data-name="Aliança FQ30V" data-avail="Ouro 10K · Ouro 18K" data-peso="18K 1,8g · 10K 1,4g · Larg. 3,0mm">+ Adicionar ao carrinho</button>
           </div>
       </div>
-      <div class="card reveal" data-peso-num="18" data-search="aliança fv35 aliança de noivado e casamento ouro 18k peso 2,1g ou ouro 10k peso 1,8g largura 3,5mm" data-modelo="98">
+      <div class="card reveal" data-peso-num="2.1" data-search="aliança fv35 aliança de noivado e casamento ouro 18k peso 2,1g ou ouro 10k peso 1,8g largura 3,5mm" data-modelo="98">
         <div class="photo"><img src="img/p166-84f37129a6.jpg" alt="Aliança FV35" loading="lazy"><span class="ref-tag">FV35</span></div>
         <div class="body">
           <div class="name">Aliança Facetada Média</div>
@@ -2979,7 +2972,7 @@
           <button type="button" class="cart-add-btn" data-name="Aliança FV35" data-avail="Ouro 10K · Ouro 18K" data-peso="18K 2,1g · 10K 1,8g · Larg. 3,5mm">+ Adicionar ao carrinho</button>
           </div>
       </div>
-      <div class="card reveal" data-peso-num="18" data-search="aliança fxd25 aliança de noivado e casamento ouro 18k peso 1,4g ou ouro 10k peso 1,1g largura 2,5mm" data-modelo="99">
+      <div class="card reveal" data-peso-num="1.4" data-search="aliança fxd25 aliança de noivado e casamento ouro 18k peso 1,4g ou ouro 10k peso 1,1g largura 2,5mm" data-modelo="99">
         <div class="photo"><img src="img/p167-e00e08602f.jpg" alt="Aliança FXD25" loading="lazy"><span class="ref-tag">FXD25</span></div>
         <div class="body">
           <div class="name">Aliança Estrelada</div>
@@ -2988,7 +2981,7 @@
           <button type="button" class="cart-add-btn" data-name="Aliança FXD25" data-avail="Ouro 10K · Ouro 18K" data-peso="18K 1,4g · 10K 1,1g · Larg. 2,5mm">+ Adicionar ao carrinho</button>
           </div>
       </div>
-      <div class="card reveal" data-peso-num="18" data-search="aliança lc30 aliança de noivado e casamento ouro 18k peso 2,0g ou ouro 10k peso 1,5g largura 3,0mm" data-modelo="100">
+      <div class="card reveal" data-peso-num="2.0" data-search="aliança lc30 aliança de noivado e casamento ouro 18k peso 2,0g ou ouro 10k peso 1,5g largura 3,0mm" data-modelo="100">
         <div class="photo"><img src="img/p168-010f029e12.jpg" alt="Aliança LC30" loading="lazy"><span class="ref-tag">LC30</span></div>
         <div class="body">
           <div class="name">Aliança Ondulada Facetada</div>
@@ -2997,7 +2990,7 @@
           <button type="button" class="cart-add-btn" data-name="Aliança LC30" data-avail="Ouro 10K · Ouro 18K" data-peso="18K 2,0g · 10K 1,5g · Larg. 3,0mm">+ Adicionar ao carrinho</button>
           </div>
       </div>
-      <div class="card reveal" data-peso-num="18" data-search="aliança mc35 aliança de noivado e casamento ouro 18k peso 1,9g ou ouro 10k peso 1,6g largura 3,5mm" data-modelo="101">
+      <div class="card reveal" data-peso-num="1.9" data-search="aliança mc35 aliança de noivado e casamento ouro 18k peso 1,9g ou ouro 10k peso 1,6g largura 3,5mm" data-modelo="101">
         <div class="photo"><img src="img/p169-072794746e.jpg" alt="Aliança MC35" loading="lazy"><span class="ref-tag">MC35</span></div>
         <div class="body">
           <div class="name">Aliança Abaulada Fina</div>
@@ -3006,7 +2999,7 @@
           <button type="button" class="cart-add-btn" data-name="Aliança MC35" data-avail="Ouro 10K · Ouro 18K" data-peso="18K 1,9g · 10K 1,6g · Larg. 3,5mm">+ Adicionar ao carrinho</button>
           </div>
       </div>
-      <div class="card reveal" data-peso-num="18" data-search="aliança mc60 aliança de noivado e casamento ouro 18k peso 4,3g ou ouro 10k peso 3,3g largura 6,0mm" data-modelo="102">
+      <div class="card reveal" data-peso-num="4.3" data-search="aliança mc60 aliança de noivado e casamento ouro 18k peso 4,3g ou ouro 10k peso 3,3g largura 6,0mm" data-modelo="102">
         <div class="photo"><img src="img/p170-5300b14947.jpg" alt="Aliança MC60" loading="lazy"><span class="ref-tag">MC60</span></div>
         <div class="body">
           <div class="name">Aliança Abaulada Martelada</div>
@@ -3015,7 +3008,7 @@
           <button type="button" class="cart-add-btn" data-name="Aliança MC60" data-avail="Ouro 10K · Ouro 18K" data-peso="18K 4,3g · 10K 3,3g · Larg. 6,0mm">+ Adicionar ao carrinho</button>
           </div>
       </div>
-      <div class="card reveal" data-peso-num="18" data-search="aliança mc230 aliança de noivado e casamento ouro 18k peso 2,3g ou ouro 10k peso 1,6g largura 3,0mm" data-modelo="103">
+      <div class="card reveal" data-peso-num="2.3" data-search="aliança mc230 aliança de noivado e casamento ouro 18k peso 2,3g ou ouro 10k peso 1,6g largura 3,0mm" data-modelo="103">
         <div class="photo"><img src="img/p172-bd327b8827.jpg" alt="Aliança MC230" loading="lazy"><span class="ref-tag">MC230</span></div>
         <div class="body">
           <div class="name">Aliança Abaulada Fosca</div>
@@ -3024,7 +3017,7 @@
           <button type="button" class="cart-add-btn" data-name="Aliança MC230" data-avail="Ouro 10K · Ouro 18K" data-peso="18K 2,3g · 10K 1,6g · Larg. 3,0mm">+ Adicionar ao carrinho</button>
           </div>
       </div>
-      <div class="card reveal" data-peso-num="18" data-search="aliança mc240 aliança de noivado e casamento ouro 18k peso 2,8g ou ouro 10k peso 2,4g largura 4,0mm" data-modelo="104">
+      <div class="card reveal" data-peso-num="2.8" data-search="aliança mc240 aliança de noivado e casamento ouro 18k peso 2,8g ou ouro 10k peso 2,4g largura 4,0mm" data-modelo="104">
         <div class="photo"><img src="img/p171-72d3bdffb0.jpg" alt="Aliança MC240" loading="lazy"><span class="ref-tag">MC240</span></div>
         <div class="body">
           <div class="name">Aliança Abaulada Texturizada</div>
@@ -3033,7 +3026,7 @@
           <button type="button" class="cart-add-btn" data-name="Aliança MC240" data-avail="Ouro 10K · Ouro 18K" data-peso="18K 2,8g · 10K 2,4g · Larg. 4,0mm">+ Adicionar ao carrinho</button>
           </div>
       </div>
-      <div class="card reveal" data-peso-num="18" data-search="aliança mc25 aliança de noivado e casamento ouro 18k peso 1,3g ou ouro 10k peso 1,1g largura 2,5mm" data-modelo="105">
+      <div class="card reveal" data-peso-num="1.3" data-search="aliança mc25 aliança de noivado e casamento ouro 18k peso 1,3g ou ouro 10k peso 1,1g largura 2,5mm" data-modelo="105">
         <div class="photo"><img src="img/p173-d794b105cc.jpg" alt="Aliança MC25" loading="lazy"><span class="ref-tag">MC25</span></div>
         <div class="body">
           <div class="name">Aliança Abaulada Extra Fina</div>
@@ -3042,7 +3035,7 @@
           <button type="button" class="cart-add-btn" data-name="Aliança MC25" data-avail="Ouro 10K · Ouro 18K" data-peso="18K 1,3g · 10K 1,1g · Larg. 2,5mm">+ Adicionar ao carrinho</button>
           </div>
       </div>
-      <div class="card reveal" data-peso-num="18" data-search="aliança mc3c60 aliança de noivado e casamento ouro 18k peso 4,2g ou ouro 10k peso 3,8g largura 6,0mm" data-modelo="106">
+      <div class="card reveal" data-peso-num="4.2" data-search="aliança mc3c60 aliança de noivado e casamento ouro 18k peso 4,2g ou ouro 10k peso 3,8g largura 6,0mm" data-modelo="106">
         <div class="photo"><img src="img/p174-768080b7f5.jpg" alt="Aliança MC3C60" loading="lazy"><span class="ref-tag">MC3C60</span></div>
         <div class="body">
           <div class="name">Aliança Raio</div>
@@ -3051,7 +3044,7 @@
           <button type="button" class="cart-add-btn" data-name="Aliança MC3C60" data-avail="Ouro 10K · Ouro 18K" data-peso="18K 4,2g · 10K 3,8g · Larg. 6,0mm">+ Adicionar ao carrinho</button>
           </div>
       </div>
-      <div class="card reveal" data-peso-num="18" data-search="aliança mc50 aliança de noivado e casamento ouro 18k peso 3,5g ou ouro 10k peso 2,8g largura 5,0mm" data-modelo="107">
+      <div class="card reveal" data-peso-num="3.5" data-search="aliança mc50 aliança de noivado e casamento ouro 18k peso 3,5g ou ouro 10k peso 2,8g largura 5,0mm" data-modelo="107">
         <div class="photo"><img src="img/p175-4170b47197.jpg" alt="Aliança MC50" loading="lazy"><span class="ref-tag">MC50</span></div>
         <div class="body">
           <div class="name">Aliança Abaulada Polida</div>
@@ -3060,7 +3053,7 @@
           <button type="button" class="cart-add-btn" data-name="Aliança MC50" data-avail="Ouro 10K · Ouro 18K" data-peso="18K 3,5g · 10K 2,8g · Larg. 5,0mm">+ Adicionar ao carrinho</button>
           </div>
       </div>
-      <div class="card reveal" data-peso-num="18" data-search="aliança mc80 aliança de noivado e casamento ouro 18k peso 7,2g ou ouro 10k peso 8,2g largura 8,0mm" data-modelo="108">
+      <div class="card reveal" data-peso-num="7.2" data-search="aliança mc80 aliança de noivado e casamento ouro 18k peso 7,2g ou ouro 10k peso 8,2g largura 8,0mm" data-modelo="108">
         <div class="photo"><img src="img/p176-0b95d51b1f.jpg" alt="Aliança MC80" loading="lazy"><span class="ref-tag">MC80</span></div>
         <div class="body">
           <div class="name">Aliança Abaulada Larga</div>
@@ -3069,7 +3062,7 @@
           <button type="button" class="cart-add-btn" data-name="Aliança MC80" data-avail="Ouro 10K · Ouro 18K" data-peso="18K 7,2g · 10K 8,2g · Larg. 8,0mm">+ Adicionar ao carrinho</button>
           </div>
       </div>
-      <div class="card reveal" data-peso-num="18" data-search="aliança mca50 aliança de noivado e casamento ouro 18k peso 3,4g ou ouro 10k peso 2,7g largura 5,0mm" data-modelo="109">
+      <div class="card reveal" data-peso-num="3.4" data-search="aliança mca50 aliança de noivado e casamento ouro 18k peso 3,4g ou ouro 10k peso 2,7g largura 5,0mm" data-modelo="109">
         <div class="photo"><img src="img/p177-79df8ea2bd.jpg" alt="Aliança MCA50" loading="lazy"><span class="ref-tag">MCA50</span></div>
         <div class="body">
           <div class="name">Aliança Fosca em Blocos</div>
@@ -3078,7 +3071,7 @@
           <button type="button" class="cart-add-btn" data-name="Aliança MCA50" data-avail="Ouro 10K · Ouro 18K" data-peso="18K 3,4g · 10K 2,7g · Larg. 5,0mm">+ Adicionar ao carrinho</button>
           </div>
       </div>
-      <div class="card reveal" data-peso-num="18" data-search="aliança mcaf40 aliança de noivado e casamento ouro 18k peso 2,5g ou ouro 10k peso 2,1g largura 4,0mm" data-modelo="110">
+      <div class="card reveal" data-peso-num="2.5" data-search="aliança mcaf40 aliança de noivado e casamento ouro 18k peso 2,5g ou ouro 10k peso 2,1g largura 4,0mm" data-modelo="110">
         <div class="photo"><img src="img/p178-ae2b0346d7.jpg" alt="Aliança MCAF40" loading="lazy"><span class="ref-tag">MCAF40</span></div>
         <div class="body">
           <div class="name">Aliança Losangos</div>
@@ -3087,7 +3080,7 @@
           <button type="button" class="cart-add-btn" data-name="Aliança MCAF40" data-avail="Ouro 10K · Ouro 18K" data-peso="18K 2,5g · 10K 2,1g · Larg. 4,0mm">+ Adicionar ao carrinho</button>
           </div>
       </div>
-      <div class="card reveal" data-peso-num="18" data-search="aliança mcc260 aliança de noivado e casamento ouro 18k peso 4,0g ou ouro 10k peso 3,6g largura 6,0mm" data-modelo="111">
+      <div class="card reveal" data-peso-num="4.0" data-search="aliança mcc260 aliança de noivado e casamento ouro 18k peso 4,0g ou ouro 10k peso 3,6g largura 6,0mm" data-modelo="111">
         <div class="photo"><img src="img/p179-7409a87ee5.jpg" alt="Aliança MCC260" loading="lazy"><span class="ref-tag">MCC260</span></div>
         <div class="body">
           <div class="name">Aliança Diamantada Larga</div>
@@ -3096,7 +3089,7 @@
           <button type="button" class="cart-add-btn" data-name="Aliança MCC260" data-avail="Ouro 10K · Ouro 18K" data-peso="18K 4,0g · 10K 3,6g · Larg. 6,0mm">+ Adicionar ao carrinho</button>
           </div>
       </div>
-      <div class="card reveal" data-peso-num="18" data-search="aliança mcc40 aliança de noivado e casamento ouro 18k peso 2,4g ou ouro 10k peso 2,0g largura 4,0mm" data-modelo="112">
+      <div class="card reveal" data-peso-num="2.4" data-search="aliança mcc40 aliança de noivado e casamento ouro 18k peso 2,4g ou ouro 10k peso 2,0g largura 4,0mm" data-modelo="112">
         <div class="photo"><img src="img/p180-78d0b38559.jpg" alt="Aliança MCC40" loading="lazy"><span class="ref-tag">MCC40</span></div>
         <div class="body">
           <div class="name">Aliança Diamantada</div>
@@ -3105,7 +3098,7 @@
           <button type="button" class="cart-add-btn" data-name="Aliança MCC40" data-avail="Ouro 10K · Ouro 18K" data-peso="18K 2,4g · 10K 2,0g · Larg. 4,0mm">+ Adicionar ao carrinho</button>
           </div>
       </div>
-      <div class="card reveal" data-peso-num="18" data-search="aliança mcf40 aliança de noivado e casamento ouro 18k peso 2,4g ou ouro 10k peso 1,8g largura 4,0mm" data-modelo="113">
+      <div class="card reveal" data-peso-num="2.4" data-search="aliança mcf40 aliança de noivado e casamento ouro 18k peso 2,4g ou ouro 10k peso 1,8g largura 4,0mm" data-modelo="113">
         <div class="photo"><img src="img/p181-43df6c4060.jpg" alt="Aliança MCF40" loading="lazy"><span class="ref-tag">MCF40</span></div>
         <div class="body">
           <div class="name">Aliança com Friso Central</div>
@@ -3114,7 +3107,7 @@
           <button type="button" class="cart-add-btn" data-name="Aliança MCF40" data-avail="Ouro 10K · Ouro 18K" data-peso="18K 2,4g · 10K 1,8g · Larg. 4,0mm">+ Adicionar ao carrinho</button>
           </div>
       </div>
-      <div class="card reveal" data-peso-num="18" data-search="aliança mcx40 aliança de noivado e casamento ouro 18k peso 2,5g ou ouro 10k peso 2,0g largura 4,0mm" data-modelo="114">
+      <div class="card reveal" data-peso-num="2.5" data-search="aliança mcx40 aliança de noivado e casamento ouro 18k peso 2,5g ou ouro 10k peso 2,0g largura 4,0mm" data-modelo="114">
         <div class="photo"><img src="img/p182-7e4e54d7b1.jpg" alt="Aliança MCX40" loading="lazy"><span class="ref-tag">MCX40</span></div>
         <div class="body">
           <div class="name">Aliança Palma</div>
@@ -3123,7 +3116,7 @@
           <button type="button" class="cart-add-btn" data-name="Aliança MCX40" data-avail="Ouro 10K · Ouro 18K" data-peso="18K 2,5g · 10K 2,0g · Larg. 4,0mm">+ Adicionar ao carrinho</button>
           </div>
       </div>
-      <div class="card reveal" data-peso-num="18" data-search="aliança me30 aliança de noivado e casamento ouro 18k peso 1,9g ou ouro 10k peso 1,4g largura 3,0mm" data-modelo="115">
+      <div class="card reveal" data-peso-num="1.9" data-search="aliança me30 aliança de noivado e casamento ouro 18k peso 1,9g ou ouro 10k peso 1,4g largura 3,0mm" data-modelo="115">
         <div class="photo"><img src="img/p183-e76773f4a8.jpg" alt="Aliança ME30" loading="lazy"><span class="ref-tag">ME30</span></div>
         <div class="body">
           <div class="name">Aliança Facetada Delicada</div>
@@ -3132,7 +3125,7 @@
           <button type="button" class="cart-add-btn" data-name="Aliança ME30" data-avail="Ouro 10K · Ouro 18K" data-peso="18K 1,9g · 10K 1,4g · Larg. 3,0mm">+ Adicionar ao carrinho</button>
           </div>
       </div>
-      <div class="card reveal" data-peso-num="18" data-search="aliança mf2f60 aliança de noivado e casamento ouro 18k peso 6,0g ou ouro 10k peso 5,5g largura 6,0mm corte anatômico" data-modelo="116">
+      <div class="card reveal" data-peso-num="6.0" data-search="aliança mf2f60 aliança de noivado e casamento ouro 18k peso 6,0g ou ouro 10k peso 5,5g largura 6,0mm corte anatômico" data-modelo="116">
         <div class="photo"><img src="img/p184-35eb33bd9b.jpg" alt="Aliança MF2F60" loading="lazy"><span class="ref-tag">MF2F60</span></div>
         <div class="body">
           <div class="name">Aliança Dupla Facetada</div>
@@ -3141,7 +3134,7 @@
           <button type="button" class="cart-add-btn" data-name="Aliança MF2F60" data-avail="Ouro 10K · Ouro 18K" data-peso="18K 6,0g · 10K 5,5g · Larg. 6,0mm">+ Adicionar ao carrinho</button>
           </div>
       </div>
-      <div class="card reveal" data-peso-num="18" data-search="aliança mfe40 aliança de noivado e casamento ouro 18k peso 2,4g ou ouro 10k peso 2,0g largura 4,0mm" data-modelo="117">
+      <div class="card reveal" data-peso-num="2.4" data-search="aliança mfe40 aliança de noivado e casamento ouro 18k peso 2,4g ou ouro 10k peso 2,0g largura 4,0mm" data-modelo="117">
         <div class="photo"><img src="img/p185-4b26edbb5e.jpg" alt="Aliança MFE40" loading="lazy"><span class="ref-tag">MFE40</span></div>
         <div class="body">
           <div class="name">Aliança Floral</div>
@@ -3150,7 +3143,7 @@
           <button type="button" class="cart-add-btn" data-name="Aliança MFE40" data-avail="Ouro 10K · Ouro 18K" data-peso="18K 2,4g · 10K 2,0g · Larg. 4,0mm">+ Adicionar ao carrinho</button>
           </div>
       </div>
-      <div class="card reveal" data-peso-num="18" data-search="aliança mj40 aliança de noivado e casamento ouro 18k peso 2,5g ou ouro 10k peso 2,0g largura 4,0mm" data-modelo="118">
+      <div class="card reveal" data-peso-num="2.5" data-search="aliança mj40 aliança de noivado e casamento ouro 18k peso 2,5g ou ouro 10k peso 2,0g largura 4,0mm" data-modelo="118">
         <div class="photo"><img src="img/p186-66b54ed22e.jpg" alt="Aliança MJ40" loading="lazy"><span class="ref-tag">MJ40</span></div>
         <div class="body">
           <div class="name">Aliança Corte Diamante</div>
@@ -3159,7 +3152,7 @@
           <button type="button" class="cart-add-btn" data-name="Aliança MJ40" data-avail="Ouro 10K · Ouro 18K" data-peso="18K 2,5g · 10K 2,0g · Larg. 4,0mm">+ Adicionar ao carrinho</button>
           </div>
       </div>
-      <div class="card reveal" data-peso-num="18" data-search="aliança mq25 aliança de noivado e casamento ouro 18k peso 1,4g ou ouro 10k peso 1,1g largura 2,5mm" data-modelo="119">
+      <div class="card reveal" data-peso-num="1.4" data-search="aliança mq25 aliança de noivado e casamento ouro 18k peso 1,4g ou ouro 10k peso 1,1g largura 2,5mm" data-modelo="119">
         <div class="photo"><img src="img/p187-a60840687a.jpg" alt="Aliança MQ25" loading="lazy"><span class="ref-tag">MQ25</span></div>
         <div class="body">
           <div class="name">Aliança Lisa Simples</div>
@@ -3168,7 +3161,7 @@
           <button type="button" class="cart-add-btn" data-name="Aliança MQ25" data-avail="Ouro 10K · Ouro 18K" data-peso="18K 1,4g · 10K 1,1g · Larg. 2,5mm">+ Adicionar ao carrinho</button>
           </div>
       </div>
-      <div class="card reveal" data-peso-num="18" data-search="aliança mv40 aliança de noivado e casamento ouro 18k peso 2,3g ou ouro 10k peso 1,8g largura 4,0mm" data-modelo="120">
+      <div class="card reveal" data-peso-num="2.3" data-search="aliança mv40 aliança de noivado e casamento ouro 18k peso 2,3g ou ouro 10k peso 1,8g largura 4,0mm" data-modelo="120">
         <div class="photo"><img src="img/p188-e059d9acf1.jpg" alt="Aliança MV40" loading="lazy"><span class="ref-tag">MV40</span></div>
         <div class="body">
           <div class="name">Aliança Estrela</div>
@@ -3177,7 +3170,7 @@
           <button type="button" class="cart-add-btn" data-name="Aliança MV40" data-avail="Ouro 10K · Ouro 18K" data-peso="18K 2,3g · 10K 1,8g · Larg. 4,0mm">+ Adicionar ao carrinho</button>
           </div>
       </div>
-      <div class="card reveal" data-peso-num="18" data-search="aliança mv20 aliança de noivado e casamento ouro 18k peso 1,2g ou ouro 10k peso 1,0g largura 2,0mm" data-modelo="121">
+      <div class="card reveal" data-peso-num="1.2" data-search="aliança mv20 aliança de noivado e casamento ouro 18k peso 1,2g ou ouro 10k peso 1,0g largura 2,0mm" data-modelo="121">
         <div class="photo"><img src="img/p189-98b071bc5b.jpg" alt="Aliança MV20" loading="lazy"><span class="ref-tag">MV20</span></div>
         <div class="body">
           <div class="name">Aliança Facetada Extra Fina</div>
@@ -3186,7 +3179,7 @@
           <button type="button" class="cart-add-btn" data-name="Aliança MV20" data-avail="Ouro 10K · Ouro 18K" data-peso="18K 1,2g · 10K 1,0g · Larg. 2,0mm">+ Adicionar ao carrinho</button>
           </div>
       </div>
-      <div class="card reveal" data-peso-num="18" data-search="aliança mx40 aliança de noivado e casamento ouro 18k peso 2,3g ou ouro 10k peso 1,8g largura 4,0mm" data-modelo="122">
+      <div class="card reveal" data-peso-num="2.3" data-search="aliança mx40 aliança de noivado e casamento ouro 18k peso 2,3g ou ouro 10k peso 1,8g largura 4,0mm" data-modelo="122">
         <div class="photo"><img src="img/p190-65082c32d8.jpg" alt="Aliança MX40" loading="lazy"><span class="ref-tag">MX40</span></div>
         <div class="body">
           <div class="name">Aliança Cruzada</div>
@@ -3195,7 +3188,7 @@
           <button type="button" class="cart-add-btn" data-name="Aliança MX40" data-avail="Ouro 10K · Ouro 18K" data-peso="18K 2,3g · 10K 1,8g · Larg. 4,0mm">+ Adicionar ao carrinho</button>
           </div>
       </div>
-      <div class="card reveal" data-peso-num="18" data-search="aliança oc50 aliança de noivado e casamento ouro 18k peso 3,1g ou ouro 10k peso 2,7g largura 5,0mm" data-modelo="123">
+      <div class="card reveal" data-peso-num="3.1" data-search="aliança oc50 aliança de noivado e casamento ouro 18k peso 3,1g ou ouro 10k peso 2,7g largura 5,0mm" data-modelo="123">
         <div class="photo"><img src="img/p191-a5208b9d60.jpg" alt="Aliança OC50" loading="lazy"><span class="ref-tag">OC50</span></div>
         <div class="body">
           <div class="name">Aliança Trançada</div>
@@ -3204,7 +3197,7 @@
           <button type="button" class="cart-add-btn" data-name="Aliança OC50" data-avail="Ouro 10K · Ouro 18K" data-peso="18K 3,1g · 10K 2,7g · Larg. 5,0mm">+ Adicionar ao carrinho</button>
           </div>
       </div>
-      <div class="card reveal" data-peso-num="18" data-search="aliança ocm50 aliança de noivado e casamento ouro 18k peso 3,1g ou ouro 10k peso 2,7g largura 5,0mm" data-modelo="124">
+      <div class="card reveal" data-peso-num="3.1" data-search="aliança ocm50 aliança de noivado e casamento ouro 18k peso 3,1g ou ouro 10k peso 2,7g largura 5,0mm" data-modelo="124">
         <div class="photo"><img src="img/p192-ae75c1d49b.jpg" alt="Aliança OCM50" loading="lazy"><span class="ref-tag">OCM50</span></div>
         <div class="body">
           <div class="name">Aliança Martelada Larga</div>
@@ -3213,7 +3206,7 @@
           <button type="button" class="cart-add-btn" data-name="Aliança OCM50" data-avail="Ouro 10K · Ouro 18K" data-peso="18K 3,1g · 10K 2,7g · Larg. 5,0mm">+ Adicionar ao carrinho</button>
           </div>
       </div>
-      <div class="card reveal" data-peso-num="18" data-search="aliança qdf30 aliança de noivado e casamento ouro 18k peso 2,2g ou ouro 10k peso 1,6g largura 3,0mm" data-modelo="125">
+      <div class="card reveal" data-peso-num="2.2" data-search="aliança qdf30 aliança de noivado e casamento ouro 18k peso 2,2g ou ouro 10k peso 1,6g largura 3,0mm" data-modelo="125">
         <div class="photo"><img src="img/p193-5a351dcfbe.jpg" alt="Aliança QDF30" loading="lazy"><span class="ref-tag">QDF30</span></div>
         <div class="body">
           <div class="name">Aliança Diamantada Fina</div>
@@ -3222,7 +3215,7 @@
           <button type="button" class="cart-add-btn" data-name="Aliança QDF30" data-avail="Ouro 10K · Ouro 18K" data-peso="18K 2,2g · 10K 1,6g · Larg. 3,0mm">+ Adicionar ao carrinho</button>
           </div>
       </div>
-      <div class="card reveal" data-peso-num="18" data-search="aliança tc30 aliança de noivado e casamento ouro 18k peso 2,0g ou ouro 10k peso 1,6g largura 3,0mm" data-modelo="126">
+      <div class="card reveal" data-peso-num="2.0" data-search="aliança tc30 aliança de noivado e casamento ouro 18k peso 2,0g ou ouro 10k peso 1,6g largura 3,0mm" data-modelo="126">
         <div class="photo"><img src="img/p194-03c285d742.jpg" alt="Aliança TC30" loading="lazy"><span class="ref-tag">TC30</span></div>
         <div class="body">
           <div class="name">Aliança Lisa Reta</div>
@@ -3231,7 +3224,7 @@
           <button type="button" class="cart-add-btn" data-name="Aliança TC30" data-avail="Ouro 10K · Ouro 18K" data-peso="18K 2,0g · 10K 1,6g · Larg. 3,0mm">+ Adicionar ao carrinho</button>
           </div>
       </div>
-      <div class="card reveal" data-peso-num="18" data-search="aliança especial 2 aliança de noivado e casamento ouro 10k ouro 18k" data-modelo="128">
+      <div class="card reveal" data-peso-num="" data-search="aliança especial 2 aliança de noivado e casamento ouro 10k ouro 18k" data-modelo="128">
         <div class="photo"><img src="img/p196-cfacd065d6.jpg" alt="Aliança Especial 2" loading="lazy"></div>
         <div class="body">
           <div class="name">Aliança Especial 2</div>
@@ -3240,7 +3233,7 @@
           <button type="button" class="cart-add-btn" data-name="Aliança Especial 2" data-avail="Ouro 10K · Ouro 18K" data-peso="Consulte peso e valores pelo WhatsApp">+ Adicionar ao carrinho</button>
           </div>
       </div>
-      <div class="card reveal" data-peso-num="18" data-search="aliança especial 3 aliança de noivado e casamento ouro 10k ouro 18k" data-modelo="129">
+      <div class="card reveal" data-peso-num="" data-search="aliança especial 3 aliança de noivado e casamento ouro 10k ouro 18k" data-modelo="129">
         <div class="photo"><img src="img/p197-a6bee61150.jpg" alt="Aliança Especial 3" loading="lazy"></div>
         <div class="body">
           <div class="name">Aliança Especial 3</div>
@@ -3249,7 +3242,7 @@
           <button type="button" class="cart-add-btn" data-name="Aliança Especial 3" data-avail="Ouro 10K · Ouro 18K" data-peso="Consulte peso e valores pelo WhatsApp">+ Adicionar ao carrinho</button>
           </div>
       </div>
-      <div class="card reveal" data-peso-num="18" data-search="aliança cfl55 aliança de noivado e casamento ouro 18k peso 4,0g ou ouro 10k peso 3,0g largura 5,5mm" data-modelo="131"><div class="photo"><img src="img/p199-0af51fb2b3.jpg" alt="Aliança CFL55" loading="lazy"><span class="ref-tag">CFL55</span></div><div class="body"><div class="name">Aliança CFL55</div><div class="availability">Ouro 10K · Ouro 18K</div><div class="peso-line">18K 4,0g · 10K 3,0g · Larg. 5,5mm</div><button type="button" class="cart-add-btn" data-name="Aliança CFL55" data-avail="Ouro 10K · Ouro 18K" data-peso="18K 4,0g · 10K 3,0g · Larg. 5,5mm">+ Adicionar ao carrinho</button></div></div><div class="card reveal" data-peso-num="18" data-search="aliança cla50 aliança de noivado e casamento ouro 18k peso 5,0g ou ouro 10k peso 4,0g largura 5,0mm" data-modelo="132"><div class="photo"><img src="img/p200-9c693eb65f.jpg" alt="Aliança CLA50" loading="lazy"><span class="ref-tag">CLA50</span></div><div class="body"><div class="name">Aliança CLA50</div><div class="availability">Ouro 10K · Ouro 18K</div><div class="peso-line">18K 5,0g · 10K 4,0g · Larg. 5,0mm</div><button type="button" class="cart-add-btn" data-name="Aliança CLA50" data-avail="Ouro 10K · Ouro 18K" data-peso="18K 5,0g · 10K 4,0g · Larg. 5,0mm">+ Adicionar ao carrinho</button></div></div><div class="card reveal" data-peso-num="18" data-search="aliança dq25 aliança de noivado e casamento ouro 18k peso 1,4g ou ouro 10k peso 1,1g largura 2,5mm" data-modelo="133"><div class="photo"><img src="img/p201-efcda4d7e4.jpg" alt="Aliança DQ25" loading="lazy"><span class="ref-tag">DQ25</span></div><div class="body"><div class="name">Aliança DQ25</div><div class="availability">Ouro 10K · Ouro 18K</div><div class="peso-line">18K 1,4g · 10K 1,1g · Larg. 2,5mm</div><button type="button" class="cart-add-btn" data-name="Aliança DQ25" data-avail="Ouro 10K · Ouro 18K" data-peso="18K 1,4g · 10K 1,1g · Larg. 2,5mm">+ Adicionar ao carrinho</button></div></div><div class="card reveal" data-peso-num="18" data-search="aliança fc25 aliança de noivado e casamento ouro 18k peso 1,4g ou ouro 10k peso 1,1g largura 2,5mm" data-modelo="134"><div class="photo"><img src="img/p202-81622181d8.jpg" alt="Aliança FC25" loading="lazy"><span class="ref-tag">FC25</span></div><div class="body"><div class="name">Aliança FC25</div><div class="availability">Ouro 10K · Ouro 18K</div><div class="peso-line">18K 1,4g · 10K 1,1g · Larg. 2,5mm</div><button type="button" class="cart-add-btn" data-name="Aliança FC25" data-avail="Ouro 10K · Ouro 18K" data-peso="18K 1,4g · 10K 1,1g · Larg. 2,5mm">+ Adicionar ao carrinho</button></div></div><div class="card reveal" data-peso-num="18" data-search="aliança ffq40 aliança de noivado e casamento ouro 18k peso 2,8g ou ouro 10k peso 2,4g largura 4,0mm" data-modelo="135"><div class="photo"><img src="img/p203-d53e1bf9fc.jpg" alt="Aliança FFQ40" loading="lazy"><span class="ref-tag">FFQ40</span></div><div class="body"><div class="name">Aliança FFQ40</div><div class="availability">Ouro 10K · Ouro 18K</div><div class="peso-line">18K 2,8g · 10K 2,4g · Larg. 4,0mm</div><button type="button" class="cart-add-btn" data-name="Aliança FFQ40" data-avail="Ouro 10K · Ouro 18K" data-peso="18K 2,8g · 10K 2,4g · Larg. 4,0mm">+ Adicionar ao carrinho</button></div></div><div class="card reveal" data-peso-num="18" data-search="aliança fq30 aliança de noivado e casamento ouro 18k peso 1,8g ou ouro 10k peso 1,4g largura 3,0mm" data-modelo="136"><div class="photo"><img src="img/p204-ef8ac18ce4.jpg" alt="Aliança FQ30" loading="lazy"><span class="ref-tag">FQ30</span></div><div class="body"><div class="name">Aliança FQ30</div><div class="availability">Ouro 10K · Ouro 18K</div><div class="peso-line">18K 1,8g · 10K 1,4g · Larg. 3,0mm</div><button type="button" class="cart-add-btn" data-name="Aliança FQ30" data-avail="Ouro 10K · Ouro 18K" data-peso="18K 1,8g · 10K 1,4g · Larg. 3,0mm">+ Adicionar ao carrinho</button></div></div><div class="card reveal" data-peso-num="18" data-search="aliança lc25 aliança de noivado e casamento ouro 18k peso 1,4g ou ouro 10k peso 1,1g largura 2,5mm" data-modelo="137"><div class="photo"><img src="img/p205-c4fbd66cae.jpg" alt="Aliança LC25" loading="lazy"><span class="ref-tag">LC25</span></div><div class="body"><div class="name">Aliança LC25</div><div class="availability">Ouro 10K · Ouro 18K</div><div class="peso-line">18K 1,4g · 10K 1,1g · Larg. 2,5mm</div><button type="button" class="cart-add-btn" data-name="Aliança LC25" data-avail="Ouro 10K · Ouro 18K" data-peso="18K 1,4g · 10K 1,1g · Larg. 2,5mm">+ Adicionar ao carrinho</button></div></div><div class="card reveal" data-peso-num="18" data-search="aliança maf40 aliança de noivado e casamento ouro 18k peso 2,5g ou ouro 10k peso 2,1g largura 4,0mm" data-modelo="138"><div class="photo"><img src="img/p206-416f853f99.jpg" alt="Aliança MAF40" loading="lazy"><span class="ref-tag">MAF40</span></div><div class="body"><div class="name">Aliança MAF40</div><div class="availability">Ouro 10K · Ouro 18K</div><div class="peso-line">18K 2,5g · 10K 2,1g · Larg. 4,0mm</div><button type="button" class="cart-add-btn" data-name="Aliança MAF40" data-avail="Ouro 10K · Ouro 18K" data-peso="18K 2,5g · 10K 2,1g · Larg. 4,0mm">+ Adicionar ao carrinho</button></div></div><div class="card reveal" data-peso-num="18" data-search="aliança med40 aliança de noivado e casamento ouro 18k peso 2,4g ou ouro 10k peso 2,0g largura 4,0mm" data-modelo="139"><div class="photo"><img src="img/p207-2fb5bbcdca.jpg" alt="Aliança MED40" loading="lazy"><span class="ref-tag">MED40</span></div><div class="body"><div class="name">Aliança MED40</div><div class="availability">Ouro 10K · Ouro 18K</div><div class="peso-line">18K 2,4g · 10K 2,0g · Larg. 4,0mm</div><button type="button" class="cart-add-btn" data-name="Aliança MED40" data-avail="Ouro 10K · Ouro 18K" data-peso="18K 2,4g · 10K 2,0g · Larg. 4,0mm">+ Adicionar ao carrinho</button></div></div><div class="card reveal" data-peso-num="18" data-search="aliança mf3p50 aliança de noivado e casamento ouro 18k peso 5,1g ou ouro 10k peso 4,4g largura 5,0mm" data-modelo="140"><div class="photo"><img src="img/p208-f83c2e6b76.jpg" alt="Aliança MF3P50" loading="lazy"><span class="ref-tag">MF3P50</span></div><div class="body"><div class="name">Aliança MF3P50</div><div class="availability">Ouro 10K · Ouro 18K</div><div class="peso-line">18K 5,1g · 10K 4,4g · Larg. 5,0mm</div><button type="button" class="cart-add-btn" data-name="Aliança MF3P50" data-avail="Ouro 10K · Ouro 18K" data-peso="18K 5,1g · 10K 4,4g · Larg. 5,0mm">+ Adicionar ao carrinho</button></div></div><div class="card reveal" data-peso-num="18" data-search="aliança mcch50 aliança de noivado e casamento ouro 18k peso 5,4g ou ouro 10k peso 4,4g largura 5,0mm" data-modelo="141"><div class="photo"><img src="img/p209-5b3416dc61.jpg" alt="Aliança MCCH50" loading="lazy"><span class="ref-tag">MCCH50</span></div><div class="body"><div class="name">Aliança MCCH50</div><div class="availability">Ouro 10K · Ouro 18K</div><div class="peso-line">18K 5,4g · 10K 4,4g · Larg. 5,0mm</div><button type="button" class="cart-add-btn" data-name="Aliança MCCH50" data-avail="Ouro 10K · Ouro 18K" data-peso="18K 5,4g · 10K 4,4g · Larg. 5,0mm">+ Adicionar ao carrinho</button></div></div><div class="card reveal" data-peso-num="18" data-search="aliança cfc35 aliança de noivado e casamento ouro 18k peso 2,8g ou ouro 10k peso 1,7g largura 3,5mm" data-modelo="142"><div class="photo"><img src="img/p210-7ebc8274af.jpg" alt="Aliança CFC35" loading="lazy"><span class="ref-tag">CFC35</span></div><div class="body"><div class="name">Aliança CFC35</div><div class="availability">Ouro 10K · Ouro 18K</div><div class="peso-line">18K 2,8g · 10K 1,7g · Larg. 3,5mm</div><button type="button" class="cart-add-btn" data-name="Aliança CFC35" data-avail="Ouro 10K · Ouro 18K" data-peso="18K 2,8g · 10K 1,7g · Larg. 3,5mm">+ Adicionar ao carrinho</button></div></div><div class="card reveal" data-peso-num="18" data-search="aliança cfdf60 aliança de noivado e casamento ouro 18k peso 4,0g ou ouro 10k peso 3,5g largura 6,0mm" data-modelo="143"><div class="photo"><img src="img/p211-6a006cd5b9.jpg" alt="Aliança CFDF60" loading="lazy"><span class="ref-tag">CFDF60</span></div><div class="body"><div class="name">Aliança CFDF60</div><div class="availability">Ouro 10K · Ouro 18K</div><div class="peso-line">18K 4,0g · 10K 3,5g · Larg. 6,0mm</div><button type="button" class="cart-add-btn" data-name="Aliança CFDF60" data-avail="Ouro 10K · Ouro 18K" data-peso="18K 4,0g · 10K 3,5g · Larg. 6,0mm">+ Adicionar ao carrinho</button></div></div><div class="card reveal" data-peso-num="18" data-search="aliança lcc30 aliança de noivado e casamento ouro 18k peso 2,0g ou ouro 10k peso 1,5g largura 3,0mm" data-modelo="144"><div class="photo"><img src="img/p212-8e91651e38.jpg" alt="Aliança LCC30" loading="lazy"><span class="ref-tag">LCC30</span></div><div class="body"><div class="name">Aliança LCC30</div><div class="availability">Ouro 10K · Ouro 18K</div><div class="peso-line">18K 2,0g · 10K 1,5g · Larg. 3,0mm</div><button type="button" class="cart-add-btn" data-name="Aliança LCC30" data-avail="Ouro 10K · Ouro 18K" data-peso="18K 2,0g · 10K 1,5g · Larg. 3,0mm">+ Adicionar ao carrinho</button></div></div><div class="card reveal" data-peso-num="18" data-search="aliança mf30 aliança de noivado e casamento ouro 18k peso 1,9g ou ouro 10k peso 1,4g largura 3,0mm" data-modelo="145"><div class="photo"><img src="img/p213-4b7a74fc89.jpg" alt="Aliança MF30" loading="lazy"><span class="ref-tag">MF30</span></div><div class="body"><div class="name">Aliança MF30</div><div class="availability">Ouro 10K · Ouro 18K</div><div class="peso-line">18K 1,9g · 10K 1,4g · Larg. 3,0mm</div><button type="button" class="cart-add-btn" data-name="Aliança MF30" data-avail="Ouro 10K · Ouro 18K" data-peso="18K 1,9g · 10K 1,4g · Larg. 3,0mm">+ Adicionar ao carrinho</button></div></div><div class="card reveal" data-peso-num="18" data-search="aliança cffa50 aliança de noivado e casamento anatômica ouro 18k peso 4,5g ou ouro 10k peso 3,5g largura 5,0mm" data-modelo="146"><div class="photo"><img src="img/p214-12277ddacc.jpg" alt="Aliança CFFA50" loading="lazy"><span class="ref-tag">CFFA50</span></div><div class="body"><div class="name">Aliança CFFA50</div><div class="availability">Ouro 10K · Ouro 18K</div><div class="peso-line">18K 4,5g · 10K 3,5g · Larg. 5,0mm Anatômica</div><button type="button" class="cart-add-btn" data-name="Aliança CFFA50" data-avail="Ouro 10K · Ouro 18K" data-peso="18K 4,5g · 10K 3,5g · Larg. 5,0mm Anatômica">+ Adicionar ao carrinho</button></div></div></div>
+      <div class="card reveal" data-peso-num="4.0" data-search="aliança cfl55 aliança de noivado e casamento ouro 18k peso 4,0g ou ouro 10k peso 3,0g largura 5,5mm" data-modelo="131"><div class="photo"><img src="img/p199-0af51fb2b3.jpg" alt="Aliança CFL55" loading="lazy"><span class="ref-tag">CFL55</span></div><div class="body"><div class="name">Aliança CFL55</div><div class="availability">Ouro 10K · Ouro 18K</div><div class="peso-line">18K 4,0g · 10K 3,0g · Larg. 5,5mm</div><button type="button" class="cart-add-btn" data-name="Aliança CFL55" data-avail="Ouro 10K · Ouro 18K" data-peso="18K 4,0g · 10K 3,0g · Larg. 5,5mm">+ Adicionar ao carrinho</button></div></div><div class="card reveal" data-peso-num="5.0" data-search="aliança cla50 aliança de noivado e casamento ouro 18k peso 5,0g ou ouro 10k peso 4,0g largura 5,0mm" data-modelo="132"><div class="photo"><img src="img/p200-9c693eb65f.jpg" alt="Aliança CLA50" loading="lazy"><span class="ref-tag">CLA50</span></div><div class="body"><div class="name">Aliança CLA50</div><div class="availability">Ouro 10K · Ouro 18K</div><div class="peso-line">18K 5,0g · 10K 4,0g · Larg. 5,0mm</div><button type="button" class="cart-add-btn" data-name="Aliança CLA50" data-avail="Ouro 10K · Ouro 18K" data-peso="18K 5,0g · 10K 4,0g · Larg. 5,0mm">+ Adicionar ao carrinho</button></div></div><div class="card reveal" data-peso-num="1.4" data-search="aliança dq25 aliança de noivado e casamento ouro 18k peso 1,4g ou ouro 10k peso 1,1g largura 2,5mm" data-modelo="133"><div class="photo"><img src="img/p201-efcda4d7e4.jpg" alt="Aliança DQ25" loading="lazy"><span class="ref-tag">DQ25</span></div><div class="body"><div class="name">Aliança DQ25</div><div class="availability">Ouro 10K · Ouro 18K</div><div class="peso-line">18K 1,4g · 10K 1,1g · Larg. 2,5mm</div><button type="button" class="cart-add-btn" data-name="Aliança DQ25" data-avail="Ouro 10K · Ouro 18K" data-peso="18K 1,4g · 10K 1,1g · Larg. 2,5mm">+ Adicionar ao carrinho</button></div></div><div class="card reveal" data-peso-num="1.4" data-search="aliança fc25 aliança de noivado e casamento ouro 18k peso 1,4g ou ouro 10k peso 1,1g largura 2,5mm" data-modelo="134"><div class="photo"><img src="img/p202-81622181d8.jpg" alt="Aliança FC25" loading="lazy"><span class="ref-tag">FC25</span></div><div class="body"><div class="name">Aliança FC25</div><div class="availability">Ouro 10K · Ouro 18K</div><div class="peso-line">18K 1,4g · 10K 1,1g · Larg. 2,5mm</div><button type="button" class="cart-add-btn" data-name="Aliança FC25" data-avail="Ouro 10K · Ouro 18K" data-peso="18K 1,4g · 10K 1,1g · Larg. 2,5mm">+ Adicionar ao carrinho</button></div></div><div class="card reveal" data-peso-num="2.8" data-search="aliança ffq40 aliança de noivado e casamento ouro 18k peso 2,8g ou ouro 10k peso 2,4g largura 4,0mm" data-modelo="135"><div class="photo"><img src="img/p203-d53e1bf9fc.jpg" alt="Aliança FFQ40" loading="lazy"><span class="ref-tag">FFQ40</span></div><div class="body"><div class="name">Aliança FFQ40</div><div class="availability">Ouro 10K · Ouro 18K</div><div class="peso-line">18K 2,8g · 10K 2,4g · Larg. 4,0mm</div><button type="button" class="cart-add-btn" data-name="Aliança FFQ40" data-avail="Ouro 10K · Ouro 18K" data-peso="18K 2,8g · 10K 2,4g · Larg. 4,0mm">+ Adicionar ao carrinho</button></div></div><div class="card reveal" data-peso-num="1.8" data-search="aliança fq30 aliança de noivado e casamento ouro 18k peso 1,8g ou ouro 10k peso 1,4g largura 3,0mm" data-modelo="136"><div class="photo"><img src="img/p204-ef8ac18ce4.jpg" alt="Aliança FQ30" loading="lazy"><span class="ref-tag">FQ30</span></div><div class="body"><div class="name">Aliança FQ30</div><div class="availability">Ouro 10K · Ouro 18K</div><div class="peso-line">18K 1,8g · 10K 1,4g · Larg. 3,0mm</div><button type="button" class="cart-add-btn" data-name="Aliança FQ30" data-avail="Ouro 10K · Ouro 18K" data-peso="18K 1,8g · 10K 1,4g · Larg. 3,0mm">+ Adicionar ao carrinho</button></div></div><div class="card reveal" data-peso-num="1.4" data-search="aliança lc25 aliança de noivado e casamento ouro 18k peso 1,4g ou ouro 10k peso 1,1g largura 2,5mm" data-modelo="137"><div class="photo"><img src="img/p205-c4fbd66cae.jpg" alt="Aliança LC25" loading="lazy"><span class="ref-tag">LC25</span></div><div class="body"><div class="name">Aliança LC25</div><div class="availability">Ouro 10K · Ouro 18K</div><div class="peso-line">18K 1,4g · 10K 1,1g · Larg. 2,5mm</div><button type="button" class="cart-add-btn" data-name="Aliança LC25" data-avail="Ouro 10K · Ouro 18K" data-peso="18K 1,4g · 10K 1,1g · Larg. 2,5mm">+ Adicionar ao carrinho</button></div></div><div class="card reveal" data-peso-num="2.5" data-search="aliança maf40 aliança de noivado e casamento ouro 18k peso 2,5g ou ouro 10k peso 2,1g largura 4,0mm" data-modelo="138"><div class="photo"><img src="img/p206-416f853f99.jpg" alt="Aliança MAF40" loading="lazy"><span class="ref-tag">MAF40</span></div><div class="body"><div class="name">Aliança MAF40</div><div class="availability">Ouro 10K · Ouro 18K</div><div class="peso-line">18K 2,5g · 10K 2,1g · Larg. 4,0mm</div><button type="button" class="cart-add-btn" data-name="Aliança MAF40" data-avail="Ouro 10K · Ouro 18K" data-peso="18K 2,5g · 10K 2,1g · Larg. 4,0mm">+ Adicionar ao carrinho</button></div></div><div class="card reveal" data-peso-num="2.4" data-search="aliança med40 aliança de noivado e casamento ouro 18k peso 2,4g ou ouro 10k peso 2,0g largura 4,0mm" data-modelo="139"><div class="photo"><img src="img/p207-2fb5bbcdca.jpg" alt="Aliança MED40" loading="lazy"><span class="ref-tag">MED40</span></div><div class="body"><div class="name">Aliança MED40</div><div class="availability">Ouro 10K · Ouro 18K</div><div class="peso-line">18K 2,4g · 10K 2,0g · Larg. 4,0mm</div><button type="button" class="cart-add-btn" data-name="Aliança MED40" data-avail="Ouro 10K · Ouro 18K" data-peso="18K 2,4g · 10K 2,0g · Larg. 4,0mm">+ Adicionar ao carrinho</button></div></div><div class="card reveal" data-peso-num="5.1" data-search="aliança mf3p50 aliança de noivado e casamento ouro 18k peso 5,1g ou ouro 10k peso 4,4g largura 5,0mm" data-modelo="140"><div class="photo"><img src="img/p208-f83c2e6b76.jpg" alt="Aliança MF3P50" loading="lazy"><span class="ref-tag">MF3P50</span></div><div class="body"><div class="name">Aliança MF3P50</div><div class="availability">Ouro 10K · Ouro 18K</div><div class="peso-line">18K 5,1g · 10K 4,4g · Larg. 5,0mm</div><button type="button" class="cart-add-btn" data-name="Aliança MF3P50" data-avail="Ouro 10K · Ouro 18K" data-peso="18K 5,1g · 10K 4,4g · Larg. 5,0mm">+ Adicionar ao carrinho</button></div></div><div class="card reveal" data-peso-num="5.4" data-search="aliança mcch50 aliança de noivado e casamento ouro 18k peso 5,4g ou ouro 10k peso 4,4g largura 5,0mm" data-modelo="141"><div class="photo"><img src="img/p209-5b3416dc61.jpg" alt="Aliança MCCH50" loading="lazy"><span class="ref-tag">MCCH50</span></div><div class="body"><div class="name">Aliança MCCH50</div><div class="availability">Ouro 10K · Ouro 18K</div><div class="peso-line">18K 5,4g · 10K 4,4g · Larg. 5,0mm</div><button type="button" class="cart-add-btn" data-name="Aliança MCCH50" data-avail="Ouro 10K · Ouro 18K" data-peso="18K 5,4g · 10K 4,4g · Larg. 5,0mm">+ Adicionar ao carrinho</button></div></div><div class="card reveal" data-peso-num="2.8" data-search="aliança cfc35 aliança de noivado e casamento ouro 18k peso 2,8g ou ouro 10k peso 1,7g largura 3,5mm" data-modelo="142"><div class="photo"><img src="img/p210-7ebc8274af.jpg" alt="Aliança CFC35" loading="lazy"><span class="ref-tag">CFC35</span></div><div class="body"><div class="name">Aliança CFC35</div><div class="availability">Ouro 10K · Ouro 18K</div><div class="peso-line">18K 2,8g · 10K 1,7g · Larg. 3,5mm</div><button type="button" class="cart-add-btn" data-name="Aliança CFC35" data-avail="Ouro 10K · Ouro 18K" data-peso="18K 2,8g · 10K 1,7g · Larg. 3,5mm">+ Adicionar ao carrinho</button></div></div><div class="card reveal" data-peso-num="4.0" data-search="aliança cfdf60 aliança de noivado e casamento ouro 18k peso 4,0g ou ouro 10k peso 3,5g largura 6,0mm" data-modelo="143"><div class="photo"><img src="img/p211-6a006cd5b9.jpg" alt="Aliança CFDF60" loading="lazy"><span class="ref-tag">CFDF60</span></div><div class="body"><div class="name">Aliança CFDF60</div><div class="availability">Ouro 10K · Ouro 18K</div><div class="peso-line">18K 4,0g · 10K 3,5g · Larg. 6,0mm</div><button type="button" class="cart-add-btn" data-name="Aliança CFDF60" data-avail="Ouro 10K · Ouro 18K" data-peso="18K 4,0g · 10K 3,5g · Larg. 6,0mm">+ Adicionar ao carrinho</button></div></div><div class="card reveal" data-peso-num="2.0" data-search="aliança lcc30 aliança de noivado e casamento ouro 18k peso 2,0g ou ouro 10k peso 1,5g largura 3,0mm" data-modelo="144"><div class="photo"><img src="img/p212-8e91651e38.jpg" alt="Aliança LCC30" loading="lazy"><span class="ref-tag">LCC30</span></div><div class="body"><div class="name">Aliança LCC30</div><div class="availability">Ouro 10K · Ouro 18K</div><div class="peso-line">18K 2,0g · 10K 1,5g · Larg. 3,0mm</div><button type="button" class="cart-add-btn" data-name="Aliança LCC30" data-avail="Ouro 10K · Ouro 18K" data-peso="18K 2,0g · 10K 1,5g · Larg. 3,0mm">+ Adicionar ao carrinho</button></div></div><div class="card reveal" data-peso-num="1.9" data-search="aliança mf30 aliança de noivado e casamento ouro 18k peso 1,9g ou ouro 10k peso 1,4g largura 3,0mm" data-modelo="145"><div class="photo"><img src="img/p213-4b7a74fc89.jpg" alt="Aliança MF30" loading="lazy"><span class="ref-tag">MF30</span></div><div class="body"><div class="name">Aliança MF30</div><div class="availability">Ouro 10K · Ouro 18K</div><div class="peso-line">18K 1,9g · 10K 1,4g · Larg. 3,0mm</div><button type="button" class="cart-add-btn" data-name="Aliança MF30" data-avail="Ouro 10K · Ouro 18K" data-peso="18K 1,9g · 10K 1,4g · Larg. 3,0mm">+ Adicionar ao carrinho</button></div></div><div class="card reveal" data-peso-num="4.5" data-search="aliança cffa50 aliança de noivado e casamento anatômica ouro 18k peso 4,5g ou ouro 10k peso 3,5g largura 5,0mm" data-modelo="146"><div class="photo"><img src="img/p214-12277ddacc.jpg" alt="Aliança CFFA50" loading="lazy"><span class="ref-tag">CFFA50</span></div><div class="body"><div class="name">Aliança CFFA50</div><div class="availability">Ouro 10K · Ouro 18K</div><div class="peso-line">18K 4,5g · 10K 3,5g · Larg. 5,0mm Anatômica</div><button type="button" class="cart-add-btn" data-name="Aliança CFFA50" data-avail="Ouro 10K · Ouro 18K" data-peso="18K 4,5g · 10K 3,5g · Larg. 5,0mm Anatômica">+ Adicionar ao carrinho</button></div></div></div>
   
 </section>
 
@@ -3257,7 +3250,7 @@
   <div class="section-head">
     <div class="kicker">Visite-nos</div>
     <h2>Nossas Lojas</h2>
-    <p>Estamos à disposição para te ajudar a escolher o anel perfeito.</p>
+    <p>Estamos à disposição para te ajudar a escolher a peça perfeita.</p>
   </div>
   <div class="stores-grid">
         <div class="store-card">
@@ -3288,7 +3281,7 @@
         </div>
         <div class="store-card">
           <div class="store-map">
-            <iframe src="https://www.google.com/maps?q=Avenida%20Liberdade%2C%202047%20%E2%80%94%20Santa%20Isabel%2C%20Viam%C3%A3o%2C%20Porto%20Alegre%2C%20RS&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+            <iframe src="https://www.google.com/maps?q=Avenida%20Liberdade%2C%202047%20%E2%80%94%20Santa%20Isabel%2C%20Viam%C3%A3o%2C%20RS&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
           </div>
           <div class="store-name">Popular Óptica Gold · Viamão</div>
           <div class="store-line"><svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><path d="M12 2C7.6 2 4 5.6 4 10c0 5.4 7 12 8 12s8-6.6 8-12c0-4.4-3.6-8-8-8zm0 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/></svg><span>Avenida Liberdade, 2047 — Santa Isabel, Viamão</span></div>
@@ -3296,7 +3289,7 @@
           <div class="store-actions">
             <a class="store-btn" href="https://wa.me/5551993504373?text=Ol%C3%A1%21%20Tenho%20interesse%20em%20uma%20pe%C3%A7a%20do%20cat%C3%A1logo.%20Pode%20me%20passar%20mais%20informa%C3%A7%C3%B5es%3F" target="_blank" rel="noopener" onclick="trackLead('contato-loja')">WhatsApp</a>
             <a class="store-btn outline" href="tel:+5551993504373">Ligar</a>
-            <a class="store-btn outline" href="https://www.google.com/maps/search/?api=1&query=Avenida%20Liberdade%2C%202047%20%E2%80%94%20Santa%20Isabel%2C%20Viam%C3%A3o%2C%20Porto%20Alegre%2C%20RS" target="_blank" rel="noopener">Ver no Maps</a>
+            <a class="store-btn outline" href="https://www.google.com/maps/search/?api=1&query=Avenida%20Liberdade%2C%202047%20%E2%80%94%20Santa%20Isabel%2C%20Viam%C3%A3o%2C%20RS" target="_blank" rel="noopener">Ver no Maps</a>
           </div>
         </div>
   </div>
@@ -3312,6 +3305,7 @@
       <h4>Ajuda e suporte</h4>
       <a href="#" data-info-modal="sobre">Quem Somos</a>
       <a href="#" data-info-modal="termos">Termos de Uso</a>
+      <a href="#" data-info-modal="privacidade">Política de Privacidade</a>
       <a href="https://wa.me/5551998919943?text=Ol%C3%A1%21%20Como%20funciona%20para%20comprar%20uma%20pe%C3%A7a%20de%20voc%C3%AAs%3F" target="_blank" rel="noopener">Como Comprar</a>
       <a href="https://wa.me/5551998919943?text=Ol%C3%A1%21%20Gostaria%20de%20saber%20sobre%20trocas%20e%20devolu%C3%A7%C3%B5es." target="_blank" rel="noopener">Trocas e Devoluções</a>
       <a href="https://wa.me/5551998919943?text=Ol%C3%A1%21%20Tenho%20uma%20d%C3%BAvida%20sobre%20o%20cat%C3%A1logo." target="_blank" rel="noopener">Perguntas Frequentes</a>
@@ -3366,7 +3360,7 @@
     </div>
   </div>
 
-  <div class="footer-copy">Popular Óptica Gold © <span id="footer-year">2026</span> · Ouro 10K e 18K · Feminina · Infantil · Masculina · Solitários</div>
+  <div class="footer-copy">Popular Óptica Gold © <span id="footer-year">2026</span> · Ouro 10K e 18K · Feminina · Infantil · Masculina · Solitários · Alianças</div>
 </footer>
 
 <div class="cat-nav-overlay" id="cat-nav-overlay">
@@ -3724,6 +3718,17 @@
     } catch (e) {}
   }
 
+  function trackAddToCart(itemName) {
+    try {
+      if (typeof fbq === 'function') {
+        fbq('track', 'AddToCart', { content_name: itemName });
+      }
+      if (typeof gtag === 'function') {
+        gtag('event', 'add_to_cart', { items: [{ item_name: itemName }] });
+      }
+    } catch (e) {}
+  }
+
   // ---------- Aba lateral de categorias ----------
   (function() {
     var openBtn = document.getElementById('cat-nav-open-btn');
@@ -3939,6 +3944,24 @@
   <p>Para facilitar seu atendimento, guardamos de forma anônima as peças que você adiciona ao carrinho (sem nome, telefone ou qualquer dado que identifique você), mesmo que o pedido não seja finalizado. Essa informação é usada só para entendermos o interesse nas peças do catálogo.</p>
   <h4>Notificações</h4>
   <p>Se você aceitar, o site pode enviar uma notificação pelo navegador lembrando que ainda há peças no seu carrinho. Isso só acontece se você ativar essa opção; você pode recusar ou desativar quando quiser, nas configurações do seu navegador ou celular. Essa notificação também não usa nome, telefone ou qualquer dado que identifique você — apenas um identificador técnico anônimo do seu aparelho/navegador.</p>
+  <p>Veja também a nossa Política de Privacidade, no rodapé do site.</p>
+</div>
+
+<div id="info-modal-source-privacidade" hidden>
+  <p>Esta política explica como a Popular Óptica Gold trata os seus dados pessoais neste site, de acordo com a Lei Geral de Proteção de Dados (Lei nº 13.709/2018 — LGPD).</p>
+  <h4>Quais dados coletamos</h4>
+  <p><strong>Se você criar uma conta (opcional):</strong> nome, e-mail, WhatsApp e senha. A senha é guardada de forma criptografada e nós não temos acesso a ela.</p>
+  <p><strong>Carrinho:</strong> as peças que você adiciona ao carrinho. Sem conta, o carrinho fica ligado só a um código anônimo do seu navegador. Com conta, ele fica ligado ao seu cadastro para você encontrá-lo em outro aparelho.</p>
+  <p><strong>Notificações (opcional):</strong> um identificador técnico do navegador, só se você aceitar receber avisos.</p>
+  <p><strong>Navegação:</strong> usamos o Meta Pixel (Facebook/Instagram) e o Google Ads para medir visitas e o resultado dos nossos anúncios. Essas ferramentas usam cookies e podem registrar páginas vistas e botões clicados.</p>
+  <h4>Para que usamos</h4>
+  <p>Para atender o seu pedido pelo WhatsApp, guardar o seu carrinho, avisar sobre novidades e promoções (se você criou conta) e melhorar o catálogo e os nossos anúncios. Não vendemos os seus dados.</p>
+  <h4>Com quem compartilhamos</h4>
+  <p>Apenas com os serviços que fazem o site funcionar: hospedagem e banco de dados (Cloudflare e Supabase), WhatsApp para o atendimento, e Meta e Google para a medição de anúncios.</p>
+  <h4>Seus direitos</h4>
+  <p>Você pode pedir a qualquer momento para ver, corrigir ou apagar os seus dados, ou para deixar de receber mensagens. É só falar com a gente pelo WhatsApp ou pelo e-mail a.popularoptica@gmail.com.</p>
+  <h4>Por quanto tempo guardamos</h4>
+  <p>Mantemos os dados enquanto a sua conta existir ou enquanto forem necessários para o atendimento. Quando você pede a exclusão, apagamos os seus dados, exceto o que a lei nos obriga a guardar.</p>
 </div>
 
 <script>
@@ -3989,6 +4012,7 @@
         opt.addEventListener('click', function() {
           var text = 'Ol\u00e1! Tenho interesse na ' + currentCorrente + ' com o ' + p.name + '. Pode me passar mais informa\u00e7\u00f5es?';
           var url = 'https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(text);
+          trackLead('corrente-com-pingente');
           window.open(url, '_blank', 'noopener');
           closeModal();
         });
@@ -4026,7 +4050,7 @@
     var bodyEl = document.getElementById('info-modal-body');
     if (!overlay || !titleEl || !bodyEl) return;
 
-    var TITLES = { sobre: 'Quem Somos', termos: 'Termos de Uso' };
+    var TITLES = { sobre: 'Quem Somos', termos: 'Termos de Uso', privacidade: 'Política de Privacidade' };
 
     function openInfoModal(key) {
       var source = document.getElementById('info-modal-source-' + key);
@@ -4095,7 +4119,7 @@
 
     <div id="auth-view-signup" class="auth-view" hidden>
       <h3>Criar conta</h3>
-      <p class="auth-sub">Opcional! É só pra guardar seu carrinho e te avisar sobre novidades e promoções. Você pode continuar comprando sem se cadastrar, se preferir.</p>
+      <p class="auth-sub">Opcional! É só pra guardar seu carrinho e te avisar sobre novidades e promoções. Você pode continuar comprando sem se cadastrar, se preferir. Ao criar a conta, você concorda com a nossa <a href="#" data-info-modal="privacidade">Política de Privacidade</a>.</p>
       <form id="auth-signup-form">
         <label>Nome<input type="text" id="signup-name" name="name" required autocomplete="name"></label>
         <label>E-mail<input type="email" id="signup-email" name="email" required autocomplete="email"></label>
@@ -4418,6 +4442,7 @@
         var item = { name: name, avail: avail, peso: peso };
         if (size) { item.size = size; }
         cart.push(item);
+        trackAddToCart(name);
         saveCart();
         render();
         syncAddButtons();
@@ -4440,6 +4465,7 @@
           '\n\nPode me passar o valor total e as formas de pagamento (Pix ou cartão)?';
         var url = 'https://wa.me/' + CART_WA_NUMBER + '?text=' + encodeURIComponent(text);
         syncCartRemote(true);
+        trackLead('finalizar-pedido-carrinho');
         window.open(url, '_blank', 'noopener');
       });
     }
