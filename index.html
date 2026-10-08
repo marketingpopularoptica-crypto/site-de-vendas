@@ -2865,7 +2865,7 @@
           <button type="button" class="cart-add-btn" data-name="Aliança BO40" data-avail="Ouro 10K · 18K sob encomenda" data-peso="18K 2,4g · 10K 2,0g · Larg. 4,0mm">+ Adicionar ao carrinho</button>
           </div>
       </div>
-      <div class="card reveal" data-peso-num="6.4" data-search="aliança cf3p60 aliança de noivado e casamento ouro 18k peso 6,4g ou ouro 10k peso 4,9g largura 6,0mm 3 pedras de zircônia 1,5mm, corte anatômico" data-modelo="82">
+      <div class="card reveal" data-linha="elegance" data-peso-num="6.4" data-search="aliança cf3p60 aliança de noivado e casamento ouro 18k peso 6,4g ou ouro 10k peso 4,9g largura 6,0mm 3 pedras de zircônia 1,5mm, corte anatômico" data-modelo="82">
         <div class="photo"><img src="img/p150-f16847915b.jpg" alt="Aliança CF3P60" loading="lazy"><span class="ref-tag">CF3P60</span></div>
         <div class="body">
           <div class="name">Aliança Dupla Cravejada</div>
@@ -4301,9 +4301,10 @@
       function par(pesoCatalogo, taxa) {
         return pesoCatalogo ? (pesoCatalogo / taxas.divisor) * soma * taxa : null;
       }
+      var elegance = card.getAttribute('data-linha') === 'elegance';
       return {
-        k10: par(pesos.k10, taxas.alianca10),
-        k18: par(pesos.k18, taxas.alianca18),
+        k10: par(pesos.k10, elegance ? taxas.elegance10 : taxas.alianca10),
+        k18: par(pesos.k18, elegance ? taxas.elegance18 : taxas.alianca18),
         aPartir: !completo,
         tamanhos: completo ? t1 + ' e ' + t2 : ''
       };
