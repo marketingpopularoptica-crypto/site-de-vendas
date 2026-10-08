@@ -589,6 +589,30 @@
   .card .size-select-wrap.size-missing label {
     color: #c0392b;
   }
+  .card .price-line {
+    font-size: 15px;
+    font-weight: 700;
+    color: #0f1c30;
+    margin-top: 6px;
+    line-height: 1.35;
+  }
+  .card .price-line small {
+    display: block;
+    font-size: 10.5px;
+    font-weight: 500;
+    color: #8a8471;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+  }
+  .card .alianca-sizes {
+    display: flex;
+    gap: 6px;
+  }
+  .card .alianca-sizes .size-select-wrap { flex: 1; min-width: 0; }
+  @media (max-width: 560px) {
+    .card .price-line { font-size: 11px !important; }
+    .card .price-line small { font-size: 8px !important; }
+  }
   @keyframes size-shake {
     0%, 100% { transform: translateX(0); }
     25% { transform: translateX(-3px); }
@@ -4094,7 +4118,7 @@
     </div>
     <div class="cart-push-banner" id="cart-push-banner" hidden></div>
     <div class="cart-drawer-foot">
-      <p>O pedido é enviado pelo WhatsApp. Valores, Pix e pagamento com cartão são combinados diretamente com a loja.</p>
+      <p>O pedido é enviado pelo WhatsApp. Os valores seguem a cotação do ouro do dia e são confirmados no atendimento, junto com Pix ou cartão.</p>
       <button type="button" class="cart-checkout-btn" id="cart-checkout-btn" disabled>
         <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21h.004c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm5.8 14.14c-.24.68-1.4 1.3-1.93 1.38-.5.08-1.12.11-1.8-.11-.42-.13-.96-.31-1.65-.6-2.9-1.25-4.8-4.17-4.94-4.36-.15-.19-1.18-1.57-1.18-3 0-1.42.75-2.12 1.01-2.41.27-.29.58-.36.78-.36.19 0 .39 0 .56.01.18.01.42-.07.65.5.24.58.82 2 .89 2.15.07.15.12.32.02.51-.09.19-.14.31-.28.48-.14.17-.3.37-.42.5-.14.15-.29.31-.12.6.16.29.72 1.19 1.55 1.93 1.07.95 1.97 1.25 2.26 1.39.29.15.46.12.63-.07.17-.19.72-.84.91-1.13.19-.29.38-.24.64-.14.26.1 1.66.78 1.94.93.29.14.47.21.55.33.07.12.07.68-.17 1.36z"/></svg>
         <span>Finalizar pedido no WhatsApp</span>
@@ -4152,6 +4176,197 @@
     </div>
   </div>
 </div>
+
+<script>
+  // ---------- Preços do dia ----------
+  // O servidor (/api/precos) devolve só o valor por grama já calculado com a
+  // cotação informada pela loja; a fórmula fica guardada na Cloudflare.
+  (function() {
+    var GRIDS_GERAIS = ['grid-feminina', 'grid-infantil', 'grid-masculina', 'grid-pingentes', 'grid-aliancas-solitarios'];
+    var TAMANHOS_ALIANCA = [];
+    for (var t = 10; t <= 35; t++) { TAMANHOS_ALIANCA.push(t); }
+    var taxas = null;
+
+    function reais(v) {
+      return 'R$ ' + v.toFixed(2).replace('.', ',').replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+    }
+    function num(s) { return parseFloat(String(s).replace(',', '.')); }
+
+    // Solitários: "peso 0,5g (tam. 13,14,15,16,18,20) ou 0,6g (tam. 19)".
+    // Se um tamanho aparece em dois pesos, vale o maior.
+    function pesosPorTamanho(card) {
+      var mapa = {};
+      var re = /(\d+(?:,\d+)?)g \(tam\. ([^)]+)\)/g;
+      var texto = card.getAttribute('data-search') || '';
+      var m;
+      while ((m = re.exec(texto))) {
+        var peso = num(m[1]);
+        m[2].split(/,| e /).forEach(function(tam) {
+          tam = tam.trim();
+          if (tam && !(mapa[tam] >= peso)) { mapa[tam] = peso; }
+        });
+      }
+      return mapa;
+    }
+
+    function linhaPreco(card) {
+      var el = card.querySelector('.price-line');
+      if (!el) {
+        el = document.createElement('div');
+        el.className = 'price-line';
+        var ref = card.querySelector('.peso-line') || card.querySelector('.availability');
+        ref.parentNode.insertBefore(el, ref.nextSibling);
+      }
+      return el;
+    }
+
+    // Retorna { texto, tamanhos } com o preço que o card mostra agora, ou null.
+    function precoGeral(card) {
+      var mapa = pesosPorTamanho(card);
+      var tamanhos = Object.keys(mapa);
+      var select = card.querySelector('.size-select');
+      if (tamanhos.length) {
+        var escolhido = select && select.value;
+        if (escolhido && mapa[escolhido]) {
+          return { valor: taxas.gerais * mapa[escolhido], aPartir: false };
+        }
+        var menor = Math.min.apply(null, tamanhos.map(function(k) { return mapa[k]; }));
+        return { valor: taxas.gerais * menor, aPartir: true };
+      }
+      var peso = num(card.getAttribute('data-peso-num'));
+      if (!peso) { return null; }
+      var pesoLine = card.querySelector('.peso-line');
+      var faixa = pesoLine && / a /.test(pesoLine.textContent);
+      return { valor: taxas.gerais * peso, aPartir: faixa };
+    }
+
+    function pesosAlianca(card) {
+      var texto = (card.querySelector('.peso-line') || {}).textContent || '';
+      var p18 = texto.match(/18K (\d+(?:,\d+)?)g/);
+      var p10 = texto.match(/10K (\d+(?:,\d+)?)g/);
+      if (!p18 && !p10) { return null; }
+      return { k18: p18 ? num(p18[1]) : null, k10: p10 ? num(p10[1]) : null };
+    }
+
+    function montarTamanhosAlianca(card) {
+      if (card.querySelector('.alianca-sizes')) { return; }
+      var wrap = document.createElement('div');
+      wrap.className = 'alianca-sizes';
+      ['1', '2'].forEach(function(n) {
+        var id = 'alianca-tam-' + (card.getAttribute('data-modelo') || Math.random().toString(36).slice(2)) + '-' + n;
+        var box = document.createElement('div');
+        box.className = 'size-select-wrap';
+        var label = document.createElement('label');
+        label.setAttribute('for', id);
+        label.textContent = 'Tam. ' + n;
+        var sel = document.createElement('select');
+        sel.className = 'size-select alianca-size';
+        sel.id = id;
+        var vazio = document.createElement('option');
+        vazio.value = '';
+        vazio.textContent = 'Selecione';
+        sel.appendChild(vazio);
+        TAMANHOS_ALIANCA.forEach(function(tam) {
+          var o = document.createElement('option');
+          o.value = String(tam);
+          o.textContent = String(tam);
+          sel.appendChild(o);
+        });
+        sel.addEventListener('change', function() { mostrarAlianca(card); });
+        box.appendChild(label);
+        box.appendChild(sel);
+        wrap.appendChild(box);
+      });
+      var btn = card.querySelector('.cart-add-btn');
+      btn.parentNode.insertBefore(wrap, btn);
+    }
+
+    function precoAlianca(card) {
+      var pesos = pesosAlianca(card);
+      if (!pesos) { return null; }
+      var sels = card.querySelectorAll('.alianca-size');
+      var t1 = sels[0] && sels[0].value, t2 = sels[1] && sels[1].value;
+      var completo = !!(t1 && t2);
+      var soma = completo ? Number(t1) + Number(t2) : TAMANHOS_ALIANCA[0] * 2;
+      function par(pesoCatalogo, taxa) {
+        return pesoCatalogo ? (pesoCatalogo / taxas.divisor) * soma * taxa : null;
+      }
+      return {
+        k10: par(pesos.k10, taxas.alianca10),
+        k18: par(pesos.k18, taxas.alianca18),
+        aPartir: !completo,
+        tamanhos: completo ? t1 + ' e ' + t2 : ''
+      };
+    }
+
+    function mostrarGeral(card) {
+      var p = precoGeral(card);
+      var el = linhaPreco(card);
+      if (!p) { el.hidden = true; return; }
+      el.innerHTML = (p.aPartir ? '<small>a partir de</small>' : '') + reais(p.valor);
+      el.hidden = false;
+    }
+
+    function mostrarAlianca(card) {
+      var p = precoAlianca(card);
+      var el = linhaPreco(card);
+      if (!p) { el.hidden = true; return; }
+      var partes = [];
+      if (p.k10) { partes.push('10K ' + reais(p.k10)); }
+      if (p.k18) { partes.push('18K ' + reais(p.k18)); }
+      el.innerHTML = '<small>' + (p.aPartir ? 'Par a partir de' : 'Valor do par') + '</small>' + partes.join('<br>');
+      el.hidden = false;
+    }
+
+    // Usado pelo carrinho: texto do preço atual do card e tamanhos escolhidos.
+    window.precoDoCard = function(card) {
+      if (!taxas || !card) { return null; }
+      if (card.closest('#grid-aliancas')) {
+        var a = precoAlianca(card);
+        if (!a || a.aPartir) { return null; }
+        var partes = [];
+        if (a.k10) { partes.push('10K ' + reais(a.k10)); }
+        if (a.k18) { partes.push('18K ' + reais(a.k18)); }
+        return { texto: 'Par: ' + partes.join(' · '), tamanhos: a.tamanhos };
+      }
+      var g = precoGeral(card);
+      if (!g || g.aPartir) { return null; }
+      return { texto: reais(g.valor) };
+    };
+
+    function renderizar() {
+      GRIDS_GERAIS.forEach(function(id) {
+        var grid = document.getElementById(id);
+        if (!grid) { return; }
+        grid.querySelectorAll('.card').forEach(function(card) {
+          mostrarGeral(card);
+          var sel = card.querySelector('.size-select');
+          if (sel && !sel._precoLigado) {
+            sel._precoLigado = true;
+            sel.addEventListener('change', function() { mostrarGeral(card); });
+          }
+        });
+      });
+      var gridAl = document.getElementById('grid-aliancas');
+      if (gridAl) {
+        gridAl.querySelectorAll('.card').forEach(function(card) {
+          if (!pesosAlianca(card)) { return; }
+          montarTamanhosAlianca(card);
+          mostrarAlianca(card);
+        });
+      }
+    }
+
+    fetch('/api/precos')
+      .then(function(r) { return r.ok ? r.json() : null; })
+      .then(function(d) {
+        if (!d || !d.disponivel) { return; }
+        taxas = d;
+        renderizar();
+      })
+      .catch(function() {});
+  })();
+</script>
 
 <script>
   (function() {
@@ -4357,6 +4572,7 @@
         var metaText = item.avail || '';
         if (item.peso) { metaText += (metaText ? ' · ' : '') + item.peso; }
         if (item.size) { metaText += (metaText ? ' · ' : '') + 'Tam. ' + item.size; }
+        if (item.preco) { metaText += (metaText ? ' · ' : '') + item.preco; }
         var metaEl = document.createElement('div');
         metaEl.className = 'cart-item-meta';
         metaEl.textContent = metaText;
@@ -4429,7 +4645,7 @@
         }
         var card = btn.closest('.card');
         var sizeWrap = card ? card.querySelector('.size-select-wrap') : null;
-        var sizeSelect = card ? card.querySelector('.size-select') : null;
+        var sizeSelect = card ? card.querySelector('.size-select:not(.alianca-size)') : null;
         var size = '';
         if (sizeSelect) {
           size = sizeSelect.value || '';
@@ -4444,6 +4660,11 @@
         }
         var item = { name: name, avail: avail, peso: peso };
         if (size) { item.size = size; }
+        var preco = window.precoDoCard ? window.precoDoCard(card) : null;
+        if (preco) {
+          item.preco = preco.texto;
+          if (preco.tamanhos) { item.size = preco.tamanhos; }
+        }
         cart.push(item);
         trackAddToCart(name);
         saveCart();
@@ -4461,11 +4682,12 @@
           if (item.avail) { extra.push(item.avail); }
           if (item.peso) { extra.push(item.peso); }
           if (item.size) { extra.push('Tam. ' + item.size); }
+          if (item.preco) { extra.push(item.preco); }
           if (extra.length) { line += ' (' + extra.join(' · ') + ')'; }
           return line;
         });
         var text = 'Olá! Gostaria de fazer um pedido:\n' + lines.join('\n') +
-          '\n\nPode me passar o valor total e as formas de pagamento (Pix ou cartão)?';
+          '\n\nPode confirmar o valor total e as formas de pagamento (Pix ou cartão)?';
         var url = 'https://wa.me/' + CART_WA_NUMBER + '?text=' + encodeURIComponent(text);
         syncCartRemote(true);
         trackLead('finalizar-pedido-carrinho');

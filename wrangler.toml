@@ -1,0 +1,9 @@
+name = "popularopticagold"
+pages_build_output_dir = "."
+compatibility_date = "2026-10-01"
+
+# Cotação do ouro 18k informada pelo chefe às 11h (página /cotacao).
+# A fórmula de preço NÃO fica aqui: ela é o segredo FORMULA, gravado na Cloudflare.
+[[kv_namespaces]]
+binding = "COTACAO_OURO"
+id = "790608a5ceb54697bf01a09669d03c02"

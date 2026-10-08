@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Cotação do dia · Popular Óptica Gold</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; min-height: 100vh; display: flex; align-items: center; justify-content: center;
+    font-family: 'Poppins', Arial, sans-serif; background: #0f1c30; color: #1c1a17; padding: 20px;
+  }
+  .card { background: #faf8f3; border-radius: 16px; padding: 28px 24px; width: 100%; max-width: 380px; box-shadow: 0 10px 40px rgba(0,0,0,.35); }
+  .eyebrow { font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: #b8923f; font-weight: 600; }
+  h1 { font-size: 22px; margin: 6px 0 4px; }
+  .sub { font-size: 14px; color: #5c564c; margin: 0 0 20px; }
+  label { display: block; font-size: 13px; font-weight: 500; margin-bottom: 6px; }
+  .campo { position: relative; margin-bottom: 16px; }
+  .campo span { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: #5c564c; font-size: 18px; }
+  input { width: 100%; font: inherit; font-size: 18px; padding: 12px 14px; border: 1.5px solid #d9cfb4; border-radius: 10px; background: #fff; }
+  input:focus { outline: none; border-color: #b8923f; }
+  .campo input { padding-left: 46px; font-size: 24px; font-weight: 600; }
+  button { width: 100%; font: inherit; font-weight: 600; font-size: 16px; padding: 14px; border: 0; border-radius: 10px; background: #c9a14a; color: #0f1c30; cursor: pointer; }
+  button:disabled { opacity: .6; cursor: wait; }
+  .msg { margin-top: 14px; font-size: 14px; padding: 10px 12px; border-radius: 8px; }
+  .msg.ok { background: #e6f4ea; color: #1e6b34; }
+  .msg.erro { background: #fbe9e7; color: #a12d1c; }
+  .atual { font-size: 13px; color: #5c564c; margin: -6px 0 18px; }
+</style>
+</head>
+<body>
+<main class="card">
+  <div class="eyebrow">Popular Óptica Gold</div>
+  <h1>Cotação do ouro 18k</h1>
+
+  <form id="form-senha">
+    <p class="sub">Área interna. Digite a senha para continuar.</p>
+    <label for="senha">Senha</label>
+    <input id="senha" type="password" autocomplete="current-password" required>
+    <div style="height:16px"></div>
+    <button type="submit">Entrar</button>
+  </form>
+
+  <form id="form-cotacao" hidden>
+    <p class="sub">Informe o valor do grama do ouro 18k de hoje. Os preços do site são atualizados na hora.</p>
+    <p class="atual" id="atual"></p>
+    <label for="valor">Grama do 18k</label>
+    <div class="campo"><span>R$</span><input id="valor" inputmode="decimal" placeholder="487,30" autocomplete="off" required></div>
+    <button type="submit">Salvar cotação</button>
+  </form>
+
+  <div class="msg" id="msg" hidden></div>
+</main>
+
+<script>
+  (function() {
+    var KEY = 'cotacao_senha_v1';
+    var formSenha = document.getElementById('form-senha');
+    var formCot = document.getElementById('form-cotacao');
+    var msg = document.getElementById('msg');
+    var atualEl = document.getElementById('atual');
+    var senha = '';
+
+    function mostrar(texto, ok) {
+      msg.textContent = texto;
+      msg.className = 'msg ' + (ok ? 'ok' : 'erro');
+      msg.hidden = false;
+    }
+    function reais(v) {
+      return 'R$ ' + Number(v).toFixed(2).replace('.', ',').replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+    }
+    function quando(iso) {
+      return new Date(iso).toLocaleString('pt-BR', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' });
+    }
+    function mostrarAtual(atual) {
+      atualEl.textContent = atual ? 'Cotação em uso: ' + reais(atual.valor) + ' (informada em ' + quando(atual.em) + ')' : 'Nenhuma cotação informada ainda.';
+    }
+    function enviar(corpo) {
+      return fetch('/api/cotacao', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(corpo)
+      }).then(function(r) { return r.json().then(function(d) { d._status = r.status; return d; }); });
+    }
+    function entrar(s, lembrar) {
+      return enviar({ senha: s }).then(function(d) {
+        if (d.erro) {
+          try { localStorage.removeItem(KEY); } catch (e) {}
+          formSenha.hidden = false; formCot.hidden = true;
+          mostrar(d.erro, false);
+          return;
+        }
+        senha = s;
+        if (lembrar) { try { localStorage.setItem(KEY, s); } catch (e) {} }
+        formSenha.hidden = true; formCot.hidden = false; msg.hidden = true;
+        mostrarAtual(d.atual);
+        document.getElementById('valor').focus();
+      }).catch(function() { mostrar('Sem conexão. Tente de novo.', false); });
+    }
+
+    formSenha.addEventListener('submit', function(e) {
+      e.preventDefault();
+      entrar(document.getElementById('senha').value, true);
+    });
+
+    formCot.addEventListener('submit', function(e) {
+      e.preventDefault();
+      var btn = formCot.querySelector('button');
+      btn.disabled = true;
+      enviar({ senha: senha, valor: document.getElementById('valor').value }).then(function(d) {
+        btn.disabled = false;
+        if (d.erro) { mostrar(d.erro, false); return; }
+        mostrarAtual(d.atual);
+        document.getElementById('valor').value = '';
+        mostrar('Pronto! Cotação de ' + reais(d.atual.valor) + ' salva. Os preços do site já estão atualizados.', true);
+      }).catch(function() {
+        btn.disabled = false;
+        mostrar('Sem conexão. A cotação não foi salva, tente de novo.', false);
+      });
+    });
+
+    var salva = null;
+    try { salva = localStorage.getItem(KEY); } catch (e) {}
+    if (salva) { entrar(salva, false); }
+  })();
+</script>
+</body>
+</html>
