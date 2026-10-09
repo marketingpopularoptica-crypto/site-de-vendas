@@ -614,7 +614,17 @@
     text-transform: none;
     letter-spacing: 0;
   }
+  .card .price-line .preco-18k {
+    display: block;
+    font-size: 11px;
+    font-weight: 500;
+    color: #8a8471;
+    margin-top: 2px;
+  }
+  .card input.alianca-size { cursor: text; text-align: center; }
+  .card input.alianca-size::placeholder { color: #8a8471; }
   .card .alianca-sizes {
+    margin-top: 8px;
     display: flex;
     gap: 6px;
   }
@@ -622,6 +632,8 @@
   @media (max-width: 560px) {
     .card .price-line { font-size: 11px !important; }
     .card .price-line small { font-size: 8px !important; }
+    .card .alianca-sizes { flex-direction: column; gap: 4px; }
+    .card .price-line .preco-18k { font-size: 8.5px; }
   }
   @keyframes size-shake {
     0%, 100% { transform: translateX(0); }
@@ -4193,8 +4205,8 @@
   // cotação informada pela loja; a fórmula fica guardada na Cloudflare.
   (function() {
     var GRIDS_GERAIS = ['grid-feminina', 'grid-infantil', 'grid-masculina', 'grid-pingentes', 'grid-aliancas-solitarios'];
-    var TAMANHOS_ALIANCA = [];
-    for (var t = 10; t <= 35; t++) { TAMANHOS_ALIANCA.push(t); }
+    // tamanhos de aro aceitos quando o cliente digita; o menor serve para o "a partir de"
+    var TAMANHO_MIN = 10, TAMANHO_MAX = 35;
     var taxas = null;
 
     function reais(v) {
@@ -4251,7 +4263,7 @@
     }
 
     function pesosAlianca(card) {
-      var texto = (card.querySelector('.peso-line') || {}).textContent || '';
+      var texto = (card.querySelector('.peso-line:not(.largura-line)') || {}).textContent || '';
       var p18 = texto.match(/18K (\d+(?:,\d+)?)g/);
       var p10 = texto.match(/10K (\d+(?:,\d+)?)g/);
       if (!p18 && !p10) { return null; }
@@ -4266,25 +4278,20 @@
         var id = 'alianca-tam-' + (card.getAttribute('data-modelo') || Math.random().toString(36).slice(2)) + '-' + n;
         var box = document.createElement('div');
         box.className = 'size-select-wrap';
-        var label = document.createElement('label');
-        label.setAttribute('for', id);
-        label.textContent = 'Tam. ' + n;
-        var sel = document.createElement('select');
-        sel.className = 'size-select alianca-size';
-        sel.id = id;
-        var vazio = document.createElement('option');
-        vazio.value = '';
-        vazio.textContent = 'Selecione';
-        sel.appendChild(vazio);
-        TAMANHOS_ALIANCA.forEach(function(tam) {
-          var o = document.createElement('option');
-          o.value = String(tam);
-          o.textContent = String(tam);
-          sel.appendChild(o);
+        var campo = document.createElement('input');
+        campo.type = 'text';
+        campo.inputMode = 'numeric';
+        campo.maxLength = 2;
+        campo.autocomplete = 'off';
+        campo.className = 'size-select alianca-size';
+        campo.id = id;
+        campo.placeholder = 'Tam. ' + n;
+        campo.setAttribute('aria-label', 'Tamanho ' + n);
+        campo.addEventListener('input', function() {
+          campo.value = campo.value.replace(/\D/g, '');
+          mostrarAlianca(card);
         });
-        sel.addEventListener('change', function() { mostrarAlianca(card); });
-        box.appendChild(label);
-        box.appendChild(sel);
+        box.appendChild(campo);
         wrap.appendChild(box);
       });
       var btn = card.querySelector('.cart-add-btn');
@@ -4295,9 +4302,13 @@
       var pesos = pesosAlianca(card);
       if (!pesos) { return null; }
       var sels = card.querySelectorAll('.alianca-size');
-      var t1 = sels[0] && sels[0].value, t2 = sels[1] && sels[1].value;
+      function valido(campo) {
+        var n = campo ? parseInt(campo.value, 10) : NaN;
+        return n >= TAMANHO_MIN && n <= TAMANHO_MAX ? n : null;
+      }
+      var t1 = valido(sels[0]), t2 = valido(sels[1]);
       var completo = !!(t1 && t2);
-      var soma = completo ? Number(t1) + Number(t2) : TAMANHOS_ALIANCA[0] * 2;
+      var soma = completo ? t1 + t2 : TAMANHO_MIN * 2;
       function par(pesoCatalogo, taxa) {
         return pesoCatalogo ? (pesoCatalogo / taxas.divisor) * soma * taxa : null;
       }
@@ -4306,7 +4317,8 @@
         k10: par(pesos.k10, elegance ? taxas.elegance10 : taxas.alianca10),
         k18: par(pesos.k18, elegance ? taxas.elegance18 : taxas.alianca18),
         aPartir: !completo,
-        tamanhos: completo ? t1 + ' e ' + t2 : ''
+        tamanhos: completo ? t1 + ' e ' + t2 : '',
+        foraDaFaixa: !completo && !!((sels[0] && sels[0].value) && (sels[1] && sels[1].value))
       };
     }
 
@@ -4318,14 +4330,31 @@
       el.hidden = false;
     }
 
+    function mostrarLargura(card) {
+      var pesoLine = card.querySelector('.peso-line');
+      if (!pesoLine || card.querySelector('.largura-line')) { return; }
+      var larg = pesoLine.textContent.match(/Larg\. (\d+(?:,\d+)?)mm/);
+      if (!larg) { return; }
+      var el = document.createElement('div');
+      el.className = 'peso-line largura-line';
+      el.textContent = 'Largura ' + larg[1] + ' mm';
+      pesoLine.parentNode.insertBefore(el, pesoLine);
+      pesoLine.hidden = true;
+    }
+
     function mostrarAlianca(card) {
       var p = precoAlianca(card);
       var el = linhaPreco(card);
       if (!p) { el.hidden = true; return; }
-      var partes = [];
-      if (p.k10) { partes.push('10K ' + reais(p.k10)); }
-      if (p.k18) { partes.push('18K ' + reais(p.k18) + ' <small class="encomenda">sob encomenda</small>'); }
-      el.innerHTML = '<small>' + (p.aPartir ? 'Par a partir de' : 'Valor do par') + '</small>' + partes.join('<br>');
+      var principal = p.k10 || p.k18;
+      var html = '<small>' + (p.aPartir ? 'Par a partir de' : 'Valor do par em 10K') + '</small>' + reais(principal);
+      if (p.foraDaFaixa) {
+        html += '<span class="preco-18k">Tamanhos de ' + TAMANHO_MIN + ' a ' + TAMANHO_MAX + '. Fora disso, fale com a gente.</span>';
+      }
+      if (!p.aPartir && p.k10 && p.k18) {
+        html += '<span class="preco-18k">18K sob encomenda: ' + reais(p.k18) + '</span>';
+      }
+      el.innerHTML = html;
       el.hidden = false;
     }
 
@@ -4362,6 +4391,7 @@
       if (gridAl) {
         gridAl.querySelectorAll('.card').forEach(function(card) {
           if (!pesosAlianca(card)) { return; }
+          mostrarLargura(card);
           montarTamanhosAlianca(card);
           mostrarAlianca(card);
         });
