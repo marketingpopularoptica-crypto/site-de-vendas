@@ -1068,6 +1068,32 @@
     font-size: 12px;
     color: #8a8471;
   }
+  .cart-item-info .cart-item-price {
+    font-size: 14px;
+    font-weight: 700;
+    color: #0f1c30;
+    margin-top: 3px;
+  }
+  .cart-item-info .cart-item-price.a-confirmar {
+    font-size: 12px;
+    font-weight: 500;
+    color: #8a8471;
+    font-style: italic;
+  }
+  .cart-total {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 2px 8px;
+    padding: 10px 0 12px;
+    margin-bottom: 8px;
+    border-bottom: 1px solid #e4d9b8;
+    font-size: 14px;
+    color: #0f1c30;
+  }
+  .cart-total strong { font-size: 18px; }
+  .cart-total small { flex-basis: 100%; font-size: 11.5px; color: #8a8471; }
   .cart-item-remove {
     background: none;
     border: none;
@@ -4140,6 +4166,7 @@
     </div>
     <div class="cart-push-banner" id="cart-push-banner" hidden></div>
     <div class="cart-drawer-foot">
+      <div class="cart-total" id="cart-total" hidden></div>
       <p>O pedido é enviado pelo WhatsApp. Os valores seguem a cotação do ouro do dia e são confirmados no atendimento, junto com Pix ou cartão.</p>
       <button type="button" class="cart-checkout-btn" id="cart-checkout-btn" disabled>
         <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21h.004c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm5.8 14.14c-.24.68-1.4 1.3-1.93 1.38-.5.08-1.12.11-1.8-.11-.42-.13-.96-.31-1.65-.6-2.9-1.25-4.8-4.17-4.94-4.36-.15-.19-1.18-1.57-1.18-3 0-1.42.75-2.12 1.01-2.41.27-.29.58-.36.78-.36.19 0 .39 0 .56.01.18.01.42-.07.65.5.24.58.82 2 .89 2.15.07.15.12.32.02.51-.09.19-.14.31-.28.48-.14.17-.3.37-.42.5-.14.15-.29.31-.12.6.16.29.72 1.19 1.55 1.93 1.07.95 1.97 1.25 2.26 1.39.29.15.46.12.63-.07.17-.19.72-.84.91-1.13.19-.29.38-.24.64-.14.26.1 1.66.78 1.94.93.29.14.47.21.55.33.07.12.07.68-.17 1.36z"/></svg>
@@ -4289,6 +4316,7 @@
         campo.setAttribute('aria-label', 'Tamanho ' + n);
         campo.addEventListener('input', function() {
           campo.value = campo.value.replace(/\D/g, '');
+          box.classList.remove('size-missing');
           mostrarAlianca(card);
         });
         box.appendChild(campo);
@@ -4367,12 +4395,34 @@
         var partes = [];
         if (a.k10) { partes.push('10K ' + reais(a.k10)); }
         if (a.k18) { partes.push('18K ' + reais(a.k18) + ' (sob encomenda)'); }
-        return { texto: 'Par: ' + partes.join(' · '), tamanhos: a.tamanhos };
+        return { texto: 'Par: ' + partes.join(' · '), tamanhos: a.tamanhos, valor: a.k10 || a.k18,
+                 valor18: a.k10 && a.k18 ? a.k18 : null, par: true };
       }
       var g = precoGeral(card);
       if (!g || g.aPartir) { return null; }
-      return { texto: reais(g.valor) };
+      return { texto: reais(g.valor), valor: g.valor };
     };
+
+    // Aliança com preço só entra no carrinho com os dois tamanhos: marca os campos e avisa.
+    window.aliancaFaltaTamanho = function(card) {
+      if (!taxas || !card || !card.closest('#grid-aliancas') || !pesosAlianca(card)) { return false; }
+      var a = precoAlianca(card);
+      if (!a || !a.aPartir) { return false; }
+      var primeiroVazio = null;
+      card.querySelectorAll('.alianca-sizes .size-select-wrap').forEach(function(wrap) {
+        var campo = wrap.querySelector('.alianca-size');
+        var n = parseInt(campo.value, 10);
+        wrap.classList.remove('size-missing');
+        if (!(n >= TAMANHO_MIN && n <= TAMANHO_MAX)) {
+          void wrap.offsetWidth; // reinicia a animação se clicar de novo
+          wrap.classList.add('size-missing');
+          if (!primeiroVazio) { primeiroVazio = campo; }
+        }
+      });
+      if (primeiroVazio) { primeiroVazio.focus(); }
+      return true;
+    };
+    window.reaisCarrinho = reais;
 
     function renderizar() {
       GRIDS_GERAIS.forEach(function(id) {
@@ -4598,6 +4648,7 @@
         empty.id = 'cart-empty';
         empty.textContent = 'Seu carrinho está vazio. Adicione peças do catálogo para montar seu pedido.';
         itemsEl.appendChild(empty);
+        mostrarTotal();
         updateCount();
         return;
       }
@@ -4611,14 +4662,29 @@
         nameEl.className = 'cart-item-name';
         nameEl.textContent = item.name;
         var metaText = item.avail || '';
-        if (item.peso) { metaText += (metaText ? ' · ' : '') + item.peso; }
         if (item.size) { metaText += (metaText ? ' · ' : '') + 'Tam. ' + item.size; }
-        if (item.preco) { metaText += (metaText ? ' · ' : '') + item.preco; }
         var metaEl = document.createElement('div');
         metaEl.className = 'cart-item-meta';
         metaEl.textContent = metaText;
         info.appendChild(nameEl);
         info.appendChild(metaEl);
+        var precoEl = document.createElement('div');
+        precoEl.className = 'cart-item-price';
+        if (typeof item.valor === 'number' && window.reaisCarrinho) {
+          precoEl.textContent = (item.par ? 'Par em 10K: ' : '') + window.reaisCarrinho(item.valor);
+        } else if (item.preco) {
+          precoEl.textContent = item.preco;
+        } else {
+          precoEl.textContent = 'Valor a confirmar no atendimento';
+          precoEl.classList.add('a-confirmar');
+        }
+        info.appendChild(precoEl);
+        if (typeof item.valor18 === 'number' && window.reaisCarrinho) {
+          var p18 = document.createElement('div');
+          p18.className = 'cart-item-meta';
+          p18.textContent = '18K sob encomenda: ' + window.reaisCarrinho(item.valor18);
+          info.appendChild(p18);
+        }
 
         var removeBtn = document.createElement('button');
         removeBtn.className = 'cart-item-remove';
@@ -4635,7 +4701,26 @@
         row.appendChild(removeBtn);
         itemsEl.appendChild(row);
       });
+      mostrarTotal();
       updateCount();
+    }
+
+    function totalEstimado() {
+      var soma = 0, semValor = 0;
+      cart.forEach(function(item) {
+        if (typeof item.valor === 'number') { soma += item.valor; } else { semValor++; }
+      });
+      return { soma: soma, semValor: semValor };
+    }
+
+    function mostrarTotal() {
+      var el = document.getElementById('cart-total');
+      if (!el) { return; }
+      var t = totalEstimado();
+      if (!cart.length || !t.soma || !window.reaisCarrinho) { el.hidden = true; return; }
+      el.innerHTML = '<span>Total estimado em 10K</span><strong>' + window.reaisCarrinho(t.soma) + '</strong>' +
+        (t.semValor ? '<small>+ ' + t.semValor + (t.semValor === 1 ? ' peça' : ' peças') + ' com valor a confirmar</small>' : '');
+      el.hidden = false;
     }
 
     function syncAddButtons() {
@@ -4685,6 +4770,7 @@
           return;
         }
         var card = btn.closest('.card');
+        if (window.aliancaFaltaTamanho && window.aliancaFaltaTamanho(card)) { return; }
         var sizeWrap = card ? card.querySelector('.size-select-wrap') : null;
         var sizeSelect = card ? card.querySelector('.size-select:not(.alianca-size)') : null;
         var size = '';
@@ -4704,6 +4790,9 @@
         var preco = window.precoDoCard ? window.precoDoCard(card) : null;
         if (preco) {
           item.preco = preco.texto;
+          item.valor = Math.round(preco.valor * 100) / 100;
+          if (preco.par) { item.par = true; }
+          if (preco.valor18) { item.valor18 = Math.round(preco.valor18 * 100) / 100; }
           if (preco.tamanhos) { item.size = preco.tamanhos; }
         }
         cart.push(item);
@@ -4727,6 +4816,11 @@
           if (extra.length) { line += ' (' + extra.join(' · ') + ')'; }
           return line;
         });
+        var t = totalEstimado();
+        if (t.soma && window.reaisCarrinho) {
+          lines.push('', 'Total estimado em 10K: ' + window.reaisCarrinho(t.soma) +
+            (t.semValor ? ' (+ ' + t.semValor + ' a confirmar)' : ''));
+        }
         var text = 'Olá! Gostaria de fazer um pedido:\n' + lines.join('\n') +
           '\n\nPode confirmar o valor total e as formas de pagamento (Pix ou cartão)?';
         var url = 'https://wa.me/' + CART_WA_NUMBER + '?text=' + encodeURIComponent(text);
