@@ -416,36 +416,24 @@
     .grid.cols-3 > .card, .grid.cols-4 > .card { flex: 0 0 calc(50% - 13px); }
   }
   @media (max-width: 560px) {
-    .grid { gap: 10px; }
-    .grid.cols-3 > .card, .grid.cols-4 > .card { flex: 0 0 calc(33.333% - 6.7px); }
-    /* !important porque essas regras vêm antes, no CSS, das regras base de
-       .card .name / .availability / .peso-line / .cart-add-btn / .add-pendant-btn
-       — sem isso, a ordem no arquivo faz a regra base (mais abaixo) vencer
-       mesmo com o media query batendo. */
-    .card .body { padding: 8px 6px 10px !important; }
+    /* celular: 2 colunas, para a foto aparecer grande e o texto caber inteiro.
+       !important porque estas regras vêm antes, no CSS, das regras base do card. */
+    .grid { gap: 12px; }
+    .grid.cols-3 > .card, .grid.cols-4 > .card { flex: 0 0 calc(50% - 6px); }
+    .card .body { padding: 10px 10px 12px !important; }
     .card .name {
-      font-size: 10.5px !important;
-      line-height: 1.2 !important;
-      white-space: nowrap !important;
-      overflow: hidden !important;
-      text-overflow: ellipsis !important;
+      font-size: 14px !important;
+      line-height: 1.25 !important;
+      margin-bottom: 4px !important;
     }
-    .card .availability, .card .peso-line {
-      font-size: 9px !important;
-      white-space: nowrap !important;
-      overflow: hidden !important;
-      text-overflow: ellipsis !important;
-    }
-    .card .availability {
-      white-space: normal !important;
-      line-height: 1.3;
-    }
+    .card .availability { font-size: 11px !important; line-height: 1.3; }
+    .card .peso-line { font-size: 11.5px !important; }
     .cart-add-btn, .add-pendant-btn {
-      font-size: 8px !important;
-      padding: 7px 2px !important;
-      gap: 3px !important;
-      white-space: nowrap !important;
+      font-size: 12px !important;
+      padding: 10px 4px !important;
+      gap: 4px !important;
       letter-spacing: 0 !important;
+      white-space: nowrap !important;
     }
     /* espaço extra embaixo de cada seção pro botão flutuante do WhatsApp não
        ficar em cima do último card ao terminar de rolar aquela seção */
@@ -524,7 +512,7 @@
     user-select: none;
   }
   @media (max-width: 560px) {
-    .card .photo .ref-tag { font-size: 7px; padding: 2px 5px; bottom: 6px; right: 6px; }
+    .card .photo .ref-tag { font-size: 9px; padding: 3px 6px; bottom: 6px; right: 6px; }
   }
   .card .photo .photo-hover {
     position: absolute;
@@ -657,11 +645,13 @@
   }
   .card .alianca-sizes .size-select-wrap { flex: 1; min-width: 0; }
   @media (max-width: 560px) {
-    .card .price-line { font-size: 11px !important; }
-    .card .price-line small { font-size: 8px !important; }
-    .card .alianca-sizes { flex-direction: column; gap: 4px; }
-    .card .alianca-modo button { font-size: 9.5px; padding: 5px 2px; }
-    .card .price-line .preco-18k { font-size: 8.5px; }
+    .card .price-line { font-size: 16px !important; margin-top: 4px; }
+    .card .price-line small { font-size: 9.5px !important; }
+    .card .price-line .preco-18k { font-size: 10.5px; }
+    .card .alianca-modo { margin-top: 8px; }
+    .card .alianca-modo button { font-size: 11.5px; padding: 6px 2px; }
+    .card .alianca-sizes { gap: 6px; margin-top: 6px; }
+    .card input.alianca-size { font-size: 14px !important; padding: 7px 4px !important; }
   }
   @keyframes size-shake {
     0%, 100% { transform: translateX(0); }
@@ -669,8 +659,8 @@
     75% { transform: translateX(3px); }
   }
   @media (max-width: 560px) {
-    .card .size-select-wrap label { font-size: 9px !important; }
-    .card .size-select { font-size: 10.5px !important; padding: 6px 6px !important; }
+    .card .size-select-wrap label { font-size: 10px !important; }
+    .card .size-select { font-size: 13px !important; padding: 8px 6px !important; }
   }
   .coming-soon {
     text-align: center;
@@ -3817,24 +3807,31 @@
   })();
 
   // ---------- Encolhe a fonte dos botões "Adicionar ao carrinho" / "Adicionar
-  // pingente" no celular (3 colunas) até o texto caber numa linha só, em vez
+  // pingente" no celular (2 colunas) até o texto caber numa linha só, em vez
   // de trocar o texto por uma versão curta. ----------
   function fitButtonLabels() {
-    var isMobile3Col = window.matchMedia('(max-width: 560px)').matches;
+    var isCelular = window.matchMedia('(max-width: 560px)').matches;
     var buttons = document.querySelectorAll('.cart-add-btn, .add-pendant-btn');
     buttons.forEach(function(btn) {
       // o CSS usa !important no font-size pra vencer a ordem das regras no
       // arquivo — por isso, pra o JS conseguir sobrescrever, também precisa
       // marcar a declaração inline como !important (senão o !important do
       // stylesheet sempre ganha do style inline comum).
-      if (!isMobile3Col) { btn.style.removeProperty('font-size'); return; }
-      var maxSize = 8; // precisa bater com o font-size do CSS em @media (max-width: 560px)
-      var minSize = 5.5;
+      btn.style.removeProperty('white-space');
+      if (!isCelular) { btn.style.removeProperty('font-size'); return; }
+      var maxSize = 12; // precisa bater com o font-size do CSS em @media (max-width: 560px)
+      var minSize = 10.5;
       var size = maxSize;
       btn.style.setProperty('font-size', size + 'px', 'important');
-      while (btn.scrollWidth > btn.clientWidth && size > minSize) {
+      var FOLGA = 12; // espaço livre dentro do botão, para o texto não encostar na borda
+      while (btn.scrollWidth > btn.clientWidth - FOLGA && size > minSize) {
         size -= 0.25;
         btn.style.setProperty('font-size', size + 'px', 'important');
+      }
+      // se nem no menor tamanho legível couber, quebra em duas linhas
+      if (btn.scrollWidth > btn.clientWidth - FOLGA) {
+        btn.style.setProperty('font-size', maxSize + 'px', 'important');
+        btn.style.setProperty('white-space', 'normal', 'important');
       }
     });
   }
@@ -4956,6 +4953,8 @@
     render();
     syncAddButtons();
     fitButtonLabels();
+    // a fonte Poppins chega depois e deixa o texto mais largo: mede de novo
+    if (document.fonts && document.fonts.ready) { document.fonts.ready.then(fitButtonLabels); }
 
     // reencolhe a fonte dos botões se a tela girar/mudar de tamanho
     var resizeTimer = null;
