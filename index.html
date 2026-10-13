@@ -622,6 +622,27 @@
     margin-top: 2px;
   }
   .card input.alianca-size { cursor: text; text-align: center; }
+  .card .alianca-modo {
+    display: flex;
+    margin-top: 8px;
+    border: 1.5px solid #d9c48a;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .card .alianca-modo button {
+    flex: 1;
+    border: 0;
+    background: #fff;
+    color: #8a8471;
+    font-family: 'Poppins', Arial, sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 6px 4px;
+    cursor: pointer;
+  }
+  .card .alianca-modo button + button { border-left: 1.5px solid #d9c48a; }
+  .card .alianca-modo button[aria-pressed="true"] { background: #0f1c30; color: #fff; }
+  .card .alianca-sizes .size-select-wrap[hidden] { display: none; }
   .card input.alianca-size::placeholder { color: #8a8471; }
   .card .alianca-sizes {
     margin-top: 8px;
@@ -633,6 +654,7 @@
     .card .price-line { font-size: 11px !important; }
     .card .price-line small { font-size: 8px !important; }
     .card .alianca-sizes { flex-direction: column; gap: 4px; }
+    .card .alianca-modo button { font-size: 9.5px; padding: 5px 2px; }
     .card .price-line .preco-18k { font-size: 8.5px; }
   }
   @keyframes size-shake {
@@ -4240,11 +4262,13 @@
       return 'R$ ' + v.toFixed(2).replace('.', ',').replace(/\B(?=(\d{3})+(?!\d))/g, '.');
     }
     function num(s) { return parseFloat(String(s).replace(',', '.')); }
+    function gramas(v) { return v.toFixed(1).replace('.', ',') + 'g'; }
 
     // Solitários: "peso 0,5g (tam. 13,14,15,16,18,20) ou 0,6g (tam. 19)".
-    // Se um tamanho aparece em dois pesos, vale o maior.
-    function pesosPorTamanho(card) {
-      var mapa = {};
+    // Devolve todas as combinações tamanho/peso, inclusive o mesmo tamanho em dois pesos.
+    function combinacoesSolitario(card, tamanhosDoSelect) {
+      var lista = [];
+      var vistos = {};
       var re = /(\d+(?:,\d+)?)g \(tam\. ([^)]+)\)/g;
       var texto = card.getAttribute('data-search') || '';
       var m;
@@ -4252,10 +4276,39 @@
         var peso = num(m[1]);
         m[2].split(/,| e /).forEach(function(tam) {
           tam = tam.trim();
-          if (tam && !(mapa[tam] >= peso)) { mapa[tam] = peso; }
+          if (tam && !vistos[tam + '|' + peso]) {
+            vistos[tam + '|' + peso] = true;
+            lista.push({ tam: tam, peso: peso });
+          }
         });
       }
-      return mapa;
+      // peça com um peso só: vale para todos os tamanhos da lista
+      var pesoLine = card.querySelector('.peso-line');
+      var pesoUnico = num(card.getAttribute('data-peso-num'));
+      var faixa = pesoLine && / a /.test(pesoLine.textContent);
+      tamanhosDoSelect.forEach(function(tam) {
+        var tem = lista.some(function(c) { return c.tam === tam; });
+        if (!tem) { lista.push({ tam: tam, peso: (!faixa && pesoUnico) ? pesoUnico : null }); }
+      });
+      lista.sort(function(a, b) { return Number(a.tam) - Number(b.tam) || (a.peso || 0) - (b.peso || 0); });
+      return lista;
+    }
+
+    // Troca as opções do select de tamanho por "18 · 1,0g", uma por combinação.
+    function rotularTamanhosSolitario(card) {
+      var select = card.querySelector('.size-select:not(.alianca-size)');
+      if (!select || select._rotulado) { return; }
+      select._rotulado = true;
+      var tamanhos = [].slice.call(select.options).map(function(o) { return o.value; }).filter(Boolean);
+      var combos = combinacoesSolitario(card, tamanhos);
+      while (select.options.length > 1) { select.remove(1); }
+      combos.forEach(function(c) {
+        var o = document.createElement('option');
+        o.value = c.peso ? c.tam + ' · ' + gramas(c.peso) : c.tam;
+        o.textContent = o.value;
+        if (c.peso) { o.setAttribute('data-peso', String(c.peso)); }
+        select.appendChild(o);
+      });
     }
 
     function linhaPreco(card) {
@@ -4269,18 +4322,20 @@
       return el;
     }
 
-    // Retorna { texto, tamanhos } com o preço que o card mostra agora, ou null.
+    // Preço que o card de joia em geral mostra agora: { valor, aPartir } ou null.
     function precoGeral(card) {
-      var mapa = pesosPorTamanho(card);
-      var tamanhos = Object.keys(mapa);
-      var select = card.querySelector('.size-select');
-      if (tamanhos.length) {
-        var escolhido = select && select.value;
-        if (escolhido && mapa[escolhido]) {
-          return { valor: taxas.gerais * mapa[escolhido], aPartir: false };
+      var select = card.querySelector('.size-select:not(.alianca-size)');
+      if (select && select.options.length > 1) {
+        var opcoes = [].slice.call(select.options).filter(function(o) { return o.value; });
+        var pesos = opcoes.map(function(o) { return Number(o.getAttribute('data-peso')); }).filter(function(n) { return n > 0; });
+        if (pesos.length) {
+          var escolhida = select.options[select.selectedIndex];
+          if (select.value && escolhida.getAttribute('data-peso')) {
+            return { valor: taxas.gerais * Number(escolhida.getAttribute('data-peso')), aPartir: false };
+          }
+          var menor = Math.min.apply(null, pesos), maior = Math.max.apply(null, pesos);
+          return { valor: taxas.gerais * menor, aPartir: maior > menor || pesos.length < opcoes.length };
         }
-        var menor = Math.min.apply(null, tamanhos.map(function(k) { return mapa[k]; }));
-        return { valor: taxas.gerais * menor, aPartir: true };
       }
       var peso = num(card.getAttribute('data-peso-num'));
       if (!peso) { return null; }
@@ -4297,8 +4352,39 @@
       return { k18: p18 ? num(p18[1]) : null, k10: p10 ? num(p10[1]) : null };
     }
 
+    function modoAlianca(card) { return card.getAttribute('data-modo') === 'unidade' ? 'unidade' : 'par'; }
+
     function montarTamanhosAlianca(card) {
       if (card.querySelector('.alianca-sizes')) { return; }
+      var btn = card.querySelector('.cart-add-btn');
+
+      // Par (dois tamanhos) ou Unidade (um tamanho)
+      var modo = document.createElement('div');
+      modo.className = 'alianca-modo';
+      modo.setAttribute('role', 'group');
+      modo.setAttribute('aria-label', 'Quantidade');
+      [['par', 'Par'], ['unidade', 'Unidade']].forEach(function(op) {
+        var b = document.createElement('button');
+        b.type = 'button';
+        b.textContent = op[1];
+        b.setAttribute('data-modo', op[0]);
+        b.setAttribute('aria-pressed', op[0] === 'par' ? 'true' : 'false');
+        b.addEventListener('click', function() {
+          card.setAttribute('data-modo', op[0]);
+          modo.querySelectorAll('button').forEach(function(x) {
+            x.setAttribute('aria-pressed', x === b ? 'true' : 'false');
+          });
+          var boxes = card.querySelectorAll('.alianca-sizes .size-select-wrap');
+          boxes[1].hidden = op[0] === 'unidade';
+          boxes.forEach(function(x) { x.classList.remove('size-missing'); });
+          var campos = card.querySelectorAll('.alianca-size');
+          campos[0].placeholder = op[0] === 'unidade' ? 'Tamanho' : 'Tam. 1';
+          mostrarAlianca(card);
+        });
+        modo.appendChild(b);
+      });
+      btn.parentNode.insertBefore(modo, btn);
+
       var wrap = document.createElement('div');
       wrap.className = 'alianca-sizes';
       ['1', '2'].forEach(function(n) {
@@ -4322,31 +4408,36 @@
         box.appendChild(campo);
         wrap.appendChild(box);
       });
-      var btn = card.querySelector('.cart-add-btn');
       btn.parentNode.insertBefore(wrap, btn);
     }
 
     function precoAlianca(card) {
       var pesos = pesosAlianca(card);
       if (!pesos) { return null; }
-      var sels = card.querySelectorAll('.alianca-size');
+      var unidade = modoAlianca(card) === 'unidade';
+      var campos = card.querySelectorAll('.alianca-size');
+      if (unidade) { campos = [campos[0]]; }
       function valido(campo) {
         var n = campo ? parseInt(campo.value, 10) : NaN;
         return n >= TAMANHO_MIN && n <= TAMANHO_MAX ? n : null;
       }
-      var t1 = valido(sels[0]), t2 = valido(sels[1]);
-      var completo = !!(t1 && t2);
-      var soma = completo ? t1 + t2 : TAMANHO_MIN * 2;
-      function par(pesoCatalogo, taxa) {
+      var tams = [].map.call(campos, valido);
+      var completo = tams.every(Boolean);
+      var preenchido = [].every.call(campos, function(c) { return c && c.value; });
+      var soma = completo
+        ? tams.reduce(function(a, b) { return a + b; }, 0)
+        : TAMANHO_MIN * campos.length;
+      function valor(pesoCatalogo, taxa) {
         return pesoCatalogo ? (pesoCatalogo / taxas.divisor) * soma * taxa : null;
       }
       var elegance = card.getAttribute('data-linha') === 'elegance';
       return {
-        k10: par(pesos.k10, elegance ? taxas.elegance10 : taxas.alianca10),
-        k18: par(pesos.k18, elegance ? taxas.elegance18 : taxas.alianca18),
+        k10: valor(pesos.k10, elegance ? taxas.elegance10 : taxas.alianca10),
+        k18: valor(pesos.k18, elegance ? taxas.elegance18 : taxas.alianca18),
+        unidade: unidade,
         aPartir: !completo,
-        tamanhos: completo ? t1 + ' e ' + t2 : '',
-        foraDaFaixa: !completo && !!((sels[0] && sels[0].value) && (sels[1] && sels[1].value))
+        tamanhos: completo ? tams.join(' e ') : '',
+        foraDaFaixa: !completo && preenchido
       };
     }
 
@@ -4375,7 +4466,9 @@
       var el = linhaPreco(card);
       if (!p) { el.hidden = true; return; }
       var principal = p.k10 || p.k18;
-      var html = '<small>' + (p.aPartir ? 'Par a partir de' : 'Valor do par em 10K') + '</small>' + reais(principal);
+      var nome = p.unidade ? 'Unidade' : 'Par';
+      var titulo = p.aPartir ? nome + ' a partir de' : 'Valor ' + (p.unidade ? 'da unidade' : 'do par') + ' em 10K';
+      var html = '<small>' + titulo + '</small>' + reais(principal);
       if (p.foraDaFaixa) {
         html += '<span class="preco-18k">Tamanhos de ' + TAMANHO_MIN + ' a ' + TAMANHO_MAX + '. Fora disso, fale com a gente.</span>';
       }
@@ -4395,21 +4488,23 @@
         var partes = [];
         if (a.k10) { partes.push('10K ' + reais(a.k10)); }
         if (a.k18) { partes.push('18K ' + reais(a.k18) + ' (sob encomenda)'); }
-        return { texto: 'Par: ' + partes.join(' · '), tamanhos: a.tamanhos, valor: a.k10 || a.k18,
-                 valor18: a.k10 && a.k18 ? a.k18 : null, par: true };
+        return { texto: (a.unidade ? 'Unidade: ' : 'Par: ') + partes.join(' · '), tamanhos: a.tamanhos,
+                 valor: a.k10 || a.k18, valor18: a.k10 && a.k18 ? a.k18 : null,
+                 par: !a.unidade, unidade: a.unidade };
       }
       var g = precoGeral(card);
       if (!g || g.aPartir) { return null; }
       return { texto: reais(g.valor), valor: g.valor };
     };
 
-    // Aliança com preço só entra no carrinho com os dois tamanhos: marca os campos e avisa.
+    // Aliança com preço só entra no carrinho com os tamanhos: marca os campos e avisa.
     window.aliancaFaltaTamanho = function(card) {
       if (!taxas || !card || !card.closest('#grid-aliancas') || !pesosAlianca(card)) { return false; }
       var a = precoAlianca(card);
       if (!a || !a.aPartir) { return false; }
       var primeiroVazio = null;
       card.querySelectorAll('.alianca-sizes .size-select-wrap').forEach(function(wrap) {
+        if (wrap.hidden) { return; }
         var campo = wrap.querySelector('.alianca-size');
         var n = parseInt(campo.value, 10);
         wrap.classList.remove('size-missing');
@@ -4447,6 +4542,10 @@
         });
       }
     }
+
+    // O peso de cada tamanho aparece mesmo se os preços não carregarem.
+    var gridSol = document.getElementById('grid-aliancas-solitarios');
+    if (gridSol) { gridSol.querySelectorAll('.card').forEach(rotularTamanhosSolitario); }
 
     fetch('/api/precos')
       .then(function(r) { return r.ok ? r.json() : null; })
@@ -4671,7 +4770,7 @@
         var precoEl = document.createElement('div');
         precoEl.className = 'cart-item-price';
         if (typeof item.valor === 'number' && window.reaisCarrinho) {
-          precoEl.textContent = (item.par ? 'Par em 10K: ' : '') + window.reaisCarrinho(item.valor);
+          precoEl.textContent = (item.par ? 'Par em 10K: ' : item.unidade ? 'Unidade em 10K: ' : '') + window.reaisCarrinho(item.valor);
         } else if (item.preco) {
           precoEl.textContent = item.preco;
         } else {
@@ -4792,6 +4891,7 @@
           item.preco = preco.texto;
           item.valor = Math.round(preco.valor * 100) / 100;
           if (preco.par) { item.par = true; }
+          if (preco.unidade) { item.unidade = true; }
           if (preco.valor18) { item.valor18 = Math.round(preco.valor18 * 100) / 100; }
           if (preco.tamanhos) { item.size = preco.tamanhos; }
         }
