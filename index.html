@@ -4485,27 +4485,6 @@
       el.hidden = false;
     }
 
-    function mostrarLargura(card) {
-      var pesoLine = card.querySelector('.peso-line');
-      if (!pesoLine || card.querySelector('.largura-line')) { return; }
-      var larg = pesoLine.textContent.match(/Larg\. (\d+(?:,\d+)?)mm/);
-      if (!larg) { return; }
-      var el = document.createElement('div');
-      el.className = 'peso-line largura-line';
-      el.textContent = 'Largura ' + larg[1] + ' mm';
-      var p10 = pesoLine.textContent.match(/10K (\d+(?:,\d+)?)g/);
-      var p18 = pesoLine.textContent.match(/18K (\d+(?:,\d+)?)g/);
-      var pesos = [p10 && '10K ' + p10[1] + 'g', p18 && '18K ' + p18[1] + 'g'].filter(Boolean);
-      if (pesos.length) {
-        var pesoEl = document.createElement('span');
-        pesoEl.className = 'peso-valor';
-        pesoEl.textContent = 'Peso ' + pesos.join(' · ');
-        el.appendChild(pesoEl);
-      }
-      pesoLine.parentNode.insertBefore(el, pesoLine);
-      pesoLine.hidden = true;
-    }
-
     function mostrarAlianca(card) {
       var p = precoAlianca(card);
       var el = linhaPreco(card);
@@ -4581,7 +4560,6 @@
       if (gridAl) {
         gridAl.querySelectorAll('.card').forEach(function(card) {
           if (!pesosAlianca(card)) { return; }
-          mostrarLargura(card);
           montarTamanhosAlianca(card);
           mostrarAlianca(card);
         });
