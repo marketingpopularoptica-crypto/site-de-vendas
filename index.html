@@ -4831,14 +4831,68 @@
     var gridSol = document.getElementById('grid-aliancas-solitarios');
     if (gridSol) { gridSol.querySelectorAll('.card').forEach(rotularTamanhosSolitario); }
 
-    fetch('/api/precos')
-      .then(function(r) { return r.ok ? r.json() : null; })
-      .then(function(d) {
-        if (!d || !d.disponivel) { return; }
-        taxas = d;
-        renderizar();
-      })
-      .catch(function() {});
+    // Preço de um item já no carrinho, com a cotação atual e os tamanhos que o cliente escolheu.
+    window.precoItemCarrinho = function(item) {
+      if (!taxas || !item) { return null; }
+      // nome + peso: há modelos diferentes com o mesmo nome (ex.: duas "Facetada Fina")
+      var btns = [].filter.call(document.querySelectorAll('.cart-add-btn'), function(b) {
+        return b.getAttribute('data-name') === item.name;
+      });
+      var btn = btns.length > 1
+        ? [].find.call(btns, function(b) { return b.getAttribute('data-peso') === item.peso; })
+        : btns[0];
+      var card = btn && btn.closest('.card');
+      if (!card) { return null; }
+      if (card.closest('#grid-aliancas')) {
+        var pesos = pesosAlianca(card);
+        var tams = String(item.size || '').match(/\d+/g);
+        if (!pesos || !tams) { return null; }
+        var soma = tams.reduce(function(a, b) { return a + Number(b); }, 0);
+        var elegance = card.getAttribute('data-linha') === 'elegance';
+        var conta = function(peso, taxa) { return peso ? (peso / taxas.divisor) * soma * taxa : null; };
+        var k10 = conta(pesos.k10, elegance ? taxas.elegance10 : taxas.alianca10);
+        var k18 = conta(pesos.k18, elegance ? taxas.elegance18 : taxas.alianca18);
+        var partes = [];
+        if (k10) { partes.push('10K ' + reais(k10)); }
+        if (k18) { partes.push('18K ' + reais(k18) + ' (sob encomenda)'); }
+        return { texto: (item.unidade ? 'Unidade: ' : 'Par: ') + partes.join(' · '),
+                 valor: k10 || k18, valor18: k10 && k18 ? k18 : null };
+      }
+      var peso = null;
+      var select = card.querySelector('.size-select:not(.alianca-size)');
+      var opcao = select && item.size && [].find.call(select.options, function(o) { return o.value === String(item.size); });
+      if (opcao && opcao.getAttribute('data-peso')) {
+        peso = Number(opcao.getAttribute('data-peso'));
+      } else {
+        var pesoLine = card.querySelector('.peso-line');
+        if (!(pesoLine && / a /.test(pesoLine.textContent))) { peso = num(card.getAttribute('data-peso-num')); }
+      }
+      if (!peso) { return null; }
+      return { texto: reais(taxas.gerais * peso), valor: taxas.gerais * peso };
+    };
+
+    // Busca a cotação ao abrir a página e de novo quando ela muda: a cada 5 minutos e
+    // sempre que o cliente volta para a aba. Assim uma página aberta desde antes da
+    // cotação do dia não fica mostrando o preço antigo.
+    var cotacaoVista = null;
+    function carregarPrecos() {
+      fetch('/api/precos', { cache: 'no-store' })
+        .then(function(r) { return r.ok ? r.json() : null; })
+        .then(function(d) {
+          if (!d || !d.disponivel || d.atualizado_em === cotacaoVista) { return; }
+          cotacaoVista = d.atualizado_em;
+          taxas = d;
+          renderizar();
+          window.dispatchEvent(new Event('precos-atualizados'));
+        })
+        .catch(function() {});
+    }
+    carregarPrecos();
+    setInterval(carregarPrecos, 5 * 60 * 1000);
+    document.addEventListener('visibilitychange', function() {
+      if (document.visibilityState === 'visible') { carregarPrecos(); }
+    });
+    window.addEventListener('pageshow', function(e) { if (e.persisted) { carregarPrecos(); } });
   })();
 </script>
 
@@ -5213,6 +5267,25 @@
         window.open(url, '_blank', 'noopener');
       });
     }
+
+    // Cotação nova (ou carrinho salvo de outro dia): refaz o preço de cada item.
+    window.addEventListener('precos-atualizados', function() {
+      if (!window.precoItemCarrinho || !cart.length) { return; }
+      var mudou = false;
+      cart.forEach(function(item) {
+        if (typeof item.valor !== 'number') { return; }
+        var p = window.precoItemCarrinho(item);
+        if (!p) { return; }
+        var valor = Math.round(p.valor * 100) / 100;
+        var valor18 = p.valor18 ? Math.round(p.valor18 * 100) / 100 : null;
+        if (valor === item.valor && valor18 === (item.valor18 || null)) { return; }
+        item.valor = valor;
+        item.preco = p.texto;
+        if (valor18) { item.valor18 = valor18; } else { delete item.valor18; }
+        mudou = true;
+      });
+      if (mudou) { saveCart(); render(); }
+    });
 
     render();
     syncAddButtons();
